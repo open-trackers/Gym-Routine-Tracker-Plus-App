@@ -1,0 +1,61 @@
+//
+//  ContentView.swift
+//
+// Copyright 2022, 2023  OpenAlloc LLC
+//
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
+//
+
+import SwiftUI
+
+import GroutLib
+import GroutUI
+
+struct ContentView: View {
+    @SceneStorage("main-tab") private var selectedTab = 0
+    @SceneStorage("main-routines-nav") private var routinesNavData: Data?
+    @SceneStorage("main-settings-nav") private var settingsNavData: Data?
+
+    var body: some View {
+        TabView(selection: $selectedTab) {
+            NavStack(name: "routines",
+                     navData: $routinesNavData) {
+                RoutineList()
+            }
+            .tabItem {
+                Label("Routines", systemImage: "dumbbell.fill")
+            }
+            .tag(0)
+
+            NavStack(name: "settings",
+                     navData: $settingsNavData) {
+                SettingsForm()
+            }
+            .tabItem {
+                Label("Settings", systemImage: "gear")
+            }
+            .tag(1)
+
+            // TODO: history, charts, etc. will be the 'Plus'
+        }
+    }
+}
+
+// TODO: four copies of each routine showing up; should be one!
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        let ctx = PersistenceManager.preview.container.viewContext
+        let routine = Routine.create(ctx, userOrder: 0)
+        routine.name = "Back & Bicep"
+        let e1 = Exercise.create(ctx, userOrder: 0)
+        e1.name = "Lat Pulldown"
+        e1.routine = routine
+        let e2 = Exercise.create(ctx, userOrder: 1)
+        e2.name = "Arm Curl"
+        e2.routine = routine
+        return ContentView()
+            .environment(\.managedObjectContext, ctx)
+    }
+}

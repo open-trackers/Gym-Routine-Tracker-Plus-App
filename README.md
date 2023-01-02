@@ -1,0 +1,71 @@
+# Gym Routine Tracker Plus
+
+_A minimalist gym workout tracker, for iPhone and iPad_
+
+## Download
+
+Available as a free download in the App Store [HERE](https://apps.apple.com/us/app/gym-routine-tracker/id6444747204).
+
+## Features
+
+- LARGE text in RUN mode, for those with presbyopia. Leave your cheaters in your locker!
+- Prioritizes convenience, quick interactions, and the basic needs of the recreational fitness user.
+- Available separately, an independent GRT watchOS app
+
+### Quick and easy setup
+
+- Add routines and exercises in the app itself, with convenient preset names available.
+- For each exercise optionally specify seat settings and set/rep counts. 
+- For the exercise's intensity (usually weight lifted), optionally specify the units and the step.
+
+### When ‘running’ a routine
+
+- Convenient one-tap button to indicate that an exercise is complete.
+- Optional long-press to automatically step up (advance) to next higher intensity in future.
+- Convenient skip to the next incomplete exercise, in case a machine isn’t immediately available.
+- Control screen showing the time elapsed since starting the routine.
+
+### App features
+
+- Simple data model of user-defined routines and their exercises.
+- Your data syncs with CloudKit when a network connection is available.
+- Fully open source where code is licensed with Mozilla Public License 2.0.
+- App available as a free download in the iOS App Store. 
+
+## Requirements
+
+Requires iOS/iPadOS 16.1 or later
+
+## Caveats
+
+- GRT remembers only your most recent workout for each routine. It does not (yet) maintain a historical record of progress.
+- Future enhancements may largely rely on contributors.
+- GRT prioritizes convenience, quick interactions, and the basic needs of the recreational user. More sophisticated trackers are available on the App Store.
+
+To any Apple product managers who like this app, please consider Sherlocking it!
+
+## See Also
+
+* [GRT Website](https://gym-routine-tracker.github.io) - Website for GRT
+* [GRT on the App Store](https://apps.apple.com/us/app/gym-routine-tracker/id6444747204) - App Store link for free download of GRT
+* [GroutUI](https://github.com/gym-routine-tracker/GroutUI) - shared UI layer for GRT (watchOS and iOS)
+* [GroutLib](https://github.com/gym-routine-tracker/GroutLib) - shared business logic and data layer for GRT
+
+Apps by the same author:
+
+* [FlowAllocator](https://openalloc.github.io/FlowAllocator/index.html) - portfolio rebalancing tool for macOS
+* [FlowWorth](https://openalloc.github.io/FlowWorth/index.html) - portfolio valuation and tracking tool for macOS
+
+## License
+
+Copyright 2022, 2023 OpenAlloc LLC
+
+All application code is licensed under the [Mozilla Public License 2](https://www.mozilla.org/en-US/MPL/2.0/), except where noted in individual modules.
+
+## Contributing
+
+Contributions are welcome. You are encouraged to submit pull requests to fix bugs, improve documentation, or offer new features. 
+
+The pull request need not be a production-ready feature or fix. It can be a draft of proposed changes, or simply a test to show that expected behavior is buggy. Discussion on the pull request can proceed from there.
+
+Contributions should ultimately have adequate test coverage. See tests for current entities to see what coverage is expected.
