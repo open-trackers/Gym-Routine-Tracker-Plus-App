@@ -14,8 +14,15 @@ import GroutLib
 import GroutUI
 
 struct ContentView: View {
+    enum Tabs: Int {
+        case routines = 0
+        case history = 1
+        case settings
+    }
+
     @SceneStorage("main-tab") private var selectedTab = 0
     @SceneStorage("main-routines-nav") private var routinesNavData: Data?
+    @SceneStorage("main-history-nav") private var historyNavData: Data?
     @SceneStorage("main-settings-nav") private var settingsNavData: Data?
 
     var body: some View {
@@ -25,9 +32,18 @@ struct ContentView: View {
                 RoutineList()
             }
             .tabItem {
-                Label("Routines", systemImage: "dumbbell.fill")
+                Label("Routines", systemImage: "dumbbell")
             }
-            .tag(0)
+            .tag(Tabs.routines.rawValue)
+
+            NavStack(name: "history",
+                     navData: $historyNavData) {
+                HistoryView()
+            }
+            .tabItem {
+                Label("History", systemImage: "fossil.shell")
+            }
+            .tag(Tabs.history.rawValue)
 
             NavStack(name: "settings",
                      navData: $settingsNavData) {
@@ -36,9 +52,7 @@ struct ContentView: View {
             .tabItem {
                 Label("Settings", systemImage: "gear")
             }
-            .tag(1)
-
-            // TODO: history, charts, etc. will be the 'Plus'
+            .tag(Tabs.settings.rawValue)
         }
     }
 }
