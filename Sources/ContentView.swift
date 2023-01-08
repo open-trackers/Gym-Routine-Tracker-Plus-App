@@ -17,7 +17,7 @@ struct ContentView: View {
     enum Tabs: Int {
         case routines = 0
         case history = 1
-        case settings
+        case settings = 2
     }
 
     @SceneStorage("main-tab") private var selectedTab = 0

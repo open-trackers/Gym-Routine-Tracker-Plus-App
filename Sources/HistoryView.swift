@@ -1,8 +1,11 @@
 //
 //  HistoryView.swift
-//  Gym Routine Tracker Plus
 //
-//  Created by Reed Esau on 1/8/23.
+// Copyright 2023  OpenAlloc LLC
+//
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
 //
 
 import SwiftUI
@@ -12,6 +15,10 @@ import Tabler
 import GroutLib
 
 struct HistoryView: View {
+    typealias Sort = TablerSort<Routine>
+    typealias Context = TablerContext<Routine>
+    typealias ProjectedValue = ObservedObject<Routine>.Wrapper
+
     private let columnSpacing: CGFloat = 10
 
     private var columnPadding: EdgeInsets {
@@ -28,17 +35,24 @@ struct HistoryView: View {
         // Sideways(minWidth: minWidth) {
         //   if headerize {
         TablerList(listConfig,
-                   // header: header,
+                   header: header,
                    row: listRow,
                    // rowBackground: rowBackground,
                    results: routines)
-//                    } else {
-//                        TablerList(listConfig,
-//                                   row: listRow,
-//                                   rowBackground: rowBackground,
-//                                   results: fruits)
-//                    }
-//                }
+            .navigationTitle("History")
+    }
+
+    private func header(ctx: Binding<Context>) -> some View {
+        LazyVGrid(columns: gridItems, alignment: .leading) {
+            Sort.columnTitle("Name", ctx, \.name)
+                .onTapGesture { routines.sortDescriptors = [tablerSort(ctx, \.name)] }
+                .padding(columnPadding)
+//                    .background(headerBackground)
+            Sort.columnTitle("Last Started", ctx, \.lastStartedAt)
+                .onTapGesture { routines.sortDescriptors = [tablerSort(ctx, \.lastStartedAt)] }
+                .padding(columnPadding)
+//                    .background(headerBackground)
+        }
     }
 
     private var listConfig: TablerListConfig<Routine> {
@@ -46,7 +60,7 @@ struct HistoryView: View {
     }
 
     private var gridItems: [GridItem] { [
-        GridItem(.flexible(minimum: 40, maximum: 60), spacing: columnSpacing, alignment: .leading),
+        GridItem(.flexible(minimum: 40, maximum: 200), spacing: columnSpacing, alignment: .leading),
         GridItem(.flexible(minimum: 100, maximum: 200), spacing: columnSpacing, alignment: .leading),
     ] }
 
