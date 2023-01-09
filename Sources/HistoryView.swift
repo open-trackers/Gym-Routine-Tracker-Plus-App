@@ -132,7 +132,9 @@ struct HistoryView_Previews: PreviewProvider {
         _ = ZRoutineRun.create(context, zRoutine: zR, startedAt: startedAt2, duration: duration2, toStore: archiveStore)
         try! context.save()
 
-        return HistoryView(archiveStore: archiveStore)
-            .environment(\.managedObjectContext, context)
+        return NavigationStack {
+            HistoryView(archiveStore: archiveStore)
+                .environment(\.managedObjectContext, context)
+        }
     }
 }
