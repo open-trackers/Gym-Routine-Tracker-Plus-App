@@ -9,6 +9,7 @@
 //
 
 import CoreData
+import os
 import SwiftUI
 
 import Tabler
@@ -16,7 +17,12 @@ import Tabler
 import GroutLib
 import GroutUI
 
+private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
+                            category: "HistoryView")
+
 struct HistoryView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+
     typealias Sort = TablerSort<ZRoutineRun>
     typealias Context = TablerContext<ZRoutineRun>
     typealias ProjectedValue = ObservedObject<ZRoutineRun>.Wrapper
@@ -64,14 +70,21 @@ struct HistoryView: View {
     // MARK: - Views
 
     var body: some View {
-        TablerList(listConfig,
-                   header: header,
-                   row: listRow,
-                   results: routineRuns)
-            .navigationTitle("History")
-            .onReceive(timer) { _ in
-                self.now = Date.now
+        VStack {
+            Button(action: purgeAction) {
+                Label("Purge Archive", systemImage: "xmark")
             }
+
+            TablerList(listConfig,
+                       header: header,
+                       row: listRow,
+                       results: routineRuns)
+                .navigationTitle("History")
+                .onReceive(timer) { _ in
+                    self.now = Date.now
+                }
+        }
+        .task(priority: .utility, taskAction)
     }
 
     private func header(ctx _: Binding<Context>) -> some View {
@@ -89,27 +102,51 @@ struct HistoryView: View {
 
     @ViewBuilder
     private func listRow(element: ZRoutineRun) -> some View {
-        if let routineArchiveID = element.zRoutine?.routineArchiveID {
-            ZStack {
-                LazyVGrid(columns: gridItems, alignment: .leading) {
-                    Text(element.zRoutine?.name ?? "")
-                        .padding(columnPadding)
-                    SinceText(startedAt: element.startedAt ?? Date(), duration: element.duration, now: $now, compactorStyle: .short)
-                        .padding(columnPadding)
-                }
-                .frame(maxWidth: .infinity)
-
-                NavigationLink(destination: {
-                    RoutineRunView(routineArchiveID: routineArchiveID,
-                                   dateRange: element.dateRange,
-                                   archiveStore: archiveStore)
-                    }) {
-                        Rectangle().opacity(0.0)
-                    }
+        ZStack {
+            LazyVGrid(columns: gridItems, alignment: .leading) {
+                Text(element.zRoutine?.name ?? "")
+                    .padding(columnPadding)
+                SinceText(startedAt: element.startedAt ?? Date(), duration: element.duration, now: $now, compactorStyle: .short)
+                    .padding(columnPadding)
             }
-        } else {
-            // EmptyView()
-            Text("Missing routineArchiveID")
+            .frame(maxWidth: .infinity)
+
+            NavigationLink(destination: {
+                RoutineRunView(zRoutineRun: element,
+                               archiveStore: archiveStore)
+                }) {
+                    Rectangle().opacity(0.0)
+                }
+        }
+    }
+
+    // MARK: - Actions
+
+    private func purgeAction() {
+        do {
+            guard let archiveStore = PersistenceManager.getArchiveStore(viewContext) else {
+                throw DataError.invalidStoreConfiguration(msg: "Cannot purge archive.")
+            }
+            try viewContext.deleter(entityName: "ZRoutineRun", inStore: archiveStore)
+            try viewContext.deleter(entityName: "ZRoutine", inStore: archiveStore)
+            try viewContext.deleter(entityName: "ZExerciseRun", inStore: archiveStore)
+            try viewContext.deleter(entityName: "ZExercise", inStore: archiveStore)
+            try viewContext.save()
+        } catch {
+            logger.error("\(#function): \(error.localizedDescription)")
+        }
+    }
+
+    @Sendable
+    private func taskAction() async {
+        logger.notice("\(#function)")
+        // transfer any 'Z' records from the 'Main' store to the 'Archive' store.
+        // NOTE mirrored in HistoryView
+        do {
+            try transferToArchive(viewContext)
+            try PersistenceManager.shared.save()
+        } catch {
+            logger.error("\(#function): TRANSFER \(error.localizedDescription)")
         }
     }
 }

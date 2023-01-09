@@ -23,16 +23,13 @@ struct RoutineRunView: View {
 
     // MARK: - Parameters
 
-    private var routineArchiveID: UUID
-    private var dateRange: ClosedRange<Date>
+    private var zRoutineRun: ZRoutineRun
     private var archiveStore: NSPersistentStore
 
-    init(routineArchiveID: UUID,
-         dateRange: ClosedRange<Date>,
+    init(zRoutineRun: ZRoutineRun,
          archiveStore: NSPersistentStore)
     {
-        self.routineArchiveID = routineArchiveID
-        self.dateRange = dateRange
+        self.zRoutineRun = zRoutineRun
         self.archiveStore = archiveStore
 
         let request = NSFetchRequest<ZExerciseRun>(entityName: "ZExerciseRun")
@@ -40,10 +37,7 @@ struct RoutineRunView: View {
             NSSortDescriptor(keyPath: \ZExerciseRun.completedAt, ascending: true),
         ]
         request.affectedStores = [archiveStore]
-        request.predicate = NSPredicate(format: "zExercise.zRoutine.routineArchiveID = %@ AND completedAt >= %@ AND completedAt <= %@", routineArchiveID.uuidString, dateRange.lowerBound as NSDate, dateRange.upperBound as NSDate)
-
-        // TODO: needs to restrict to date range of routineRun
-
+        request.predicate = NSPredicate(format: "zRoutineRun = %@", zRoutineRun)
         _exerciseRuns = FetchRequest<ZExerciseRun>(fetchRequest: request)
     }
 
@@ -63,7 +57,7 @@ struct RoutineRunView: View {
 
     private var gridItems: [GridItem] { [
         GridItem(.flexible(minimum: 40, maximum: 300), spacing: columnSpacing, alignment: .leading),
-//        GridItem(.flexible(minimum: 100, maximum: 200), spacing: columnSpacing, alignment: .leading),
+        // GridItem(.flexible(minimum: 100, maximum: 200), spacing: columnSpacing, alignment: .leading),
     ] }
 
     // MARK: - Views
@@ -73,7 +67,7 @@ struct RoutineRunView: View {
                    header: header,
                    row: listRow,
                    results: exerciseRuns)
-            .navigationTitle("Routine \(String(routineArchiveID.uuidString.suffix(6)))")
+            .navigationTitle("Routine \(zRoutineRun.zRoutine?.wrappedName ?? "UNKNOWN")")
     }
 
     private func header(ctx _: Binding<Context>) -> some View {
@@ -114,11 +108,8 @@ struct RoutineRunView_Previews: PreviewProvider {
         let zRR2 = ZRoutineRun.create(context, zRoutine: zR, startedAt: startedAt2, duration: duration2, toStore: archiveStore)
         try! context.save()
 
-        // let routineArchiveID = zR.routineArchiveID
-        let dateRange: ClosedRange<Date> = zRR1.dateRange
-
         return NavigationStack {
-            RoutineRunView(routineArchiveID: routineArchiveID, dateRange: dateRange, archiveStore: archiveStore)
+            RoutineRunView(zRoutineRun: zRR1, archiveStore: archiveStore)
                 .environment(\.managedObjectContext, context)
         }
     }
