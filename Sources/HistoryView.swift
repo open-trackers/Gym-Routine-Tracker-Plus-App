@@ -118,8 +118,9 @@ struct HistoryView_Previews: PreviewProvider {
         let context = container.viewContext
         let archiveStore = PersistenceManager.getArchiveStore(context)!
 
-//        try? ctx.deleter(entityName: "ZRoutineRun", inStore: archiveStore)
-        //try! ctx.save()
+        try? context.deleter(entityName: "ZRoutineRun", inStore: archiveStore)
+        try? context.deleter(entityName: "ZRoutine", inStore: archiveStore)
+        try! context.save()
 
         let routineArchiveID = UUID()
         let startedAt1 = Date.now.addingTimeInterval(-20000)
@@ -129,7 +130,7 @@ struct HistoryView_Previews: PreviewProvider {
         let zR = ZRoutine.create(context, routineName: "blah", routineArchiveID: routineArchiveID, toStore: archiveStore)
         _ = ZRoutineRun.create(context, zRoutine: zR, startedAt: startedAt1, duration: duration1, toStore: archiveStore)
         _ = ZRoutineRun.create(context, zRoutine: zR, startedAt: startedAt2, duration: duration2, toStore: archiveStore)
-//        try! ctx.save()
+        try! context.save()
 
         return HistoryView(archiveStore: archiveStore)
             .environment(\.managedObjectContext, context)
