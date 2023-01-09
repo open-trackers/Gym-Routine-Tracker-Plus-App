@@ -15,9 +15,9 @@ import Tabler
 import GroutLib
 
 struct HistoryView: View {
-    typealias Sort = TablerSort<Routine>
-    typealias Context = TablerContext<Routine>
-    typealias ProjectedValue = ObservedObject<Routine>.Wrapper
+    typealias Sort = TablerSort<ZRoutineRun>
+    typealias Context = TablerContext<ZRoutineRun>
+    typealias ProjectedValue = ObservedObject<ZRoutineRun>.Wrapper
 
     private let columnSpacing: CGFloat = 10
 
@@ -26,10 +26,10 @@ struct HistoryView: View {
     }
 
     @FetchRequest(
-        sortDescriptors: [SortDescriptor(\.name, order: .forward)],
+        sortDescriptors: [SortDescriptor(\.zRoutine?.name, order: .forward)],
         animation: .default
     )
-    private var routines: FetchedResults<Routine>
+    private var routineRuns: FetchedResults<ZRoutineRun>
 
     var body: some View {
         // Sideways(minWidth: minWidth) {
@@ -38,25 +38,25 @@ struct HistoryView: View {
                    header: header,
                    row: listRow,
                    // rowBackground: rowBackground,
-                   results: routines)
+                   results: routineRuns)
             .navigationTitle("History")
     }
 
     private func header(ctx: Binding<Context>) -> some View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
-            Sort.columnTitle("Name", ctx, \.name)
-                .onTapGesture { routines.sortDescriptors = [tablerSort(ctx, \.name)] }
+            Sort.columnTitle("Name", ctx, \.zRoutine?.name)
+                .onTapGesture { routineRuns.sortDescriptors = [tablerSort(ctx, \.zRoutine?.name)] }
                 .padding(columnPadding)
 //                    .background(headerBackground)
-            Sort.columnTitle("Last Started", ctx, \.lastStartedAt)
-                .onTapGesture { routines.sortDescriptors = [tablerSort(ctx, \.lastStartedAt)] }
+            Sort.columnTitle("Started", ctx, \.startedAt)
+                .onTapGesture { routineRuns.sortDescriptors = [tablerSort(ctx, \.startedAt)] }
                 .padding(columnPadding)
 //                    .background(headerBackground)
         }
     }
 
-    private var listConfig: TablerListConfig<Routine> {
-        TablerListConfig<Routine>()
+    private var listConfig: TablerListConfig<ZRoutineRun> {
+        TablerListConfig<ZRoutineRun>()
     }
 
     private var gridItems: [GridItem] { [
@@ -64,7 +64,7 @@ struct HistoryView: View {
         GridItem(.flexible(minimum: 100, maximum: 200), spacing: columnSpacing, alignment: .leading),
     ] }
 
-    private func listRow(element: Routine) -> some View {
+    private func listRow(element: ZRoutineRun) -> some View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
             rowItems(element: element)
         }
@@ -72,10 +72,10 @@ struct HistoryView: View {
     }
 
     @ViewBuilder
-    private func rowItems(element: Routine) -> some View {
-        Text(element.wrappedName)
+    private func rowItems(element: ZRoutineRun) -> some View {
+        Text(element.zRoutine?.name ?? "")
             .padding(columnPadding)
-        Text("\(String(describing: element.lastStartedAt))")
+        Text("\(String(describing: element.startedAt))")
             .padding(columnPadding)
     }
 
@@ -90,15 +90,20 @@ struct HistoryView: View {
 
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        let ctx = PersistenceManager.preview.container.viewContext
-        let routine = Routine.create(ctx, userOrder: 0)
-        routine.name = "Back & Bicep"
-        let e1 = Exercise.create(ctx, userOrder: 0)
-        e1.name = "Lat Pulldown"
-        e1.routine = routine
-        let e2 = Exercise.create(ctx, userOrder: 1)
-        e2.name = "Arm Curl"
-        e2.routine = routine
+        let container = PersistenceManager.preview.container
+        let ctx = container.viewContext
+        let archiveStore = PersistenceManager.getArchiveStore(ctx)!
+
+        let routineArchiveID = UUID()
+        let startedAt1 = Date.now.addingTimeInterval(-20000)
+        let duration1 = 500.0
+        let startedAt2 = Date.now.addingTimeInterval(-10000)
+        let duration2 = 400.0
+        let zR = ZRoutine.create(ctx, routineName: "blah", routineArchiveID: routineArchiveID, toStore: archiveStore)
+        _ = ZRoutineRun.create(ctx, zRoutine: zR, startedAt: startedAt1, duration: duration1, toStore: archiveStore)
+        _ = ZRoutineRun.create(ctx, zRoutine: zR, startedAt: startedAt1, duration: duration1, toStore: archiveStore)
+        try! ctx.save()
+        
         return HistoryView()
             .environment(\.managedObjectContext, ctx)
     }
