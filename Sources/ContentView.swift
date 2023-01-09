@@ -16,7 +16,7 @@ import GroutUI
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    
+
     enum Tabs: Int {
         case routines = 0
         case history = 1
@@ -58,7 +58,7 @@ struct ContentView: View {
             .tag(Tabs.settings.rawValue)
         }
     }
-    
+
     private var archiveStore: NSPersistentStore {
         guard let store = PersistenceManager.getArchiveStore(viewContext)
         else {

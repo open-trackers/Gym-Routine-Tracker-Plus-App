@@ -13,8 +13,8 @@ import SwiftUI
 
 import Tabler
 
-import GroutUI
 import GroutLib
+import GroutUI
 
 struct HistoryView: View {
     typealias Sort = TablerSort<ZRoutineRun>
@@ -28,14 +28,14 @@ struct HistoryView: View {
 //        let archiveStore = PersistenceManager.getArchiveStore(context)!
         let request = NSFetchRequest<ZRoutineRun>(entityName: "ZRoutineRun")
         request.sortDescriptors = [
-            NSSortDescriptor(keyPath: \ZRoutineRun.startedAt, ascending: false)
+            NSSortDescriptor(keyPath: \ZRoutineRun.startedAt, ascending: false),
         ]
         request.affectedStores = [archiveStore]
         _routineRuns = FetchRequest<ZRoutineRun>(fetchRequest: request)
     }
-    
+
     // MARK: - Locals
-    
+
     private let columnSpacing: CGFloat = 10
 
     // timer used to refresh "2d ago, for 16.5m" on each Routine Cell
@@ -43,22 +43,28 @@ struct HistoryView: View {
     private let timer = Timer.publish(every: routineSinceUpdateSeconds,
                                       on: .main,
                                       in: .common).autoconnect()
-    
+
     private var columnPadding: EdgeInsets {
         EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
     }
 
     @FetchRequest private var routineRuns: FetchedResults<ZRoutineRun>
 
+    private var listConfig: TablerListConfig<ZRoutineRun> {
+        TablerListConfig<ZRoutineRun>()
+    }
+
+    private var gridItems: [GridItem] { [
+        GridItem(.flexible(minimum: 40, maximum: 200), spacing: columnSpacing, alignment: .leading),
+        GridItem(.flexible(minimum: 100, maximum: 200), spacing: columnSpacing, alignment: .leading),
+    ] }
+
     // MARK: - Views
 
     var body: some View {
-        // Sideways(minWidth: minWidth) {
-        //   if headerize {
         TablerList(listConfig,
                    header: header,
                    row: listRow,
-                   // rowBackground: rowBackground,
                    results: routineRuns)
             .navigationTitle("History")
             .onReceive(timer) { _ in
@@ -71,45 +77,27 @@ struct HistoryView: View {
             Sort.columnTitle("Name", ctx, \.zRoutine?.name)
                 .onTapGesture { routineRuns.sortDescriptors = [tablerSort(ctx, \.zRoutine?.name)] }
                 .padding(columnPadding)
-//                    .background(headerBackground)
             Sort.columnTitle("Started", ctx, \.startedAt)
                 .onTapGesture { routineRuns.sortDescriptors = [tablerSort(ctx, \.startedAt)] }
                 .padding(columnPadding)
-//                    .background(headerBackground)
         }
     }
-
-    private var listConfig: TablerListConfig<ZRoutineRun> {
-        TablerListConfig<ZRoutineRun>()
-    }
-
-    private var gridItems: [GridItem] { [
-        GridItem(.flexible(minimum: 40, maximum: 200), spacing: columnSpacing, alignment: .leading),
-        GridItem(.flexible(minimum: 100, maximum: 200), spacing: columnSpacing, alignment: .leading),
-    ] }
 
     private func listRow(element: ZRoutineRun) -> some View {
-        LazyVGrid(columns: gridItems, alignment: .leading) {
-            rowItems(element: element)
+        ZStack {
+            LazyVGrid(columns: gridItems, alignment: .leading) {
+                Text(element.zRoutine?.name ?? "")
+                    .padding(columnPadding)
+                SinceText(startedAt: element.startedAt ?? Date(), duration: element.duration, now: $now, compactorStyle: .short)
+                    .padding(columnPadding)
+            }
+            .frame(maxWidth: .infinity)
+
+            NavigationLink(destination: { Text("hello") }) {
+                Rectangle().opacity(0.0)
+            }
         }
-        // .modifier(listMenu(element))
     }
-
-    @ViewBuilder
-    private func rowItems(element: ZRoutineRun) -> some View {
-        Text(element.zRoutine?.name ?? "")
-            .padding(columnPadding)
-        SinceText(startedAt: element.startedAt ?? Date(), duration: element.duration, now: $now, compactorStyle: .short)
-            .padding(columnPadding)
-    }
-
-//    private func listMenu(_ fruit: Fruit) -> EditDetailerSwipeMenu<Fruit> {
-//            EditDetailerSwipeMenu(fruit,
-//                                  canDelete: detailerConfig.canDelete,
-//                                  onDelete: detailerConfig.onDelete,
-//                                  canEdit: detailerConfig.canEdit,
-//                                  onEdit: editAction)
-//        }
 }
 
 struct HistoryView_Previews: PreviewProvider {
