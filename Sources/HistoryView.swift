@@ -12,6 +12,7 @@ import CoreData
 import os
 import SwiftUI
 
+import Compactor
 import Tabler
 
 import GroutLib
@@ -21,6 +22,7 @@ private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
                             category: "HistoryView")
 
 struct HistoryView: View {
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.managedObjectContext) private var viewContext
 
     typealias Sort = TablerSort<ZRoutineRun>
@@ -106,7 +108,7 @@ struct HistoryView: View {
             LazyVGrid(columns: gridItems, alignment: .leading) {
                 Text(element.zRoutine?.name ?? "")
                     .padding(columnPadding)
-                SinceText(startedAt: element.startedAt ?? Date(), duration: element.duration, now: $now, compactorStyle: .short)
+                SinceText(startedAt: element.startedAt, duration: element.duration, now: $now, compactorStyle: compactorStyle)
                     .padding(columnPadding)
             }
             .frame(maxWidth: .infinity)
@@ -118,6 +120,12 @@ struct HistoryView: View {
                     Rectangle().opacity(0.0)
                 }
         }
+    }
+
+    // MARK: - Properties
+
+    private var compactorStyle: TimeCompactor.Style {
+        verticalSizeClass == .regular ? .short : .full
     }
 
     // MARK: - Actions
