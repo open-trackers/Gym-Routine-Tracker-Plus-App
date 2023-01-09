@@ -23,9 +23,11 @@ struct HistoryView: View {
 
     // MARK: - Parameters
 
+    private var archiveStore: NSPersistentStore
+
     internal init(archiveStore: NSPersistentStore) {
-//        let context = PersistenceManager.shared.container.viewContext
-//        let archiveStore = PersistenceManager.getArchiveStore(context)!
+        self.archiveStore = archiveStore
+
         let request = NSFetchRequest<ZRoutineRun>(entityName: "ZRoutineRun")
         request.sortDescriptors = [
             NSSortDescriptor(keyPath: \ZRoutineRun.startedAt, ascending: false),
@@ -38,15 +40,15 @@ struct HistoryView: View {
 
     private let columnSpacing: CGFloat = 10
 
+    private var columnPadding: EdgeInsets {
+        EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
+    }
+
     // timer used to refresh "2d ago, for 16.5m" on each Routine Cell
     @State private var now = Date()
     private let timer = Timer.publish(every: routineSinceUpdateSeconds,
                                       on: .main,
                                       in: .common).autoconnect()
-
-    private var columnPadding: EdgeInsets {
-        EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
-    }
 
     @FetchRequest private var routineRuns: FetchedResults<ZRoutineRun>
 
@@ -72,30 +74,42 @@ struct HistoryView: View {
             }
     }
 
-    private func header(ctx: Binding<Context>) -> some View {
+    private func header(ctx _: Binding<Context>) -> some View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
-            Sort.columnTitle("Name", ctx, \.zRoutine?.name)
-                .onTapGesture { routineRuns.sortDescriptors = [tablerSort(ctx, \.zRoutine?.name)] }
+            Text("Name")
+//            Sort.columnTitle("Name", ctx, \.zRoutine?.name)
+//                .onTapGesture { routineRuns.sortDescriptors = [tablerSort(ctx, \.zRoutine?.name)] }
                 .padding(columnPadding)
-            Sort.columnTitle("Started", ctx, \.startedAt)
-                .onTapGesture { routineRuns.sortDescriptors = [tablerSort(ctx, \.startedAt)] }
+            Text("Started")
+//            Sort.columnTitle("Started", ctx, \.startedAt)
+//                .onTapGesture { routineRuns.sortDescriptors = [tablerSort(ctx, \.startedAt)] }
                 .padding(columnPadding)
         }
     }
 
+    @ViewBuilder
     private func listRow(element: ZRoutineRun) -> some View {
-        ZStack {
-            LazyVGrid(columns: gridItems, alignment: .leading) {
-                Text(element.zRoutine?.name ?? "")
-                    .padding(columnPadding)
-                SinceText(startedAt: element.startedAt ?? Date(), duration: element.duration, now: $now, compactorStyle: .short)
-                    .padding(columnPadding)
-            }
-            .frame(maxWidth: .infinity)
+        if let routineArchiveID = element.zRoutine?.routineArchiveID {
+            ZStack {
+                LazyVGrid(columns: gridItems, alignment: .leading) {
+                    Text(element.zRoutine?.name ?? "")
+                        .padding(columnPadding)
+                    SinceText(startedAt: element.startedAt ?? Date(), duration: element.duration, now: $now, compactorStyle: .short)
+                        .padding(columnPadding)
+                }
+                .frame(maxWidth: .infinity)
 
-            NavigationLink(destination: { Text("hello") }) {
-                Rectangle().opacity(0.0)
+                NavigationLink(destination: {
+                    RoutineRunView(routineArchiveID: routineArchiveID,
+                                   dateRange: element.dateRange,
+                                   archiveStore: archiveStore)
+                    }) {
+                        Rectangle().opacity(0.0)
+                    }
             }
+        } else {
+            // EmptyView()
+            Text("Missing routineArchiveID")
         }
     }
 }
