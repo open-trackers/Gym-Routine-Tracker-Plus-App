@@ -8,12 +8,15 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 //
 
+import CoreData
 import SwiftUI
 
 import GroutLib
 import GroutUI
 
 struct ContentView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    
     enum Tabs: Int {
         case routines = 0
         case history = 1
@@ -38,7 +41,7 @@ struct ContentView: View {
 
             NavStack(name: "history",
                      navData: $historyNavData) {
-                HistoryView()
+                HistoryView(archiveStore: archiveStore)
             }
             .tabItem {
                 Label("History", systemImage: "fossil.shell")
@@ -54,6 +57,14 @@ struct ContentView: View {
             }
             .tag(Tabs.settings.rawValue)
         }
+    }
+    
+    private var archiveStore: NSPersistentStore {
+        guard let store = PersistenceManager.getArchiveStore(viewContext)
+        else {
+            fatalError("unable to resolve archive store")
+        }
+        return store
     }
 }
 

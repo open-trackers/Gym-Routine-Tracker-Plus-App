@@ -8,6 +8,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 //
 
+import CoreData
 import SwiftUI
 
 import Tabler
@@ -20,6 +21,21 @@ struct HistoryView: View {
     typealias Context = TablerContext<ZRoutineRun>
     typealias ProjectedValue = ObservedObject<ZRoutineRun>.Wrapper
 
+    // MARK: - Parameters
+
+    internal init(archiveStore: NSPersistentStore) {
+//        let context = PersistenceManager.shared.container.viewContext
+//        let archiveStore = PersistenceManager.getArchiveStore(context)!
+        let request = NSFetchRequest<ZRoutineRun>(entityName: "ZRoutineRun")
+        request.sortDescriptors = [
+            NSSortDescriptor(keyPath: \ZRoutineRun.startedAt, ascending: false)
+        ]
+        request.affectedStores = [archiveStore]
+        _routineRuns = FetchRequest<ZRoutineRun>(fetchRequest: request)
+    }
+    
+    // MARK: - Locals
+    
     private let columnSpacing: CGFloat = 10
 
     // timer used to refresh "2d ago, for 16.5m" on each Routine Cell
@@ -32,11 +48,9 @@ struct HistoryView: View {
         EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
     }
 
-    @FetchRequest(
-        sortDescriptors: [SortDescriptor(\.zRoutine?.name, order: .forward)],
-        animation: .default
-    )
-    private var routineRuns: FetchedResults<ZRoutineRun>
+    @FetchRequest private var routineRuns: FetchedResults<ZRoutineRun>
+
+    // MARK: - Views
 
     var body: some View {
         // Sideways(minWidth: minWidth) {
@@ -101,20 +115,23 @@ struct HistoryView: View {
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
         let container = PersistenceManager.preview.container
-        let ctx = container.viewContext
-        let archiveStore = PersistenceManager.getArchiveStore(ctx)!
+        let context = container.viewContext
+        let archiveStore = PersistenceManager.getArchiveStore(context)!
+
+//        try? ctx.deleter(entityName: "ZRoutineRun", inStore: archiveStore)
+        //try! ctx.save()
 
         let routineArchiveID = UUID()
         let startedAt1 = Date.now.addingTimeInterval(-20000)
         let duration1 = 500.0
         let startedAt2 = Date.now.addingTimeInterval(-10000)
         let duration2 = 400.0
-        let zR = ZRoutine.create(ctx, routineName: "blah", routineArchiveID: routineArchiveID, toStore: archiveStore)
-        _ = ZRoutineRun.create(ctx, zRoutine: zR, startedAt: startedAt1, duration: duration1, toStore: archiveStore)
-        _ = ZRoutineRun.create(ctx, zRoutine: zR, startedAt: startedAt2, duration: duration2, toStore: archiveStore)
-        try! ctx.save()
-        
-        return HistoryView()
-            .environment(\.managedObjectContext, ctx)
+        let zR = ZRoutine.create(context, routineName: "blah", routineArchiveID: routineArchiveID, toStore: archiveStore)
+        _ = ZRoutineRun.create(context, zRoutine: zR, startedAt: startedAt1, duration: duration1, toStore: archiveStore)
+        _ = ZRoutineRun.create(context, zRoutine: zR, startedAt: startedAt2, duration: duration2, toStore: archiveStore)
+//        try! ctx.save()
+
+        return HistoryView(archiveStore: archiveStore)
+            .environment(\.managedObjectContext, context)
     }
 }
