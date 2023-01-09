@@ -12,6 +12,7 @@ import SwiftUI
 
 import Tabler
 
+import GroutUI
 import GroutLib
 
 struct HistoryView: View {
@@ -21,6 +22,12 @@ struct HistoryView: View {
 
     private let columnSpacing: CGFloat = 10
 
+    // timer used to refresh "2d ago, for 16.5m" on each Routine Cell
+    @State private var now = Date()
+    private let timer = Timer.publish(every: routineSinceUpdateSeconds,
+                                      on: .main,
+                                      in: .common).autoconnect()
+    
     private var columnPadding: EdgeInsets {
         EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
     }
@@ -40,6 +47,9 @@ struct HistoryView: View {
                    // rowBackground: rowBackground,
                    results: routineRuns)
             .navigationTitle("History")
+            .onReceive(timer) { _ in
+                self.now = Date.now
+            }
     }
 
     private func header(ctx: Binding<Context>) -> some View {
@@ -75,7 +85,7 @@ struct HistoryView: View {
     private func rowItems(element: ZRoutineRun) -> some View {
         Text(element.zRoutine?.name ?? "")
             .padding(columnPadding)
-        Text("\(String(describing: element.startedAt))")
+        SinceText(startedAt: element.startedAt ?? Date(), duration: element.duration, now: $now, compactorStyle: .short)
             .padding(columnPadding)
     }
 
