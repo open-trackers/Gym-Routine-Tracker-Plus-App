@@ -14,6 +14,7 @@
 		402A5F35296B838E00A43DB3 /* DetailerMenu in Frameworks */ = {isa = PBXBuildFile; productRef = 402A5F34296B838E00A43DB3 /* DetailerMenu */; };
 		402A5F38296B83AE00A43DB3 /* Detailer in Frameworks */ = {isa = PBXBuildFile; productRef = 402A5F37296B83AE00A43DB3 /* Detailer */; };
 		402A5F3B296B83CA00A43DB3 /* Sideways in Frameworks */ = {isa = PBXBuildFile; productRef = 402A5F3A296B83CA00A43DB3 /* Sideways */; };
+		408FACFE296CAC9300D02C9C /* RoutineRunList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408FACFD296CABC400D02C9C /* RoutineRunList.swift */; };
 		40B51E45294549DF0047377A /* GroutUI in Frameworks */ = {isa = PBXBuildFile; productRef = 40B51E44294549DF0047377A /* GroutUI */; };
 		40CCF3F629454D2B007DDE69 /* GroutLib in Frameworks */ = {isa = PBXBuildFile; productRef = 40CCF3F529454D2B007DDE69 /* GroutLib */; };
 		40E347BE29452CF1003A19B9 /* PlusApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E347BD29452CF1003A19B9 /* PlusApp.swift */; };
@@ -29,6 +30,7 @@
 		4011EECE2961C9BC00A36D87 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		40245EF5296BE7D4007B5DAB /* RoutineRunView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineRunView.swift; sourceTree = "<group>"; };
 		402A5F2E296B7F7B00A43DB3 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		408FACFD296CABC400D02C9C /* RoutineRunList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineRunList.swift; sourceTree = "<group>"; };
 		40E347BA29452CF1003A19B9 /* Gym Routine Tracker Plus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gym Routine Tracker Plus.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		40E347BD29452CF1003A19B9 /* PlusApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusApp.swift; sourceTree = "<group>"; };
 		40E347BF29452CF1003A19B9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				40E347BD29452CF1003A19B9 /* PlusApp.swift */,
 				40E347BF29452CF1003A19B9 /* ContentView.swift */,
 				402A5F2E296B7F7B00A43DB3 /* HistoryView.swift */,
+				408FACFD296CABC400D02C9C /* RoutineRunList.swift */,
 				40245EF5296BE7D4007B5DAB /* RoutineRunView.swift */,
 				40E347C129452CF1003A19B9 /* Assets.xcassets */,
 				40EBCFDE294BFB880082A172 /* Info.plist */,
@@ -196,6 +199,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				40E347C029452CF1003A19B9 /* ContentView.swift in Sources */,
+				408FACFE296CAC9300D02C9C /* RoutineRunList.swift in Sources */,
 				40245EF6296BE7D4007B5DAB /* RoutineRunView.swift in Sources */,
 				402A5F2F296B7FE000A43DB3 /* HistoryView.swift in Sources */,
 				40E347BE29452CF1003A19B9 /* PlusApp.swift in Sources */,

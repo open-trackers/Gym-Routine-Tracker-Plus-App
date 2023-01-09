@@ -41,7 +41,7 @@ struct ContentView: View {
 
             NavStack(name: "history",
                      navData: $historyNavData) {
-                HistoryView(archiveStore: archiveStore)
+                HistoryView()
             }
             .tabItem {
                 Label("History", systemImage: "fossil.shell")
@@ -57,14 +57,6 @@ struct ContentView: View {
             }
             .tag(Tabs.settings.rawValue)
         }
-    }
-
-    private var archiveStore: NSPersistentStore {
-        guard let store = PersistenceManager.getArchiveStore(viewContext)
-        else {
-            fatalError("unable to resolve archive store")
-        }
-        return store
     }
 }
 

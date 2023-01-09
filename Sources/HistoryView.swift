@@ -22,52 +22,11 @@ private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
                             category: "HistoryView")
 
 struct HistoryView: View {
-    @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.managedObjectContext) private var viewContext
-
-    typealias Sort = TablerSort<ZRoutineRun>
-    typealias Context = TablerContext<ZRoutineRun>
-    typealias ProjectedValue = ObservedObject<ZRoutineRun>.Wrapper
 
     // MARK: - Parameters
 
-    private var archiveStore: NSPersistentStore
-
-    internal init(archiveStore: NSPersistentStore) {
-        self.archiveStore = archiveStore
-
-        let request = NSFetchRequest<ZRoutineRun>(entityName: "ZRoutineRun")
-        request.sortDescriptors = [
-            NSSortDescriptor(keyPath: \ZRoutineRun.startedAt, ascending: false),
-        ]
-        request.affectedStores = [archiveStore]
-        _routineRuns = FetchRequest<ZRoutineRun>(fetchRequest: request)
-    }
-
     // MARK: - Locals
-
-    private let columnSpacing: CGFloat = 10
-
-    private var columnPadding: EdgeInsets {
-        EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
-    }
-
-    // timer used to refresh "2d ago, for 16.5m" on each Routine Cell
-    @State private var now = Date()
-    private let timer = Timer.publish(every: routineSinceUpdateSeconds,
-                                      on: .main,
-                                      in: .common).autoconnect()
-
-    @FetchRequest private var routineRuns: FetchedResults<ZRoutineRun>
-
-    private var listConfig: TablerListConfig<ZRoutineRun> {
-        TablerListConfig<ZRoutineRun>()
-    }
-
-    private var gridItems: [GridItem] { [
-        GridItem(.flexible(minimum: 40, maximum: 200), spacing: columnSpacing, alignment: .leading),
-        GridItem(.flexible(minimum: 100, maximum: 200), spacing: columnSpacing, alignment: .leading),
-    ] }
 
     // MARK: - Views
 
@@ -77,64 +36,25 @@ struct HistoryView: View {
                 Label("Purge Archive", systemImage: "xmark")
             }
 
-            TablerList(listConfig,
-                       header: header,
-                       row: listRow,
-                       results: routineRuns)
-                .navigationTitle("History")
-                .onReceive(timer) { _ in
-                    self.now = Date.now
-                }
+            RoutineRunList(archiveStore: archiveStore)
         }
         .task(priority: .utility, taskAction)
     }
 
-    private func header(ctx _: Binding<Context>) -> some View {
-        LazyVGrid(columns: gridItems, alignment: .leading) {
-            Text("Name")
-//            Sort.columnTitle("Name", ctx, \.zRoutine?.name)
-//                .onTapGesture { routineRuns.sortDescriptors = [tablerSort(ctx, \.zRoutine?.name)] }
-                .padding(columnPadding)
-            Text("Started")
-//            Sort.columnTitle("Started", ctx, \.startedAt)
-//                .onTapGesture { routineRuns.sortDescriptors = [tablerSort(ctx, \.startedAt)] }
-                .padding(columnPadding)
-        }
-    }
-
-    @ViewBuilder
-    private func listRow(element: ZRoutineRun) -> some View {
-        ZStack {
-            LazyVGrid(columns: gridItems, alignment: .leading) {
-                Text(element.zRoutine?.name ?? "")
-                    .padding(columnPadding)
-                SinceText(startedAt: element.startedAt, duration: element.duration, now: $now, compactorStyle: compactorStyle)
-                    .padding(columnPadding)
-            }
-            .frame(maxWidth: .infinity)
-
-            NavigationLink(destination: {
-                RoutineRunView(zRoutineRun: element,
-                               archiveStore: archiveStore)
-                }) {
-                    Rectangle().opacity(0.0)
-                }
-        }
-    }
-
     // MARK: - Properties
 
-    private var compactorStyle: TimeCompactor.Style {
-        verticalSizeClass == .regular ? .short : .full
+    private var archiveStore: NSPersistentStore {
+        guard let store = PersistenceManager.getArchiveStore(viewContext)
+        else {
+            fatalError("unable to resolve archive store")
+        }
+        return store
     }
 
     // MARK: - Actions
 
     private func purgeAction() {
         do {
-            guard let archiveStore = PersistenceManager.getArchiveStore(viewContext) else {
-                throw DataError.invalidStoreConfiguration(msg: "Cannot purge archive.")
-            }
             try viewContext.deleter(entityName: "ZRoutineRun", inStore: archiveStore)
             try viewContext.deleter(entityName: "ZRoutine", inStore: archiveStore)
             try viewContext.deleter(entityName: "ZExerciseRun", inStore: archiveStore)
@@ -180,7 +100,7 @@ struct HistoryView_Previews: PreviewProvider {
         try! context.save()
 
         return NavigationStack {
-            HistoryView(archiveStore: archiveStore)
+            HistoryView()
                 .environment(\.managedObjectContext, context)
         }
     }
