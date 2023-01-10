@@ -46,7 +46,7 @@ struct ExerciseRunList: View {
 
     // MARK: - Locals
 
-    let tcDur = TimeCompactor(ifZero: "", style: .short, roundSmallToWhole: false)
+    private let tcDur = TimeCompactor(ifZero: "", style: .short, roundSmallToWhole: false)
 
     private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
                                 category: String(describing: ExerciseRunList.self))
