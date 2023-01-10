@@ -122,12 +122,8 @@ struct RoutineRunList_Previews: PreviewProvider {
     static var previews: some View {
         let ctx = PersistenceManager.getPreviewContainer().viewContext
         let archiveStore = PersistenceManager.getArchiveStore(ctx)!
-
-        try? ctx.deleter(ZRoutineRun.self, inStore: archiveStore)
-        try? ctx.deleter(ZRoutine.self, inStore: archiveStore)
-        try! ctx.save()
-
         let routineArchiveID = UUID()
+
         let startedAt1 = Date.now.addingTimeInterval(-20000)
         let duration1 = 500.0
         let startedAt2 = Date.now.addingTimeInterval(-10000)
