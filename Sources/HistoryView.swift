@@ -36,7 +36,7 @@ struct HistoryView: View {
             RoutineRunList(archiveStore: archiveStore)
         }
         .navigationTitle(navigationTitle)
-        .task(priority: .utility, taskAction)
+        .task(priority: .userInitiated, taskAction)
     }
 
     // MARK: - Properties
@@ -67,13 +67,16 @@ struct HistoryView: View {
     @Sendable
     private func taskAction() async {
         logger.notice("\(#function)")
+
         // transfer any 'Z' records from the 'Main' store to the 'Archive' store.
-        // NOTE mirrored in HistoryView
-        do {
-            try transferToArchive(viewContext)
-            try viewContext.save()
-        } catch {
-            logger.error("\(#function): TRANSFER \(error.localizedDescription)")
+
+        await PersistenceManager.shared.container.performBackgroundTask { backgroundContext in
+            do {
+                try transferToArchive(backgroundContext)
+                try backgroundContext.save()
+            } catch {
+                logger.error("\(#function): TRANSFER \(error.localizedDescription)")
+            }
         }
     }
 }
