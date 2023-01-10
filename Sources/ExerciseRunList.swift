@@ -19,6 +19,8 @@ import GroutLib
 import GroutUI
 
 struct ExerciseRunList: View {
+    @Environment(\.managedObjectContext) private var viewContext
+
     typealias Sort = TablerSort<ZExerciseRun>
     typealias Context = TablerContext<ZExerciseRun>
     typealias ProjectedValue = ObservedObject<ZExerciseRun>.Wrapper
@@ -48,8 +50,8 @@ struct ExerciseRunList: View {
 
     let tcDur = TimeCompactor(ifZero: "", style: .short, roundSmallToWhole: false)
 
-//    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
-//                                category: String(describing: RoutineRunView.self))
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
+                                category: String(describing: ExerciseRunList.self))
 
     private let columnSpacing: CGFloat = 10
 
@@ -119,8 +121,18 @@ struct ExerciseRunList: View {
 
     // MARK: - Actions
 
-    private func deleteAction(offsets _: IndexSet) {
-        print("delete")
+    // MARK: - Actions
+
+    private func deleteAction(at offsets: IndexSet) {
+        for index in offsets {
+            let element = exerciseRuns[index]
+            viewContext.delete(element)
+        }
+        do {
+            try viewContext.save()
+        } catch {
+            logger.error("\(#function): \(error.localizedDescription)")
+        }
     }
 
     // MARK: - Helpers
