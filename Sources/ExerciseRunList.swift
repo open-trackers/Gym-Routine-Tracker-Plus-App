@@ -60,7 +60,9 @@ struct ExerciseRunList: View {
     @FetchRequest private var exerciseRuns: FetchedResults<ZExerciseRun>
 
     private var listConfig: TablerListConfig<ZExerciseRun> {
-        TablerListConfig<ZExerciseRun>()
+        TablerListConfig<ZExerciseRun>(
+            onDelete: deleteAction
+        )
     }
 
     private var gridItems: [GridItem] { [
@@ -114,6 +116,12 @@ struct ExerciseRunList: View {
 //    private var totalDurationStr: String {
 //        tcDur.string(from: zRoutineRun.duration as NSNumber) ?? ""
 //    }
+
+    // MARK: - Actions
+
+    private func deleteAction(offsets _: IndexSet) {
+        print("delete")
+    }
 
     // MARK: - Helpers
 

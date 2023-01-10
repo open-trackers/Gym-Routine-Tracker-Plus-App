@@ -11,9 +11,6 @@
 		40245EF6296BE7D4007B5DAB /* ExerciseRunList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40245EF5296BE7D4007B5DAB /* ExerciseRunList.swift */; };
 		402A5F2F296B7FE000A43DB3 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402A5F2E296B7F7B00A43DB3 /* HistoryView.swift */; };
 		402A5F32296B835B00A43DB3 /* Tabler in Frameworks */ = {isa = PBXBuildFile; productRef = 402A5F31296B835B00A43DB3 /* Tabler */; };
-		402A5F35296B838E00A43DB3 /* DetailerMenu in Frameworks */ = {isa = PBXBuildFile; productRef = 402A5F34296B838E00A43DB3 /* DetailerMenu */; };
-		402A5F38296B83AE00A43DB3 /* Detailer in Frameworks */ = {isa = PBXBuildFile; productRef = 402A5F37296B83AE00A43DB3 /* Detailer */; };
-		402A5F3B296B83CA00A43DB3 /* Sideways in Frameworks */ = {isa = PBXBuildFile; productRef = 402A5F3A296B83CA00A43DB3 /* Sideways */; };
 		408FACFE296CAC9300D02C9C /* RoutineRunList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408FACFD296CABC400D02C9C /* RoutineRunList.swift */; };
 		40B51E45294549DF0047377A /* GroutUI in Frameworks */ = {isa = PBXBuildFile; productRef = 40B51E44294549DF0047377A /* GroutUI */; };
 		40CCF3F629454D2B007DDE69 /* GroutLib in Frameworks */ = {isa = PBXBuildFile; productRef = 40CCF3F529454D2B007DDE69 /* GroutLib */; };
@@ -46,9 +43,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				402A5F32296B835B00A43DB3 /* Tabler in Frameworks */,
-				402A5F3B296B83CA00A43DB3 /* Sideways in Frameworks */,
-				402A5F38296B83AE00A43DB3 /* Detailer in Frameworks */,
-				402A5F35296B838E00A43DB3 /* DetailerMenu in Frameworks */,
 				40B51E45294549DF0047377A /* GroutUI in Frameworks */,
 				40E347D329452E4B003A19B9 /* Compactor in Frameworks */,
 				40EBE1CC29635306004B9189 /* GroutUI in Frameworks */,
@@ -131,9 +125,6 @@
 				40CCF3F529454D2B007DDE69 /* GroutLib */,
 				40EBE1CB29635306004B9189 /* GroutUI */,
 				402A5F31296B835B00A43DB3 /* Tabler */,
-				402A5F34296B838E00A43DB3 /* DetailerMenu */,
-				402A5F37296B83AE00A43DB3 /* Detailer */,
-				402A5F3A296B83CA00A43DB3 /* Sideways */,
 			);
 			productName = "Gym Routine Tracker Plus";
 			productReference = 40E347BA29452CF1003A19B9 /* Gym Routine Tracker Plus.app */;
@@ -167,9 +158,6 @@
 				40E347D129452E4B003A19B9 /* XCRemoteSwiftPackageReference "SwiftCompactor" */,
 				40EBE1CA29635306004B9189 /* XCRemoteSwiftPackageReference "GroutUI" */,
 				402A5F30296B835B00A43DB3 /* XCRemoteSwiftPackageReference "SwiftTabler" */,
-				402A5F33296B838E00A43DB3 /* XCRemoteSwiftPackageReference "SwiftDetailerMenu" */,
-				402A5F36296B83AE00A43DB3 /* XCRemoteSwiftPackageReference "SwiftDetailer" */,
-				402A5F39296B83CA00A43DB3 /* XCRemoteSwiftPackageReference "SwiftSideways" */,
 			);
 			productRefGroup = 40E347BB29452CF1003A19B9 /* Products */;
 			projectDirPath = "";
@@ -436,30 +424,6 @@
 				minimumVersion = 0.9.6;
 			};
 		};
-		402A5F33296B838E00A43DB3 /* XCRemoteSwiftPackageReference "SwiftDetailerMenu" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/openalloc/SwiftDetailerMenu.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.7.0;
-			};
-		};
-		402A5F36296B83AE00A43DB3 /* XCRemoteSwiftPackageReference "SwiftDetailer" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/openalloc/SwiftDetailer.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.5;
-			};
-		};
-		402A5F39296B83CA00A43DB3 /* XCRemoteSwiftPackageReference "SwiftSideways" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/openalloc/SwiftSideways.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.5.4;
-			};
-		};
 		40E347D129452E4B003A19B9 /* XCRemoteSwiftPackageReference "SwiftCompactor" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/openalloc/SwiftCompactor.git";
@@ -483,21 +447,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 402A5F30296B835B00A43DB3 /* XCRemoteSwiftPackageReference "SwiftTabler" */;
 			productName = Tabler;
-		};
-		402A5F34296B838E00A43DB3 /* DetailerMenu */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 402A5F33296B838E00A43DB3 /* XCRemoteSwiftPackageReference "SwiftDetailerMenu" */;
-			productName = DetailerMenu;
-		};
-		402A5F37296B83AE00A43DB3 /* Detailer */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 402A5F36296B83AE00A43DB3 /* XCRemoteSwiftPackageReference "SwiftDetailer" */;
-			productName = Detailer;
-		};
-		402A5F3A296B83CA00A43DB3 /* Sideways */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 402A5F39296B83CA00A43DB3 /* XCRemoteSwiftPackageReference "SwiftSideways" */;
-			productName = Sideways;
 		};
 		40B51E44294549DF0047377A /* GroutUI */ = {
 			isa = XCSwiftPackageProductDependency;

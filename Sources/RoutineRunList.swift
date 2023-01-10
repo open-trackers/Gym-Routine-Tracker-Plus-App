@@ -60,7 +60,9 @@ struct RoutineRunList: View {
     @FetchRequest private var routineRuns: FetchedResults<ZRoutineRun>
 
     private var listConfig: TablerListConfig<ZRoutineRun> {
-        TablerListConfig<ZRoutineRun>()
+        TablerListConfig<ZRoutineRun>(
+            onDelete: deleteAction
+        )
     }
 
     private var gridItems: [GridItem] { [
@@ -116,6 +118,32 @@ struct RoutineRunList: View {
     }
 
     // MARK: - Actions
+
+    private func deleteAction(offsets _: IndexSet) {
+        // TODO:
+//        let _fruit = get(for: fruit.id)
+//               guard _fruit.count > 0 else { return }
+//               do {
+//                   _fruit.forEach { viewContext.delete($0) }
+//                   try viewContext.save()
+//               } catch {
+//                   let nsError = error as NSError
+//                   print("\(#function): Unresolved error \(nsError), \(nsError.userInfo)")
+//               }
+
+//        private func get(for id: Fruit.ID?) -> [Fruit] {
+//                guard let _id = id else { return [] }
+//                do {
+//                    let fr = NSFetchRequest<Fruit>.init(entityName: "Fruit")
+//                    fr.predicate = NSPredicate(format: "id == %@", _id!)
+//                    return try viewContext.fetch(fr)
+//                } catch {
+//                    let nsError = error as NSError
+//                    print("\(#function): Unresolved error \(nsError), \(nsError.userInfo)")
+//                }
+//                return []
+//            }
+    }
 }
 
 struct RoutineRunList_Previews: PreviewProvider {
