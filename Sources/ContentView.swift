@@ -40,7 +40,7 @@ struct ContentView: View {
             .tag(Tabs.routines.rawValue)
 
             NavStack(name: "history",
-                     navData: $historyNavData) {
+                     navData: $historyNavData, routineRunDetail: exerciseRunList) {
                 HistoryView()
             }
             .tabItem {
@@ -56,6 +56,18 @@ struct ContentView: View {
                 Label("Settings", systemImage: "gear")
             }
             .tag(Tabs.settings.rawValue)
+        }
+    }
+
+    // used to inject view into NavStack
+    @ViewBuilder
+    private func exerciseRunList(_ routineRunUri: URL) -> some View {
+        if let zRoutineRun = ZRoutineRun.get(viewContext, forURIRepresentation: routineRunUri),
+           let archiveStore = PersistenceManager.getArchiveStore(viewContext)
+        {
+            ExerciseRunList(zRoutineRun: zRoutineRun, archiveStore: archiveStore)
+        } else {
+            Text("Routine Run not available to display detail.")
         }
     }
 }

@@ -15,8 +15,8 @@ import SwiftUI
 import Compactor
 import Tabler
 
-import GroutUI
 import GroutLib
+import GroutUI
 
 struct ExerciseRunList: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -66,30 +66,44 @@ struct ExerciseRunList: View {
     }
 
     private var gridItems: [GridItem] { [
+        GridItem(.flexible(minimum: 70, maximum: 100), spacing: columnSpacing, alignment: .leading),
         GridItem(.flexible(minimum: 150, maximum: 300), spacing: columnSpacing, alignment: .leading),
         GridItem(.flexible(minimum: 80, maximum: 150), spacing: columnSpacing, alignment: .trailing),
-        GridItem(.flexible(minimum: 70, maximum: 100), spacing: columnSpacing, alignment: .trailing),
     ] }
+
+    private let df: DateFormatter = {
+        let df = DateFormatter()
+        df.dateStyle = .full
+        df.timeStyle = .short
+        return df
+    }()
 
     // MARK: - Views
 
     var body: some View {
-        TablerList(listConfig,
-                   header: header,
-                   row: listRow,
-                   rowBackground: rowBackground,
-                   results: exerciseRuns)
-            .listStyle(.plain)
-            .navigationTitle(navigationTitle)
+        VStack {
+            if let startedAt = zRoutineRun.startedAt,
+               let dateStr = df.string(from: startedAt)
+            {
+                Text(dateStr)
+            }
+            TablerList(listConfig,
+                       header: header,
+                       row: listRow,
+                       rowBackground: rowBackground,
+                       results: exerciseRuns)
+                .listStyle(.plain)
+                .navigationTitle(navigationTitle)
+        }
     }
 
     private func header(ctx _: Binding<Context>) -> some View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
+            Text("Elapsed")
+                .padding(columnPadding)
             Text("Exercise")
                 .padding(columnPadding)
             Text("Intensity")
-                .padding(columnPadding)
-            Text("At")
                 .padding(columnPadding)
         }
     }
@@ -97,15 +111,12 @@ struct ExerciseRunList: View {
     @ViewBuilder
     private func listRow(element: ZExerciseRun) -> some View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
+            Text(getTimeStr(element.completedAt))
+                .padding(columnPadding)
             Text(element.zExercise?.name ?? "")
                 .padding(columnPadding)
             Text(formatIntensity(element.intensity))
                 .padding(columnPadding)
-            HStack(spacing: 0) {
-                Text("@").foregroundStyle(.secondary)
-                Text(getDuration(element.completedAt))
-            }
-            .padding(columnPadding)
         }
     }
 
@@ -122,8 +133,6 @@ struct ExerciseRunList: View {
 //    private var totalDurationStr: String {
 //        tcDur.string(from: zRoutineRun.duration as NSNumber) ?? ""
 //    }
-
-    // MARK: - Actions
 
     // MARK: - Actions
 
@@ -145,14 +154,23 @@ struct ExerciseRunList: View {
         String(format: "%0.1f", intensity)
     }
 
-    private func getDuration(_ completedAt: Date?) -> String {
+    private func getTimeStr(_ completedAt: Date?) -> String {
         guard let startedAt = zRoutineRun.startedAt,
               let completedAt
         else { return "?" }
 
         let duration = completedAt.timeIntervalSince(startedAt)
 
-        return tcDur.string(from: duration as NSNumber) ?? ""
+        let secondsPerDay: TimeInterval = 86400
+        if duration >= secondsPerDay {
+            // PUNT!
+            return tcDur.string(from: duration as NSNumber) ?? ""
+        }
+        let t = Int(max(0, min(duration, TimeInterval(Int.max))))
+        let hours = t / 3600
+        let minutes = t / 60 % 60
+        let seconds = t % 60
+        return String(format: "%02i:%02i:%02i", hours, minutes, seconds)
     }
 }
 
@@ -168,8 +186,8 @@ struct ExerciseRunList_Previews: PreviewProvider {
         let zRR = ZRoutineRun.create(ctx, zRoutine: zR, startedAt: startedAt1, duration: duration1, toStore: archiveStore)
         let exerciseArchiveID1 = UUID()
         let exerciseArchiveID2 = UUID()
-        let completedAt1 = startedAt1.addingTimeInterval(120)
-        let completedAt2 = completedAt1.addingTimeInterval(180)
+        let completedAt1 = startedAt1.addingTimeInterval(116)
+        let completedAt2 = completedAt1.addingTimeInterval(173)
         let intensity1: Float = 150.0
         let intensity2: Float = 200.0
         let zE1 = ZExercise.create(ctx, zRoutine: zR, exerciseName: "Lat Pulldown", exerciseArchiveID: exerciseArchiveID1, toStore: archiveStore)
