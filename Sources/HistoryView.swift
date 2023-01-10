@@ -17,6 +17,7 @@ import GroutUI
 
 struct HistoryView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject private var router: MyRouter
 
     // MARK: - Parameters
 

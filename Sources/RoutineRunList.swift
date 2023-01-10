@@ -19,8 +19,10 @@ import GroutLib
 import GroutUI
 
 struct RoutineRunList: View {
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject private var router: MyRouter
 
     typealias Sort = TablerSort<ZRoutineRun>
     typealias Context = TablerContext<ZRoutineRun>
@@ -76,7 +78,9 @@ struct RoutineRunList: View {
         TablerList(listConfig,
                    header: header,
                    row: listRow,
+                   rowBackground: rowBackground,
                    results: routineRuns)
+            .listStyle(.plain)
             .onReceive(timer) { _ in
                 self.now = Date.now
             }
@@ -93,7 +97,7 @@ struct RoutineRunList: View {
 
     @ViewBuilder
     private func listRow(element: ZRoutineRun) -> some View {
-        ZStack {
+        Button(action: { detailAction(zRoutineRun: element) }) {
             LazyVGrid(columns: gridItems, alignment: .leading) {
                 Text(element.zRoutine?.name ?? "")
                     .padding(columnPadding)
@@ -101,14 +105,12 @@ struct RoutineRunList: View {
                     .padding(columnPadding)
             }
             .frame(maxWidth: .infinity)
-
-            NavigationLink(destination: {
-                ExerciseRunList(zRoutineRun: element,
-                                archiveStore: archiveStore)
-                }) {
-                    Rectangle().opacity(0.0)
-                }
         }
+        // .shadow(color: shadowColor, radius: 0.25, x: 0.25, y: 0.25)
+    }
+
+    private func rowBackground(_: ZRoutineRun) -> some View {
+        EntityBackground(routineColor)
     }
 
     // MARK: - Properties
@@ -117,7 +119,15 @@ struct RoutineRunList: View {
         verticalSizeClass == .regular ? .short : .full
     }
 
+//    private var shadowColor: Color {
+//        colorScheme == .light ? .black.opacity(0.33) : .clear
+//    }
+
     // MARK: - Actions
+
+    private func detailAction(zRoutineRun: ZRoutineRun) {
+        router.path.append(MyRoutes.routineRunDetail(zRoutineRun.uriRepresentation))
+    }
 
     private func deleteAction(at offsets: IndexSet) {
         for index in offsets {
