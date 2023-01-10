@@ -38,10 +38,15 @@ struct HistoryView: View {
 
             RoutineRunList(archiveStore: archiveStore)
         }
+        .navigationTitle(navigationTitle)
         .task(priority: .utility, taskAction)
     }
 
     // MARK: - Properties
+
+    private var navigationTitle: String {
+        "History"
+    }
 
     private var archiveStore: NSPersistentStore {
         guard let store = PersistenceManager.getArchiveStore(viewContext)

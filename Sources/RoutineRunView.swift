@@ -35,18 +35,18 @@ struct RoutineRunView: View {
 
         let predicate = NSPredicate(format: "zRoutineRun = %@", zRoutineRun)
         let sortDescriptors = [NSSortDescriptor(keyPath: \ZExerciseRun.completedAt, ascending: true)]
-        let request = getRequest(ZExerciseRun.self,
-                                 predicate: predicate,
-                                 sortDescriptors: sortDescriptors,
-                                 inStore: archiveStore)
+        let request = makeRequest(ZExerciseRun.self,
+                                  predicate: predicate,
+                                  sortDescriptors: sortDescriptors,
+                                  inStore: archiveStore)
 
         _exerciseRuns = FetchRequest<ZExerciseRun>(fetchRequest: request)
     }
 
     // MARK: - Locals
 
-    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
-                                category: String(describing: RoutineRunView.self))
+//    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
+//                                category: String(describing: RoutineRunView.self))
 
     private let columnSpacing: CGFloat = 10
 

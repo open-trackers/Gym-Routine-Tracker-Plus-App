@@ -34,16 +34,16 @@ struct RoutineRunList: View {
         self.archiveStore = archiveStore
 
         let sortDescriptors = [NSSortDescriptor(keyPath: \ZRoutineRun.startedAt, ascending: false)]
-        let request = getRequest(ZRoutineRun.self,
-                                 sortDescriptors: sortDescriptors,
-                                 inStore: archiveStore)
+        let request = makeRequest(ZRoutineRun.self,
+                                  sortDescriptors: sortDescriptors,
+                                  inStore: archiveStore)
         _routineRuns = FetchRequest<ZRoutineRun>(fetchRequest: request)
     }
 
     // MARK: - Locals
 
-    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
-                                category: String(describing: RoutineRunList.self))
+//    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
+//                                category: String(describing: RoutineRunList.self))
 
     private let columnSpacing: CGFloat = 10
 
@@ -75,7 +75,6 @@ struct RoutineRunList: View {
                    header: header,
                    row: listRow,
                    results: routineRuns)
-            .navigationTitle("History")
             .onReceive(timer) { _ in
                 self.now = Date.now
             }
