@@ -64,8 +64,8 @@ struct RoutineRunList: View {
     }
 
     private var gridItems: [GridItem] { [
-        GridItem(.flexible(minimum: 40, maximum: 200), spacing: columnSpacing, alignment: .leading),
-        GridItem(.flexible(minimum: 100, maximum: 200), spacing: columnSpacing, alignment: .leading),
+        GridItem(.flexible(minimum: 50, maximum: 300), spacing: columnSpacing, alignment: .leading),
+        GridItem(.flexible(minimum: 100, maximum: 400), spacing: columnSpacing, alignment: .leading),
     ] }
 
     // MARK: - Views
@@ -82,13 +82,9 @@ struct RoutineRunList: View {
 
     private func header(ctx _: Binding<Context>) -> some View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
-            Text("Name")
-//            Sort.columnTitle("Name", ctx, \.zRoutine?.name)
-//                .onTapGesture { routineRuns.sortDescriptors = [tablerSort(ctx, \.zRoutine?.name)] }
+            Text("Routine")
                 .padding(columnPadding)
-            Text("Started")
-//            Sort.columnTitle("Started", ctx, \.startedAt)
-//                .onTapGesture { routineRuns.sortDescriptors = [tablerSort(ctx, \.startedAt)] }
+            Text("When")
                 .padding(columnPadding)
         }
     }
@@ -136,7 +132,7 @@ struct RoutineRunList_Previews: PreviewProvider {
         let duration1 = 500.0
         let startedAt2 = Date.now.addingTimeInterval(-10000)
         let duration2 = 400.0
-        let zR = ZRoutine.create(ctx, routineName: "blah", routineArchiveID: routineArchiveID, toStore: archiveStore)
+        let zR = ZRoutine.create(ctx, routineName: "Chest & Shoulder", routineArchiveID: routineArchiveID, toStore: archiveStore)
         _ = ZRoutineRun.create(ctx, zRoutine: zR, startedAt: startedAt1, duration: duration1, toStore: archiveStore)
         _ = ZRoutineRun.create(ctx, zRoutine: zR, startedAt: startedAt2, duration: duration2, toStore: archiveStore)
         try! ctx.save()
