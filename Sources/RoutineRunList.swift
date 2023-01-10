@@ -101,8 +101,8 @@ struct RoutineRunList: View {
             .frame(maxWidth: .infinity)
 
             NavigationLink(destination: {
-                RoutineRunView(zRoutineRun: element,
-                               archiveStore: archiveStore)
+                ExerciseRunList(zRoutineRun: element,
+                                archiveStore: archiveStore)
                 }) {
                     Rectangle().opacity(0.0)
                 }

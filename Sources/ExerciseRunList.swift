@@ -1,5 +1,5 @@
 //
-//  RoutineRunView.swift
+//  ExerciseRunList.swift
 //
 // Copyright 2023  OpenAlloc LLC
 //
@@ -18,7 +18,7 @@ import Tabler
 import GroutLib
 import GroutUI
 
-struct RoutineRunView: View {
+struct ExerciseRunList: View {
     typealias Sort = TablerSort<ZExerciseRun>
     typealias Context = TablerContext<ZExerciseRun>
     typealias ProjectedValue = ObservedObject<ZExerciseRun>.Wrapper
@@ -85,7 +85,7 @@ struct RoutineRunView: View {
                 .padding(columnPadding)
             Text("Intensity")
                 .padding(columnPadding)
-            Text(totalDurationStr)
+            Text("At")
                 .padding(columnPadding)
         }
     }
@@ -111,9 +111,9 @@ struct RoutineRunView: View {
         zRoutineRun.zRoutine?.wrappedName ?? "UNKNOWN"
     }
 
-    private var totalDurationStr: String {
-        tcDur.string(from: zRoutineRun.duration as NSNumber) ?? ""
-    }
+//    private var totalDurationStr: String {
+//        tcDur.string(from: zRoutineRun.duration as NSNumber) ?? ""
+//    }
 
     // MARK: - Helpers
 
@@ -155,7 +155,7 @@ struct RoutineRunView_Previews: PreviewProvider {
         try! ctx.save()
 
         return NavigationStack {
-            RoutineRunView(zRoutineRun: zRR, archiveStore: archiveStore)
+            ExerciseRunList(zRoutineRun: zRR, archiveStore: archiveStore)
                 .environment(\.managedObjectContext, ctx)
         }
     }
