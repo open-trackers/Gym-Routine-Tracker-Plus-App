@@ -94,8 +94,8 @@ struct RoutineRunView_Previews: PreviewProvider {
         let context = container.viewContext
         let archiveStore = PersistenceManager.getArchiveStore(context)!
 
-        try? context.deleter(entityName: "ZRoutineRun", inStore: archiveStore)
-        try? context.deleter(entityName: "ZRoutine", inStore: archiveStore)
+        try? context.deleter(ZRoutineRun.self, inStore: archiveStore)
+        try? context.deleter(ZRoutine.self, inStore: archiveStore)
         try! context.save()
 
         let routineArchiveID = UUID()

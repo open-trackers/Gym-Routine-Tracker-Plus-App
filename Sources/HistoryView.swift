@@ -55,10 +55,7 @@ struct HistoryView: View {
 
     private func purgeAction() {
         do {
-            try viewContext.deleter(entityName: "ZRoutineRun", inStore: archiveStore)
-            try viewContext.deleter(entityName: "ZRoutine", inStore: archiveStore)
-            try viewContext.deleter(entityName: "ZExerciseRun", inStore: archiveStore)
-            try viewContext.deleter(entityName: "ZExercise", inStore: archiveStore)
+            try PersistenceManager.clearZEntities(viewContext, inStore: archiveStore)
             try viewContext.save()
         } catch {
             logger.error("\(#function): \(error.localizedDescription)")
@@ -85,8 +82,8 @@ struct HistoryView_Previews: PreviewProvider {
         let context = container.viewContext
         let archiveStore = PersistenceManager.getArchiveStore(context)!
 
-        try? context.deleter(entityName: "ZRoutineRun", inStore: archiveStore)
-        try? context.deleter(entityName: "ZRoutine", inStore: archiveStore)
+        try? context.deleter(ZRoutineRun.self, inStore: archiveStore)
+        try? context.deleter(ZRoutine.self, inStore: archiveStore)
         try! context.save()
 
         let routineArchiveID = UUID()
