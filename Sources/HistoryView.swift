@@ -66,7 +66,7 @@ struct HistoryView: View {
 
     @Sendable
     private func taskAction() async {
-        logger.notice("\(#function)")
+        logger.notice("\(#function) START")
 
         // transfer any 'Z' records from the 'Main' store to the 'Archive' store.
 
@@ -78,6 +78,7 @@ struct HistoryView: View {
                 logger.error("\(#function): TRANSFER \(error.localizedDescription)")
             }
         }
+        logger.notice("\(#function) END")
     }
 }
 
