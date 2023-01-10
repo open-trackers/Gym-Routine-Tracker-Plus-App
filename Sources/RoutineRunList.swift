@@ -126,27 +126,26 @@ struct RoutineRunList: View {
 
 struct RoutineRunList_Previews: PreviewProvider {
     static var previews: some View {
-        let container = PersistenceManager.preview.container
-        let context = container.viewContext
-        let archiveStore = PersistenceManager.getArchiveStore(context)!
+        let ctx = PersistenceManager.getPreviewContainer().viewContext
+        let archiveStore = PersistenceManager.getArchiveStore(ctx)!
 
-        try? context.deleter(ZRoutineRun.self, inStore: archiveStore)
-        try? context.deleter(ZRoutine.self, inStore: archiveStore)
-        try! context.save()
+        try? ctx.deleter(ZRoutineRun.self, inStore: archiveStore)
+        try? ctx.deleter(ZRoutine.self, inStore: archiveStore)
+        try! ctx.save()
 
         let routineArchiveID = UUID()
         let startedAt1 = Date.now.addingTimeInterval(-20000)
         let duration1 = 500.0
         let startedAt2 = Date.now.addingTimeInterval(-10000)
         let duration2 = 400.0
-        let zR = ZRoutine.create(context, routineName: "blah", routineArchiveID: routineArchiveID, toStore: archiveStore)
-        _ = ZRoutineRun.create(context, zRoutine: zR, startedAt: startedAt1, duration: duration1, toStore: archiveStore)
-        _ = ZRoutineRun.create(context, zRoutine: zR, startedAt: startedAt2, duration: duration2, toStore: archiveStore)
-        try! context.save()
+        let zR = ZRoutine.create(ctx, routineName: "blah", routineArchiveID: routineArchiveID, toStore: archiveStore)
+        _ = ZRoutineRun.create(ctx, zRoutine: zR, startedAt: startedAt1, duration: duration1, toStore: archiveStore)
+        _ = ZRoutineRun.create(ctx, zRoutine: zR, startedAt: startedAt2, duration: duration2, toStore: archiveStore)
+        try! ctx.save()
 
         return NavigationStack {
             RoutineRunList(archiveStore: archiveStore)
-                .environment(\.managedObjectContext, context)
+                .environment(\.managedObjectContext, ctx)
         }
     }
 }
