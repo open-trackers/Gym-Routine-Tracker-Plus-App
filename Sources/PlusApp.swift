@@ -37,7 +37,7 @@ struct Gym_Routine_Tracker_Plus_App: App {
         .onChange(of: scenePhase) { _ in
             // save if: (1) app moved to background, and (2) changes are pending
             do {
-                try persistenceManager.save()
+                try persistenceManager.container.viewContext.save()
             } catch {
                 logger.error("\(#function): \(error.localizedDescription)")
             }

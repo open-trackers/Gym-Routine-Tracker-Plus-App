@@ -69,7 +69,7 @@ struct HistoryView: View {
         // NOTE mirrored in HistoryView
         do {
             try transferToArchive(viewContext)
-            try PersistenceManager.shared.save()
+            try viewContext.save()
         } catch {
             logger.error("\(#function): TRANSFER \(error.localizedDescription)")
         }
