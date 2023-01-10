@@ -22,21 +22,32 @@ struct HistoryView: View {
 
     // MARK: - Locals
 
+    @State private var showAlert = false
+
     private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
                                 category: String(describing: HistoryView.self))
 
     // MARK: - Views
 
     var body: some View {
-        VStack {
-            Button(action: purgeAction) {
-                Label("Purge Archive", systemImage: "xmark")
+        RoutineRunList(archiveStore: archiveStore)
+            .toolbar {
+                ToolbarItem(placement: .destructiveAction) {
+                    Button(action: { showAlert = true }) {
+                        Text("Clear")
+                    }
+                }
             }
-
-            RoutineRunList(archiveStore: archiveStore)
-        }
-        .navigationTitle(navigationTitle)
-        .task(priority: .userInitiated, taskAction)
+            .alert("Are you sure?",
+                   isPresented: $showAlert,
+                   actions: {
+                       Button("Delete", role: .destructive, action: clearHistoryAction)
+                   },
+                   message: {
+                       Text("This will remove all historical data.")
+                   })
+            .navigationTitle(navigationTitle)
+            .task(priority: .userInitiated, taskAction)
     }
 
     // MARK: - Properties
@@ -55,7 +66,7 @@ struct HistoryView: View {
 
     // MARK: - Actions
 
-    private func purgeAction() {
+    private func clearHistoryAction() {
         do {
             try PersistenceManager.clearZEntities(viewContext, inStore: archiveStore)
             try viewContext.save()
