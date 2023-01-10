@@ -18,9 +18,6 @@ import Tabler
 import GroutLib
 import GroutUI
 
-private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
-                            category: "RoutineRunList")
-
 struct RoutineRunList: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.managedObjectContext) private var viewContext
@@ -36,15 +33,17 @@ struct RoutineRunList: View {
     internal init(archiveStore: NSPersistentStore) {
         self.archiveStore = archiveStore
 
-        let request = NSFetchRequest<ZRoutineRun>(entityName: "ZRoutineRun")
-        request.sortDescriptors = [
-            NSSortDescriptor(keyPath: \ZRoutineRun.startedAt, ascending: false),
-        ]
-        request.affectedStores = [archiveStore]
+        let sortDescriptors = [NSSortDescriptor(keyPath: \ZRoutineRun.startedAt, ascending: false)]
+        let request = getRequest(ZRoutineRun.self,
+                                 sortDescriptors: sortDescriptors,
+                                 inStore: archiveStore)
         _routineRuns = FetchRequest<ZRoutineRun>(fetchRequest: request)
     }
 
     // MARK: - Locals
+
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
+                                category: String(describing: RoutineRunList.self))
 
     private let columnSpacing: CGFloat = 10
 

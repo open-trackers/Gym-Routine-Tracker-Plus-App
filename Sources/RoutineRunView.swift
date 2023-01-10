@@ -9,6 +9,7 @@
 //
 
 import CoreData
+import os
 import SwiftUI
 
 import Tabler
@@ -32,16 +33,20 @@ struct RoutineRunView: View {
         self.zRoutineRun = zRoutineRun
         self.archiveStore = archiveStore
 
-        let request = NSFetchRequest<ZExerciseRun>(entityName: "ZExerciseRun")
-        request.sortDescriptors = [
-            NSSortDescriptor(keyPath: \ZExerciseRun.completedAt, ascending: true),
-        ]
-        request.affectedStores = [archiveStore]
-        request.predicate = NSPredicate(format: "zRoutineRun = %@", zRoutineRun)
+        let predicate = NSPredicate(format: "zRoutineRun = %@", zRoutineRun)
+        let sortDescriptors = [NSSortDescriptor(keyPath: \ZExerciseRun.completedAt, ascending: true)]
+        let request = getRequest(ZExerciseRun.self,
+                                 predicate: predicate,
+                                 sortDescriptors: sortDescriptors,
+                                 inStore: archiveStore)
+
         _exerciseRuns = FetchRequest<ZExerciseRun>(fetchRequest: request)
     }
 
     // MARK: - Locals
+
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
+                                category: String(describing: RoutineRunView.self))
 
     private let columnSpacing: CGFloat = 10
 
@@ -67,7 +72,7 @@ struct RoutineRunView: View {
                    header: header,
                    row: listRow,
                    results: exerciseRuns)
-            .navigationTitle("Routine \(zRoutineRun.zRoutine?.wrappedName ?? "UNKNOWN")")
+            .navigationTitle(navigationTitle)
     }
 
     private func header(ctx _: Binding<Context>) -> some View {
@@ -85,6 +90,12 @@ struct RoutineRunView: View {
             Text(element.zExercise?.name ?? "")
                 .padding(columnPadding)
         }
+    }
+
+    // MARK: - Properties
+
+    private var navigationTitle: String {
+        zRoutineRun.zRoutine?.wrappedName ?? "UNKNOWN"
     }
 }
 
@@ -104,7 +115,7 @@ struct RoutineRunView_Previews: PreviewProvider {
         let duration2 = 400.0
         let zR = ZRoutine.create(ctx, routineName: "blah", routineArchiveID: routineArchiveID, toStore: archiveStore)
         let zRR1 = ZRoutineRun.create(ctx, zRoutine: zR, startedAt: startedAt1, duration: duration1, toStore: archiveStore)
-        let zRR2 = ZRoutineRun.create(ctx, zRoutine: zR, startedAt: startedAt2, duration: duration2, toStore: archiveStore)
+        _ = ZRoutineRun.create(ctx, zRoutine: zR, startedAt: startedAt2, duration: duration2, toStore: archiveStore)
         try! ctx.save()
 
         return NavigationStack {

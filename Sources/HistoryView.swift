@@ -18,15 +18,15 @@ import Tabler
 import GroutLib
 import GroutUI
 
-private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
-                            category: "HistoryView")
-
 struct HistoryView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
     // MARK: - Parameters
 
     // MARK: - Locals
+
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
+                                category: String(describing: HistoryView.self))
 
     // MARK: - Views
 
