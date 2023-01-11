@@ -52,7 +52,8 @@ struct ExerciseRunList: View {
     private let columnSpacing: CGFloat = 10
 
     private var columnPadding: EdgeInsets {
-        EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
+        EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+        // EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
     }
 
     @FetchRequest private var exerciseRuns: FetchedResults<ZExerciseRun>
@@ -60,7 +61,6 @@ struct ExerciseRunList: View {
     private var listConfig: TablerListConfig<ZExerciseRun> {
         TablerListConfig<ZExerciseRun>(
             onDelete: deleteAction
-            // tablePadding: EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30)
         )
     }
 
@@ -72,10 +72,12 @@ struct ExerciseRunList: View {
 
     private let df: DateFormatter = {
         let df = DateFormatter()
-        df.dateStyle = .full
+        df.dateStyle = .short
         df.timeStyle = .short
         return df
     }()
+
+    private let tc = TimeCompactor(ifZero: "", style: .full, roundSmallToWhole: false)
 
     // MARK: - Views
 
@@ -113,13 +115,25 @@ struct ExerciseRunList: View {
         }
     }
 
+    @ViewBuilder
     private func footer(ctx _: Binding<Context>) -> some View {
-        GroupBox {
-            startedAtText
-        } label: {
-            Text("Started")
-                .foregroundStyle(.tint)
-                .padding(.bottom, 3)
+        HStack {
+            GroupBox {
+                startedAtText
+                    .lineLimit(1)
+            } label: {
+                Text("Started")
+                    .foregroundStyle(.tint)
+                    .padding(.bottom, 3)
+            }
+            GroupBox {
+                durationText(zRoutineRun.duration)
+                    .lineLimit(1)
+            } label: {
+                Text("Duration")
+                    .foregroundStyle(.tint)
+                    .padding(.bottom, 3)
+            }
         }
     }
 
@@ -152,6 +166,10 @@ struct ExerciseRunList: View {
                     $0.monospaced()
                 }
             }
+    }
+
+    private func durationText(_ duration: TimeInterval) -> some View {
+        Text(tc.string(from: duration as NSNumber) ?? "")
     }
 
     // MARK: - Properties

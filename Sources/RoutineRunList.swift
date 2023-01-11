@@ -49,13 +49,14 @@ struct RoutineRunList: View {
     private let columnSpacing: CGFloat = 10
 
     private var columnPadding: EdgeInsets {
-        EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
+        EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+        // EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
     }
 
     private let df: DateFormatter = {
         let df = DateFormatter()
         df.dateStyle = .short
-        df.timeStyle = .short
+        df.timeStyle = .none
         return df
     }()
 
@@ -68,10 +69,12 @@ struct RoutineRunList: View {
     }
 
     private var gridItems: [GridItem] { [
-        GridItem(.flexible(minimum: 100), spacing: columnSpacing, alignment: .leading),
-        GridItem(.flexible(minimum: 100), spacing: columnSpacing, alignment: .leading),
-//        GridItem(.flexible(minimum: 70), spacing: columnSpacing, alignment: .leading),
+        GridItem(.flexible(minimum: 180), spacing: columnSpacing, alignment: .leading),
+        GridItem(.flexible(minimum: 70), spacing: columnSpacing, alignment: .leading),
+        GridItem(.flexible(minimum: 70), spacing: columnSpacing, alignment: .leading),
     ] }
+
+    private let tc = TimeCompactor(ifZero: "", style: .medium, roundSmallToWhole: false)
 
     // MARK: - Views
 
@@ -88,10 +91,10 @@ struct RoutineRunList: View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
             Text("Routine")
                 .padding(columnPadding)
-            Text("Started At")
+            Text("Date")
                 .padding(columnPadding)
-//            Text("Duration")
-//                .padding(columnPadding)
+            Text("Duration")
+                .padding(columnPadding)
         }
     }
 
@@ -100,11 +103,15 @@ struct RoutineRunList: View {
         Button(action: { detailAction(zRoutineRun: element) }) {
             LazyVGrid(columns: gridItems, alignment: .leading) {
                 Text(element.zRoutine?.name ?? "")
+                    .lineLimit(1)
                     .padding(columnPadding)
                 startedAtText(element.startedAt)
+                    .lineLimit(1)
                     .padding(columnPadding)
+                durationText(element.duration)
+                    .lineLimit(1)
 //                ElapsedTimeText(elapsedSecs: element.duration)
-//                    .padding(columnPadding)
+                    .padding(columnPadding)
             }
             .frame(maxWidth: .infinity)
         }
@@ -117,6 +124,10 @@ struct RoutineRunList: View {
     private func startedAtText(_ date: Date?) -> some View {
         guard let date else { return Text("") }
         return Text(df.string(from: date))
+    }
+
+    private func durationText(_ duration: TimeInterval) -> some View {
+        Text(tc.string(from: duration as NSNumber) ?? "")
     }
 
     // MARK: - Properties
