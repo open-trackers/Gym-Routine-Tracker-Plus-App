@@ -139,7 +139,7 @@ struct ExerciseRunList: View {
     }
 
     private func rowBackground(_: ZExerciseRun) -> some View {
-        EntityBackground(exerciseColor)
+        EntityBackground(exerciseColorDarkBg)
     }
 
     private var startedAtText: some View {
