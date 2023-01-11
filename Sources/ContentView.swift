@@ -8,14 +8,24 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 //
 
+import CoreData
 import SwiftUI
 
 import GroutLib
 import GroutUI
 
 struct ContentView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+
+    enum Tabs: Int {
+        case routines = 0
+        case history = 1
+        case settings = 2
+    }
+
     @SceneStorage("main-tab") private var selectedTab = 0
     @SceneStorage("main-routines-nav") private var routinesNavData: Data?
+    @SceneStorage("main-history-nav") private var historyNavData: Data?
     @SceneStorage("main-settings-nav") private var settingsNavData: Data?
 
     var body: some View {
@@ -25,9 +35,19 @@ struct ContentView: View {
                 RoutineList()
             }
             .tabItem {
-                Label("Routines", systemImage: "dumbbell.fill")
+                Label("Routines", systemImage: "dumbbell")
             }
-            .tag(0)
+            .tag(Tabs.routines.rawValue)
+
+            NavStack(name: "history",
+                     navData: $historyNavData,
+                     routineRunDetail: exerciseRunList) {
+                HistoryView()
+            }
+            .tabItem {
+                Label("History", systemImage: "fossil.shell")
+            }
+            .tag(Tabs.history.rawValue)
 
             NavStack(name: "settings",
                      navData: $settingsNavData) {
@@ -36,17 +56,26 @@ struct ContentView: View {
             .tabItem {
                 Label("Settings", systemImage: "gear")
             }
-            .tag(1)
+            .tag(Tabs.settings.rawValue)
+        }
+    }
 
-            // TODO: history, charts, etc. will be the 'Plus'
+    // used to inject view into NavStack
+    @ViewBuilder
+    private func exerciseRunList(_ routineRunUri: URL) -> some View {
+        if let zRoutineRun = ZRoutineRun.get(viewContext, forURIRepresentation: routineRunUri),
+           let archiveStore = PersistenceManager.getArchiveStore(viewContext)
+        {
+            ExerciseRunList(zRoutineRun: zRoutineRun, archiveStore: archiveStore)
+        } else {
+            Text("Routine Run not available to display detail.")
         }
     }
 }
 
-// TODO: four copies of each routine showing up; should be one!
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let ctx = PersistenceManager.preview.container.viewContext
+        let ctx = PersistenceManager.getPreviewContainer().viewContext
         let routine = Routine.create(ctx, userOrder: 0)
         routine.name = "Back & Bicep"
         let e1 = Exercise.create(ctx, userOrder: 0)
