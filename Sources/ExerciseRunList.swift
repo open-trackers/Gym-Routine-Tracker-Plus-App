@@ -19,6 +19,7 @@ import GroutLib
 import GroutUI
 
 struct ExerciseRunList: View {
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.managedObjectContext) private var viewContext
 
     typealias Sort = TablerSort<ZExerciseRun>

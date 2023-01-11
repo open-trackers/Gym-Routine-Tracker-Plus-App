@@ -28,7 +28,7 @@
 		40245EF5296BE7D4007B5DAB /* ExerciseRunList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseRunList.swift; sourceTree = "<group>"; };
 		402A5F2E296B7F7B00A43DB3 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		408FACFD296CABC400D02C9C /* RoutineRunList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineRunList.swift; sourceTree = "<group>"; };
-		40E347BA29452CF1003A19B9 /* Gym Routine Tracker Plus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gym Routine Tracker Plus.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		40E347BA29452CF1003A19B9 /* Gym Routine Tracker+.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gym Routine Tracker+.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		40E347BD29452CF1003A19B9 /* PlusApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusApp.swift; sourceTree = "<group>"; };
 		40E347BF29452CF1003A19B9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		40E347C129452CF1003A19B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -74,7 +74,7 @@
 		40E347BB29452CF1003A19B9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				40E347BA29452CF1003A19B9 /* Gym Routine Tracker Plus.app */,
+				40E347BA29452CF1003A19B9 /* Gym Routine Tracker+.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -106,9 +106,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		40E347B929452CF1003A19B9 /* Gym Routine Tracker Plus */ = {
+		40E347B929452CF1003A19B9 /* Gym Routine Tracker+ */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 40E347C929452CF1003A19B9 /* Build configuration list for PBXNativeTarget "Gym Routine Tracker Plus" */;
+			buildConfigurationList = 40E347C929452CF1003A19B9 /* Build configuration list for PBXNativeTarget "Gym Routine Tracker+" */;
 			buildPhases = (
 				40E347B629452CF1003A19B9 /* Sources */,
 				40E347B729452CF1003A19B9 /* Frameworks */,
@@ -118,7 +118,7 @@
 			);
 			dependencies = (
 			);
-			name = "Gym Routine Tracker Plus";
+			name = "Gym Routine Tracker+";
 			packageProductDependencies = (
 				40E347D229452E4B003A19B9 /* Compactor */,
 				40B51E44294549DF0047377A /* GroutUI */,
@@ -127,7 +127,7 @@
 				402A5F31296B835B00A43DB3 /* Tabler */,
 			);
 			productName = "Gym Routine Tracker Plus";
-			productReference = 40E347BA29452CF1003A19B9 /* Gym Routine Tracker Plus.app */;
+			productReference = 40E347BA29452CF1003A19B9 /* Gym Routine Tracker+.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -163,7 +163,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				40E347B929452CF1003A19B9 /* Gym Routine Tracker Plus */,
+				40E347B929452CF1003A19B9 /* Gym Routine Tracker+ */,
 			);
 		};
 /* End PBXProject section */
@@ -404,7 +404,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		40E347C929452CF1003A19B9 /* Build configuration list for PBXNativeTarget "Gym Routine Tracker Plus" */ = {
+		40E347C929452CF1003A19B9 /* Build configuration list for PBXNativeTarget "Gym Routine Tracker+" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				40E347CA29452CF1003A19B9 /* Debug */,

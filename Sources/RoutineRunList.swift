@@ -19,6 +19,7 @@ import GroutLib
 import GroutUI
 
 struct RoutineRunList: View {
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject private var router: MyRouter
