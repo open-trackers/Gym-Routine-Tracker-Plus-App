@@ -20,7 +20,6 @@ import GroutUI
 
 struct RoutineRunList: View {
     @Environment(\.colorScheme) private var colorScheme
-    @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject private var router: MyRouter
 
@@ -53,11 +52,12 @@ struct RoutineRunList: View {
         EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
     }
 
-    // timer used to refresh "2d ago, for 16.5m" on each Routine Cell
-    @State private var now = Date()
-    private let timer = Timer.publish(every: routineSinceUpdateSeconds,
-                                      on: .main,
-                                      in: .common).autoconnect()
+    private let df: DateFormatter = {
+        let df = DateFormatter()
+        df.dateStyle = .short
+        df.timeStyle = .short
+        return df
+    }()
 
     @FetchRequest private var routineRuns: FetchedResults<ZRoutineRun>
 
@@ -68,8 +68,9 @@ struct RoutineRunList: View {
     }
 
     private var gridItems: [GridItem] { [
-        GridItem(.flexible(minimum: 50, maximum: 300), spacing: columnSpacing, alignment: .leading),
-        GridItem(.flexible(minimum: 100, maximum: 400), spacing: columnSpacing, alignment: .leading),
+        GridItem(.flexible(minimum: 100), spacing: columnSpacing, alignment: .leading),
+        GridItem(.flexible(minimum: 100), spacing: columnSpacing, alignment: .leading),
+//        GridItem(.flexible(minimum: 70), spacing: columnSpacing, alignment: .leading),
     ] }
 
     // MARK: - Views
@@ -81,17 +82,16 @@ struct RoutineRunList: View {
                    rowBackground: rowBackground,
                    results: routineRuns)
             .listStyle(.plain)
-            .onReceive(timer) { _ in
-                self.now = Date.now
-            }
     }
 
     private func header(ctx _: Binding<Context>) -> some View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
             Text("Routine")
                 .padding(columnPadding)
-            Text("When")
+            Text("Started At")
                 .padding(columnPadding)
+//            Text("Duration")
+//                .padding(columnPadding)
         }
     }
 
@@ -101,27 +101,25 @@ struct RoutineRunList: View {
             LazyVGrid(columns: gridItems, alignment: .leading) {
                 Text(element.zRoutine?.name ?? "")
                     .padding(columnPadding)
-                SinceText(startedAt: element.startedAt, duration: element.duration, now: $now, compactorStyle: compactorStyle)
+                startedAtText(element.startedAt)
                     .padding(columnPadding)
+//                ElapsedTimeText(elapsedSecs: element.duration)
+//                    .padding(columnPadding)
             }
             .frame(maxWidth: .infinity)
         }
-        // .shadow(color: shadowColor, radius: 0.25, x: 0.25, y: 0.25)
     }
 
     private func rowBackground(_: ZRoutineRun) -> some View {
         EntityBackground(routineColor)
     }
 
-    // MARK: - Properties
-
-    private var compactorStyle: TimeCompactor.Style {
-        verticalSizeClass == .regular ? .short : .full
+    private func startedAtText(_ date: Date?) -> some View {
+        guard let date else { return Text("") }
+        return Text(df.string(from: date))
     }
 
-//    private var shadowColor: Color {
-//        colorScheme == .light ? .black.opacity(0.33) : .clear
-//    }
+    // MARK: - Properties
 
     // MARK: - Actions
 

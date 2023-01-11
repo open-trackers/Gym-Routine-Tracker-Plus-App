@@ -46,8 +46,6 @@ struct ExerciseRunList: View {
 
     // MARK: - Locals
 
-    private let tcDur = TimeCompactor(ifZero: "", style: .short, roundSmallToWhole: false)
-
     private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
                                 category: String(describing: ExerciseRunList.self))
 
@@ -62,13 +60,14 @@ struct ExerciseRunList: View {
     private var listConfig: TablerListConfig<ZExerciseRun> {
         TablerListConfig<ZExerciseRun>(
             onDelete: deleteAction
+            // tablePadding: EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30)
         )
     }
 
     private var gridItems: [GridItem] { [
-        GridItem(.flexible(minimum: 70, maximum: 100), spacing: columnSpacing, alignment: .leading),
-        GridItem(.flexible(minimum: 150, maximum: 300), spacing: columnSpacing, alignment: .leading),
-        GridItem(.flexible(minimum: 80, maximum: 150), spacing: columnSpacing, alignment: .trailing),
+        GridItem(.flexible(minimum: 70), spacing: columnSpacing, alignment: .leading),
+        GridItem(.flexible(minimum: 120), spacing: columnSpacing, alignment: .leading),
+        GridItem(.flexible(minimum: 80), spacing: columnSpacing, alignment: .trailing),
     ] }
 
     private let df: DateFormatter = {
@@ -81,20 +80,14 @@ struct ExerciseRunList: View {
     // MARK: - Views
 
     var body: some View {
-        VStack {
-            if let startedAt = zRoutineRun.startedAt,
-               let dateStr = df.string(from: startedAt)
-            {
-                Text(dateStr)
-            }
-            TablerList(listConfig,
-                       header: header,
-                       row: listRow,
-                       rowBackground: rowBackground,
-                       results: exerciseRuns)
-                .listStyle(.plain)
-                .navigationTitle(navigationTitle)
-        }
+        TablerList(listConfig,
+                   header: header,
+                   footer: footer,
+                   row: listRow,
+                   rowBackground: rowBackground,
+                   results: exerciseRuns)
+            .listStyle(.plain)
+            .navigationTitle(navigationTitle)
     }
 
     private func header(ctx _: Binding<Context>) -> some View {
@@ -111,12 +104,22 @@ struct ExerciseRunList: View {
     @ViewBuilder
     private func listRow(element: ZExerciseRun) -> some View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
-            Text(getTimeStr(element.completedAt))
+            elapsedText(element.completedAt)
                 .padding(columnPadding)
             Text(element.zExercise?.name ?? "")
                 .padding(columnPadding)
-            Text(formatIntensity(element.intensity))
+            intensityText(element.intensity)
                 .padding(columnPadding)
+        }
+    }
+
+    private func footer(ctx _: Binding<Context>) -> some View {
+        GroupBox {
+            startedAtText
+        } label: {
+            Text("Started")
+                .foregroundStyle(.tint)
+                .padding(.bottom, 3)
         }
     }
 
@@ -124,15 +127,44 @@ struct ExerciseRunList: View {
         EntityBackground(exerciseColor)
     }
 
+    private var startedAtText: some View {
+        VStack {
+            if let startedAt = zRoutineRun.startedAt,
+               let dateStr = df.string(from: startedAt)
+            {
+                Text(dateStr)
+            } else {
+                EmptyView()
+            }
+        }
+    }
+
+    private func elapsedText(_ completedAt: Date?) -> some View {
+        ElapsedTimeText(elapsedSecs: getDuration(completedAt) ?? 0, timeElapsedFormat: timeElapsedFormat)
+    }
+
+    private func intensityText(_ intensity: Float) -> some View {
+        Text(formatIntensity(intensity))
+            .modify {
+                if #available(iOS 16.1, watchOS 9.1, *) {
+                    $0.fontDesign(.monospaced)
+                } else {
+                    $0.monospaced()
+                }
+            }
+    }
+
     // MARK: - Properties
+
+    // select a formatter to accommodate the duration
+    private var timeElapsedFormat: TimeElapsedFormat {
+        let secondsPerHour: TimeInterval = 3600
+        return zRoutineRun.duration < secondsPerHour ? .mm_ss : .hh_mm_ss
+    }
 
     private var navigationTitle: String {
         zRoutineRun.zRoutine?.wrappedName ?? "UNKNOWN"
     }
-
-//    private var totalDurationStr: String {
-//        tcDur.string(from: zRoutineRun.duration as NSNumber) ?? ""
-//    }
 
     // MARK: - Actions
 
@@ -154,23 +186,12 @@ struct ExerciseRunList: View {
         String(format: "%0.1f", intensity)
     }
 
-    private func getTimeStr(_ completedAt: Date?) -> String {
+    private func getDuration(_ completedAt: Date?) -> TimeInterval? {
         guard let startedAt = zRoutineRun.startedAt,
               let completedAt
-        else { return "?" }
+        else { return nil }
 
-        let duration = completedAt.timeIntervalSince(startedAt)
-
-        let secondsPerDay: TimeInterval = 86400
-        if duration >= secondsPerDay {
-            // PUNT!
-            return tcDur.string(from: duration as NSNumber) ?? ""
-        }
-        let t = Int(max(0, min(duration, TimeInterval(Int.max))))
-        let hours = t / 3600
-        let minutes = t / 60 % 60
-        let seconds = t % 60
-        return String(format: "%02i:%02i:%02i", hours, minutes, seconds)
+        return completedAt.timeIntervalSince(startedAt)
     }
 }
 

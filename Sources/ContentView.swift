@@ -40,7 +40,8 @@ struct ContentView: View {
             .tag(Tabs.routines.rawValue)
 
             NavStack(name: "history",
-                     navData: $historyNavData, routineRunDetail: exerciseRunList) {
+                     navData: $historyNavData,
+                     routineRunDetail: exerciseRunList) {
                 HistoryView()
             }
             .tabItem {
