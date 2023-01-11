@@ -14,7 +14,6 @@ Available as a FREE download in the App Store [GRT for iPhone/iPad](https://apps
 - Simple data model of user-defined routines and their exercises.
 - Your data syncs with your private iCloud account when a network connection is available.
 - Fully open source where code is licensed with Mozilla Public License 2.0.
-- App available as a free download in the App Store. 
 - Available separately as an independent app for the Apple Watch.
 
 GRT prioritizes convenience, quick interactions, and the basic needs of the recreational fitness user.
