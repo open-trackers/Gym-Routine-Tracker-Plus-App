@@ -51,7 +51,7 @@ struct ContentView: View {
 
             NavStack(name: "settings",
                      navData: $settingsNavData) {
-                SettingsForm()
+                SettingsForm(onExport: exportAction)
             }
             .tabItem {
                 Label("Settings", systemImage: "gear")
@@ -71,6 +71,78 @@ struct ContentView: View {
             Text("Routine Run not available to display detail.")
         }
     }
+
+    // MARK: - Actions
+
+    private func exportAction() {
+//        if let data = try? packageRebalance(params: ds.params,
+//                                            tradingAllocations: tradingAllocations,
+//                                            nonTradingAllocations: nonTradingAllocations,
+//                                            mpurchases: mpurchases,
+//                                            msales: msales) {
+//            #if os(macOS)
+//            NSSavePanel.saveData(data, name: "rebalance", ext: "zip", completion: { _ in })
+//            #endif
+//        }
+    }
+
+//    public func packageRebalance(params: BaseParams,
+//                                 tradingAllocations: [MRebalanceAllocation],
+//                                 nonTradingAllocations: [MRebalanceAllocation],
+//                                 mpurchases: [MRebalancePurchase],
+//                                 msales: [MRebalanceSale]) throws -> Data {
+//        guard let archive = Archive(accessMode: .create)
+//        else { throw FlowBaseError.archiveCreateFailure }
+//
+//        let fileExt = rebalancePackageFormat.defaultFileExtension!
+//
+//        let trading = try exportData(tradingAllocations, format: rebalancePackageFormat)
+//        try archive.addEntry(with: "trading-allocations.\(fileExt)",
+//                             type: .file,
+//                             uncompressedSize: Int64(trading.count),
+//                             provider: { position, size -> Data in
+//            let range = Int(position) ..< Int(position) + size
+//            return trading.subdata(in: range)
+//        })
+//
+//        let nonTrading = try exportData(nonTradingAllocations, format: rebalancePackageFormat)
+//        try archive.addEntry(with: "non-trading-allocations.\(fileExt)",
+//                             type: .file,
+//                             uncompressedSize: Int64(nonTrading.count),
+//                             provider: { position, size -> Data in
+//            let range = Int(position) ..< Int(position) + size
+//            return nonTrading.subdata(in: range)
+//        })
+//
+//        let exportedPurchases = try exportData(mpurchases, format: rebalancePackageFormat)
+//        try archive.addEntry(with: "purchases.\(fileExt)",
+//                             type: .file,
+//                             uncompressedSize: Int64(exportedPurchases.count),
+//                             provider: { position, size -> Data in
+//            let range = Int(position) ..< Int(position) + size
+//            return exportedPurchases.subdata(in: range)
+//        })
+//
+//        let exportedSales = try exportData(msales, format: rebalancePackageFormat)
+//        try archive.addEntry(with: "sales.\(fileExt)",
+//                             type: .file,
+//                             uncompressedSize: Int64(exportedSales.count),
+//                             provider: { position, size -> Data in
+//            let range = Int(position) ..< Int(position) + size
+//            return exportedSales.subdata(in: range)
+//        })
+//
+//        let paramsData: Data = try StorageManager.encodeToJSON(params)
+//        try archive.addEntry(with: "params.json",
+//                             type: .file,
+//                             uncompressedSize: Int64(paramsData.count),
+//                             provider: { position, size -> Data in
+//            let range = Int(position) ..< Int(position) + size
+//            return paramsData.subdata(in: range)
+//        })
+//
+//        return archive.data!
+//    }
 }
 
 struct ContentView_Previews: PreviewProvider {
