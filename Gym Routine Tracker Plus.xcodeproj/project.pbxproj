@@ -11,6 +11,7 @@
 		40245EF6296BE7D4007B5DAB /* ExerciseRunList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40245EF5296BE7D4007B5DAB /* ExerciseRunList.swift */; };
 		402A5F2F296B7FE000A43DB3 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402A5F2E296B7F7B00A43DB3 /* HistoryView.swift */; };
 		402A5F32296B835B00A43DB3 /* Tabler in Frameworks */ = {isa = PBXBuildFile; productRef = 402A5F31296B835B00A43DB3 /* Tabler */; };
+		403CA2CE2971F6660084785B /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 403CA2CD2971F6660084785B /* ZIPFoundation */; };
 		408FACFE296CAC9300D02C9C /* RoutineRunList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408FACFD296CABC400D02C9C /* RoutineRunList.swift */; };
 		40B51E45294549DF0047377A /* GroutUI in Frameworks */ = {isa = PBXBuildFile; productRef = 40B51E44294549DF0047377A /* GroutUI */; };
 		40CCF3F629454D2B007DDE69 /* GroutLib in Frameworks */ = {isa = PBXBuildFile; productRef = 40CCF3F529454D2B007DDE69 /* GroutLib */; };
@@ -47,6 +48,7 @@
 				40E347D329452E4B003A19B9 /* Compactor in Frameworks */,
 				40EBE1CC29635306004B9189 /* GroutUI in Frameworks */,
 				40CCF3F629454D2B007DDE69 /* GroutLib in Frameworks */,
+				403CA2CE2971F6660084785B /* ZIPFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +127,7 @@
 				40CCF3F529454D2B007DDE69 /* GroutLib */,
 				40EBE1CB29635306004B9189 /* GroutUI */,
 				402A5F31296B835B00A43DB3 /* Tabler */,
+				403CA2CD2971F6660084785B /* ZIPFoundation */,
 			);
 			productName = "Gym Routine Tracker Plus";
 			productReference = 40E347BA29452CF1003A19B9 /* Gym Routine Tracker Plus.app */;
@@ -158,6 +161,7 @@
 				40E347D129452E4B003A19B9 /* XCRemoteSwiftPackageReference "SwiftCompactor" */,
 				40EBE1CA29635306004B9189 /* XCRemoteSwiftPackageReference "GroutUI" */,
 				402A5F30296B835B00A43DB3 /* XCRemoteSwiftPackageReference "SwiftTabler" */,
+				403CA2CC2971F6660084785B /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 			);
 			productRefGroup = 40E347BB29452CF1003A19B9 /* Products */;
 			projectDirPath = "";
@@ -424,6 +428,14 @@
 				minimumVersion = 0.9.6;
 			};
 		};
+		403CA2CC2971F6660084785B /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.9;
+			};
+		};
 		40E347D129452E4B003A19B9 /* XCRemoteSwiftPackageReference "SwiftCompactor" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/openalloc/SwiftCompactor.git";
@@ -447,6 +459,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 402A5F30296B835B00A43DB3 /* XCRemoteSwiftPackageReference "SwiftTabler" */;
 			productName = Tabler;
+		};
+		403CA2CD2971F6660084785B /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 403CA2CC2971F6660084785B /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
 		};
 		40B51E44294549DF0047377A /* GroutUI */ = {
 			isa = XCSwiftPackageProductDependency;
