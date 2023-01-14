@@ -46,21 +46,17 @@ struct PhoneSettingsForm: View {
             Section {
                 Picker(selection: $exportFormat) {
                     ForEach(ExportFormat.allCases, id: \.self) { mode in
-                        // Text("\(mode.defaultFileExtension.uppercased()) (\(mode.rawValue))")
-                        // Text("\(mode.description) (\(mode.defaultFileExtension))")
                         Text(mode.defaultFileExtension.uppercased())
-                            // Text(mode.description)
                             .tag(mode)
                     }
                 } label: {
-                    Text("Format")
+                    ShareLink(item: getData(),
+                              subject: Text("subject"), message: Text("message"), preview: SharePreview("Zip")) {
+                        Label("Export data", systemImage: "square.and.arrow.up")
+                    }
                 }
-                .pickerStyle(.segmented)
-                // .pickerStyle(MenuPickerStyle())
-                ShareLink(item: getData(),
-                          subject: Text("subject"), message: Text("message"), preview: SharePreview("Zip")) {
-                    Label("Export data", systemImage: "square.and.arrow.up")
-                }
+                .pickerStyle(MenuPickerStyle())
+
             } header: {
                 Text("Data Export")
                     .foregroundStyle(.tint)
