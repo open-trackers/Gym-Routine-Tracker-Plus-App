@@ -15,20 +15,20 @@ import GroutLib
 
 public func createZipArchive(_ context: NSManagedObjectContext,
                              mainStore: NSPersistentStore,
-                             archiveStore _: NSPersistentStore,
+                             archiveStore: NSPersistentStore,
                              format: ExportFormat = .CSV) throws -> Data?
 {
     guard let archive = Archive(accessMode: .create)
     else { throw DataError.archiveCreationFailure }
 
     func makeDelimFile<T: NSFetchRequestResult & Encodable & MAttributable>(_: T.Type,
-                                                                            _ filePrefix: String,
                                                                             inStore: NSPersistentStore?) throws
     {
         let request = makeRequest(T.self, inStore: inStore)
         let results = try context.fetch(request)
         let data = try exportData(results, format: format)
-        try archive.addEntry(with: "\(filePrefix).\(format.defaultFileExtension)",
+        let fileName = "\(T.fileNamePrefix).\(format.defaultFileExtension)"
+        try archive.addEntry(with: fileName,
                              type: .file,
                              uncompressedSize: Int64(data.count),
                              provider: { position, size -> Data in
@@ -37,12 +37,18 @@ public func createZipArchive(_ context: NSManagedObjectContext,
                              })
     }
 
-    try makeDelimFile(Routine.self, "routines", inStore: mainStore)
-    try makeDelimFile(Exercise.self, "exercises", inStore: mainStore)
-    try makeDelimFile(ZRoutine.self, "zroutines", inStore: mainStore)
-    try makeDelimFile(ZRoutineRun.self, "zroutineruns", inStore: mainStore)
-    try makeDelimFile(ZExercise.self, "zexercises", inStore: mainStore)
-    try makeDelimFile(ZExerciseRun.self, "zexerciseruns", inStore: mainStore)
+    try makeDelimFile(Routine.self, inStore: mainStore)
+    try makeDelimFile(Exercise.self, inStore: mainStore)
+
+    // NOT WORKING: Local function 'makeDelimFile(_:inStore:)' requires that 'NSManagedObject' conform to 'Encodable'
+    // [ZRoutine.self, ZRoutineRun.self, ZExercise.self, ZExerciseRun.self].forEach {
+    //    try makeDelimFile($0, inStore: archiveStore)
+    // }
+
+    try makeDelimFile(ZRoutine.self, inStore: archiveStore)
+    try makeDelimFile(ZRoutineRun.self, inStore: archiveStore)
+    try makeDelimFile(ZExercise.self, inStore: archiveStore)
+    try makeDelimFile(ZExerciseRun.self, inStore: archiveStore)
 
     return archive.data
 }
