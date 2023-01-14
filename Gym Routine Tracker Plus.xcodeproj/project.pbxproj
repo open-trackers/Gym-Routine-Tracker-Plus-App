@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4001ED0D29732D4500F165ED /* ExportSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4001ED0C29732D4500F165ED /* ExportSettings.swift */; };
+		4001ED0F29732E1300F165ED /* ColorSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4001ED0E29732E1300F165ED /* ColorSettings.swift */; };
 		4011EECD2961C9B000A36D87 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4011EECC2961C9B000A36D87 /* LICENSE */; };
 		40245EF6296BE7D4007B5DAB /* ExerciseRunList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40245EF5296BE7D4007B5DAB /* ExerciseRunList.swift */; };
 		402A5F2F296B7FE000A43DB3 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402A5F2E296B7F7B00A43DB3 /* HistoryView.swift */; };
@@ -26,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4001ED0C29732D4500F165ED /* ExportSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportSettings.swift; sourceTree = "<group>"; };
+		4001ED0E29732E1300F165ED /* ColorSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSettings.swift; sourceTree = "<group>"; };
 		4011EECC2961C9B000A36D87 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4011EECE2961C9BC00A36D87 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		40245EF5296BE7D4007B5DAB /* ExerciseRunList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseRunList.swift; sourceTree = "<group>"; };
@@ -95,6 +99,8 @@
 				40245EF5296BE7D4007B5DAB /* ExerciseRunList.swift */,
 				403CA2D12972829F0084785B /* PhoneSettingsForm.swift */,
 				403CA2CF29721E750084785B /* Export-Utils.swift */,
+				4001ED0C29732D4500F165ED /* ExportSettings.swift */,
+				4001ED0E29732E1300F165ED /* ColorSettings.swift */,
 				40E347C129452CF1003A19B9 /* Assets.xcassets */,
 				40EBCFDE294BFB880082A172 /* Info.plist */,
 				40E347C329452CF1003A19B9 /* App.entitlements */,
@@ -198,6 +204,8 @@
 			files = (
 				40E347C029452CF1003A19B9 /* ContentView.swift in Sources */,
 				403CA2D22972829F0084785B /* PhoneSettingsForm.swift in Sources */,
+				4001ED0F29732E1300F165ED /* ColorSettings.swift in Sources */,
+				4001ED0D29732D4500F165ED /* ExportSettings.swift in Sources */,
 				403CA2D0297220460084785B /* Export-Utils.swift in Sources */,
 				408FACFE296CAC9300D02C9C /* RoutineRunList.swift in Sources */,
 				40245EF6296BE7D4007B5DAB /* ExerciseRunList.swift in Sources */,
