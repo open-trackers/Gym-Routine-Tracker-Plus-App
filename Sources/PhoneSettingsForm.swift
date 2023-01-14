@@ -19,10 +19,14 @@ struct PhoneSettingsForm: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject private var router: MyRouter
 
+    // MARK: - Locals
+
     @AppStorage(colorSchemeModeKey) var colorSchemeMode: ColorSchemeMode = .automatic
 
     private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
                                 category: String(describing: PhoneSettingsForm.self))
+
+    // MARK: - Views
 
     var body: some View {
         SettingsForm {
