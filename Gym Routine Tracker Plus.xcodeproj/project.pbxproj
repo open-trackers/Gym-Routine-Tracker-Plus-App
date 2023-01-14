@@ -13,6 +13,7 @@
 		402A5F32296B835B00A43DB3 /* Tabler in Frameworks */ = {isa = PBXBuildFile; productRef = 402A5F31296B835B00A43DB3 /* Tabler */; };
 		403CA2CE2971F6660084785B /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 403CA2CD2971F6660084785B /* ZIPFoundation */; };
 		403CA2D0297220460084785B /* Export-Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403CA2CF29721E750084785B /* Export-Utils.swift */; };
+		403CA2D22972829F0084785B /* PhoneSettingsForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403CA2D12972829F0084785B /* PhoneSettingsForm.swift */; };
 		408FACFE296CAC9300D02C9C /* RoutineRunList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408FACFD296CABC400D02C9C /* RoutineRunList.swift */; };
 		40B51E45294549DF0047377A /* GroutUI in Frameworks */ = {isa = PBXBuildFile; productRef = 40B51E44294549DF0047377A /* GroutUI */; };
 		40CCF3F629454D2B007DDE69 /* GroutLib in Frameworks */ = {isa = PBXBuildFile; productRef = 40CCF3F529454D2B007DDE69 /* GroutLib */; };
@@ -30,6 +31,7 @@
 		40245EF5296BE7D4007B5DAB /* ExerciseRunList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseRunList.swift; sourceTree = "<group>"; };
 		402A5F2E296B7F7B00A43DB3 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		403CA2CF29721E750084785B /* Export-Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Export-Utils.swift"; sourceTree = "<group>"; };
+		403CA2D12972829F0084785B /* PhoneSettingsForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneSettingsForm.swift; sourceTree = "<group>"; };
 		408FACFD296CABC400D02C9C /* RoutineRunList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineRunList.swift; sourceTree = "<group>"; };
 		40E347BA29452CF1003A19B9 /* Gym Routine Tracker Plus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gym Routine Tracker Plus.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		40E347BD29452CF1003A19B9 /* PlusApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusApp.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				402A5F2E296B7F7B00A43DB3 /* HistoryView.swift */,
 				408FACFD296CABC400D02C9C /* RoutineRunList.swift */,
 				40245EF5296BE7D4007B5DAB /* ExerciseRunList.swift */,
+				403CA2D12972829F0084785B /* PhoneSettingsForm.swift */,
 				403CA2CF29721E750084785B /* Export-Utils.swift */,
 				40E347C129452CF1003A19B9 /* Assets.xcassets */,
 				40EBCFDE294BFB880082A172 /* Info.plist */,
@@ -194,6 +197,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				40E347C029452CF1003A19B9 /* ContentView.swift in Sources */,
+				403CA2D22972829F0084785B /* PhoneSettingsForm.swift in Sources */,
 				403CA2D0297220460084785B /* Export-Utils.swift in Sources */,
 				408FACFE296CAC9300D02C9C /* RoutineRunList.swift in Sources */,
 				40245EF6296BE7D4007B5DAB /* ExerciseRunList.swift in Sources */,

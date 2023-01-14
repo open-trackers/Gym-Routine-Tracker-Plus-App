@@ -21,9 +21,9 @@ public func createZipArchive(_ context: NSManagedObjectContext,
     guard let archive = Archive(accessMode: .create)
     else { throw DataError.archiveCreationFailure }
 
-    func blah<T: NSFetchRequestResult & Encodable & MAttributable>(_: T.Type,
-                                                                   _ filePrefix: String,
-                                                                   inStore: NSPersistentStore?) throws
+    func makeDelimFile<T: NSFetchRequestResult & Encodable & MAttributable>(_: T.Type,
+                                                                            _ filePrefix: String,
+                                                                            inStore: NSPersistentStore?) throws
     {
         let request = makeRequest(T.self, inStore: inStore)
         let results = try context.fetch(request)
@@ -37,12 +37,12 @@ public func createZipArchive(_ context: NSManagedObjectContext,
                              })
     }
 
-    try blah(Routine.self, "routines", inStore: mainStore)
-    try blah(Exercise.self, "exercises", inStore: mainStore)
-    try blah(ZRoutine.self, "zroutines", inStore: mainStore)
-    try blah(ZRoutineRun.self, "zroutineruns", inStore: mainStore)
-    try blah(ZExercise.self, "zexercises", inStore: mainStore)
-    try blah(ZExerciseRun.self, "zexerciseruns", inStore: mainStore)
+    try makeDelimFile(Routine.self, "routines", inStore: mainStore)
+    try makeDelimFile(Exercise.self, "exercises", inStore: mainStore)
+    try makeDelimFile(ZRoutine.self, "zroutines", inStore: mainStore)
+    try makeDelimFile(ZRoutineRun.self, "zroutineruns", inStore: mainStore)
+    try makeDelimFile(ZExercise.self, "zexercises", inStore: mainStore)
+    try makeDelimFile(ZExerciseRun.self, "zexerciseruns", inStore: mainStore)
 
     return archive.data
 }
