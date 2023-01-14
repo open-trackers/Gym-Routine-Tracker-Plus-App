@@ -22,6 +22,7 @@ struct PhoneSettingsForm: View {
     // MARK: - Locals
 
     @AppStorage(colorSchemeModeKey) var colorSchemeMode: ColorSchemeMode = .automatic
+    @AppStorage(colorSchemeModeKey) var exportFormat: ExportFormat = .CSV
 
     private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
                                 category: String(describing: PhoneSettingsForm.self))
@@ -43,6 +44,19 @@ struct PhoneSettingsForm: View {
             }
 
             Section {
+                Picker(selection: $exportFormat) {
+                    ForEach(ExportFormat.allCases, id: \.self) { mode in
+                        // Text("\(mode.defaultFileExtension.uppercased()) (\(mode.rawValue))")
+                        // Text("\(mode.description) (\(mode.defaultFileExtension))")
+                        Text(mode.defaultFileExtension.uppercased())
+                            // Text(mode.description)
+                            .tag(mode)
+                    }
+                } label: {
+                    Text("Format")
+                }
+                .pickerStyle(.segmented)
+                // .pickerStyle(MenuPickerStyle())
                 ShareLink(item: getData(),
                           subject: Text("subject"), message: Text("message"), preview: SharePreview("Zip")) {
                     Label("Export data", systemImage: "square.and.arrow.up")
@@ -51,7 +65,7 @@ struct PhoneSettingsForm: View {
                 Text("Data Export")
                     .foregroundStyle(.tint)
             } footer: {
-                Text("Exports to a zip file containing comma-separated-value (CSV) files, suitable for import into a spreadsheet.")
+                Text("Exports to ZIP file as \(exportFormat.description) (\(exportFormat.rawValue)).")
             }
 
             Button(action: {
@@ -75,7 +89,10 @@ struct PhoneSettingsForm: View {
         do {
             if let mainStore = PersistenceManager.getMainStore(viewContext),
                let archiveStore = PersistenceManager.getArchiveStore(viewContext),
-               let data = try createZipArchive(viewContext, mainStore: mainStore, archiveStore: archiveStore)
+               let data = try createZipArchive(viewContext,
+                                               mainStore: mainStore,
+                                               archiveStore: archiveStore,
+                                               format: exportFormat)
             {
                 logger.notice("\(#function) EXIT (success)")
                 return data
