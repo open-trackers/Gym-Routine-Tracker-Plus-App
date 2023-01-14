@@ -55,7 +55,7 @@ struct ContentView: View {
 
             NavStack(name: "settings",
                      navData: $settingsNavData) {
-                SettingsForm(onExport: exportAction)
+                SettingsForm(bottom: bottom)
             }
             .tabItem {
                 Label("Settings", systemImage: "gear")
@@ -76,21 +76,43 @@ struct ContentView: View {
         }
     }
 
+    private func bottom() -> some View {
+        Section {
+            ShareLink(item: getData(),
+                      subject: Text("subject"), message: Text("message"), preview: SharePreview("Zip")) {
+                Label("Export data", systemImage: "square.and.arrow.up")
+            }
+        } header: {
+            Text("Data Export")
+                .foregroundStyle(.tint)
+        } footer: {
+            Text("Exports to a zip file containing comma-separated-value (CSV) files, suitable for import into a spreadsheet.")
+        }
+    }
+
+    // MARK: - Properties
+
+    private var url: URL {
+        URL(string: "https://yahoo.com")!
+    }
+
     // MARK: - Actions
 
-    private func exportAction() {
+    private func getData() -> Data {
+        logger.notice("\(#function) ENTER")
         do {
             if let mainStore = PersistenceManager.getMainStore(viewContext),
                let archiveStore = PersistenceManager.getArchiveStore(viewContext),
                let data = try createZipArchive(viewContext, mainStore: mainStore, archiveStore: archiveStore)
             {
-                print("data ready for export")
-
-                /// NSSavePanel.saveData(data, name: "rebalance", ext: "zip", completion: { _ in })
+                return data
             }
         } catch {
             logger.error("\(#function): \(error.localizedDescription)")
         }
+
+        logger.notice("\(#function) EXIT")
+        return Data()
     }
 }
 
