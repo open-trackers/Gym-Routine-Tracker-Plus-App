@@ -27,6 +27,10 @@ struct PhoneSettingsForm: View {
     private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
                                 category: String(describing: PhoneSettingsForm.self))
 
+    @State private var showFileExport = false
+    @State private var zipDocument: ZipDocument?
+    @State private var zipFileName: String?
+
     // MARK: - Views
 
     var body: some View {
@@ -44,24 +48,21 @@ struct PhoneSettingsForm: View {
             }
 
             Section {
-                Picker(selection: $exportFormat) {
+                Button(action: exportAction) {
+                    Text("Export Data")
+                }
+                Picker("", selection: $exportFormat) {
                     ForEach(ExportFormat.allCases, id: \.self) { mode in
                         Text(mode.defaultFileExtension.uppercased())
                             .tag(mode)
                     }
-                } label: {
-                    ShareLink(item: getData(),
-                              subject: Text("subject"), message: Text("message"), preview: SharePreview("Zip")) {
-                        Label("Export data", systemImage: "square.and.arrow.up")
-                    }
                 }
-                .pickerStyle(MenuPickerStyle())
-
+                .pickerStyle(SegmentedPickerStyle())
             } header: {
                 Text("Data Export")
                     .foregroundStyle(.tint)
             } footer: {
-                Text("Exports to ZIP file as \(exportFormat.description) (\(exportFormat.rawValue)).")
+                Text("Will export data to ZIP archive containing \(exportFormat.description) (\(exportFormat.rawValue)) files.")
             }
 
             Button(action: {
@@ -69,6 +70,19 @@ struct PhoneSettingsForm: View {
             }) {
                 Text("About \(appName)")
             }
+        }
+        .fileExporter(isPresented: $showFileExport,
+                      document: zipDocument,
+                      contentType: .zip,
+                      defaultFilename: zipFileName) { result in
+            switch result {
+            case let .success(url):
+                logger.notice("\(#function): saved to \(url)")
+            case let .failure(error):
+                logger.error("\(#function): \(error.localizedDescription)")
+            }
+            zipDocument = nil
+            zipFileName = nil
         }
     }
 
@@ -80,7 +94,19 @@ struct PhoneSettingsForm: View {
 
     // MARK: - Actions
 
-    private func getData() -> Data {
+    private func exportAction() {
+        if let document = createZipDocument() {
+            zipDocument = document
+            zipFileName = generateTimestampFileName(prefix: "grt-", suffix: ".zip")
+            showFileExport = true
+        } else {
+            logger.error("Unable to generate zip document, so not exporting.")
+        }
+    }
+
+    // MARK: - Helpers
+
+    private func createZipDocument() -> ZipDocument? {
         logger.notice("\(#function) ENTER")
         do {
             if let mainStore = PersistenceManager.getMainStore(viewContext),
@@ -91,14 +117,14 @@ struct PhoneSettingsForm: View {
                                                format: exportFormat)
             {
                 logger.notice("\(#function) EXIT (success)")
-                return data
+                return ZipDocument(data: data)
             }
         } catch {
-            logger.error("\(#function): \(error.localizedDescription)")
+            logger.error("\(#function): ERROR \(error.localizedDescription)")
         }
 
         logger.notice("\(#function) EXIT (failure)")
-        return Data()
+        return nil
     }
 }
 
