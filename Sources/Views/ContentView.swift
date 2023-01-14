@@ -8,7 +8,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 //
 
-import CoreData
+import os
 import SwiftUI
 
 import GroutLib
@@ -27,6 +27,9 @@ struct ContentView: View {
     @SceneStorage("main-routines-nav") private var routinesNavData: Data?
     @SceneStorage("main-history-nav") private var historyNavData: Data?
     @SceneStorage("main-settings-nav") private var settingsNavData: Data?
+
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
+                                category: String(describing: ContentView.self))
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -51,7 +54,7 @@ struct ContentView: View {
 
             NavStack(name: "settings",
                      navData: $settingsNavData) {
-                SettingsForm()
+                PhoneSettingsForm()
             }
             .tabItem {
                 Label("Settings", systemImage: "gear")
