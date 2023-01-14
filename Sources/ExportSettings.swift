@@ -20,7 +20,7 @@ struct ExportSettings: View {
 
     // MARK: - Locals
 
-    @AppStorage(colorSchemeModeKey) var exportFormat: ExportFormat = .CSV
+    @AppStorage(exportFormatKey) var exportFormat: ExportFormat = .CSV
 
     @State private var showFileExport = false
     @State private var zipDocument: ZipDocument?
