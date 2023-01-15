@@ -101,7 +101,7 @@ struct RoutineRunList: View {
 
     @ViewBuilder
     private func listRow(element: ZRoutineRun) -> some View {
-        Button(action: { Haptics.play(); detailAction(zRoutineRun: element) }) {
+        Button(action: { detailAction(zRoutineRun: element) }) {
             LazyVGrid(columns: gridItems, alignment: .leading) {
                 Text(element.zRoutine?.name ?? "")
                     .lineLimit(1)
@@ -140,7 +140,6 @@ struct RoutineRunList: View {
     }
 
     private func deleteAction(at offsets: IndexSet) {
-        Haptics.play()
         for index in offsets {
             let element = routineRuns[index]
             viewContext.delete(element)

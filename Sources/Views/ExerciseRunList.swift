@@ -188,7 +188,6 @@ struct ExerciseRunList: View {
     // MARK: - Actions
 
     private func deleteAction(at offsets: IndexSet) {
-        Haptics.play()
         for index in offsets {
             let element = exerciseRuns[index]
             viewContext.delete(element)

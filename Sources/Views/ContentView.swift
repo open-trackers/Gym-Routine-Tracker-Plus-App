@@ -61,9 +61,6 @@ struct ContentView: View {
             }
             .tag(Tabs.settings.rawValue)
         }
-        .onChange(of: selectedTab) { _ in
-            Haptics.play()
-        }
     }
 
     // used to inject view into NavStack
