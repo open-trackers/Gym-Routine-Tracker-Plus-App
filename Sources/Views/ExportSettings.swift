@@ -42,6 +42,9 @@ struct ExportSettings: View {
                         .tag(mode)
                 }
             }
+            .onChange(of: exportFormat) { _ in
+                Haptics.play()
+            }
             .pickerStyle(SegmentedPickerStyle())
         } header: {
             Text("Data Export")
@@ -67,6 +70,7 @@ struct ExportSettings: View {
     // MARK: - Actions
 
     private func exportAction() {
+        Haptics.play()
         if let document = createZipDocument() {
             zipDocument = document
             zipFileName = generateTimestampFileName(prefix: "grt-", suffix: ".zip")

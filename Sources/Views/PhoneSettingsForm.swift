@@ -26,6 +26,7 @@ struct PhoneSettingsForm: View {
             ExportSettings()
 
             Button(action: {
+                Haptics.play()
                 router.path.append(MyRoutes.about)
             }) {
                 Text("About \(appName)")

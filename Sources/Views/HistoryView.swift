@@ -34,7 +34,7 @@ struct HistoryView: View {
         RoutineRunList(archiveStore: archiveStore)
             .toolbar {
                 ToolbarItem(placement: .destructiveAction) {
-                    Button(action: { showAlert = true }) {
+                    Button(action: { Haptics.play(.warning); showAlert = true }) {
                         Text("Clear")
                     }
                 }

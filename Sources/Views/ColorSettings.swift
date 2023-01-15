@@ -28,6 +28,9 @@ struct ColorSettings: View {
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
+            .onChange(of: colorSchemeMode) { _ in
+                Haptics.play()
+            }
         } header: {
             Text("Color Scheme")
                 .foregroundStyle(.tint)
