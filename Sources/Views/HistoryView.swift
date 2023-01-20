@@ -35,7 +35,7 @@ struct HistoryView: View {
             .toolbar {
                 ToolbarItem(placement: .destructiveAction) {
                     Button(action: {
-                        Haptics.play(.warning);
+                        Haptics.play(.warning)
                         showAlert = true
                     }) {
                         Text("Clear")
