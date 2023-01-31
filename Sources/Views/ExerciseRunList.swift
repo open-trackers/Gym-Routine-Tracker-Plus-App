@@ -111,7 +111,7 @@ struct ExerciseRunList: View {
                 .padding(columnPadding)
             Text(element.zExercise?.name ?? "")
                 .padding(columnPadding)
-            intensityText(element.intensity)
+            intensityText(element.intensity, element.zExercise?.units)
                 .padding(columnPadding)
         }
     }
@@ -158,8 +158,8 @@ struct ExerciseRunList: View {
         ElapsedTimeText(elapsedSecs: getDuration(completedAt) ?? 0, timeElapsedFormat: timeElapsedFormat)
     }
 
-    private func intensityText(_ intensity: Float) -> some View {
-        Text(formatIntensity(intensity))
+    private func intensityText(_ intensity: Float, _ units: Int16?) -> some View {
+        Text(formattedIntensity(intensity, units))
             .modify {
                 if #available(iOS 16.1, watchOS 9.1, *) {
                     $0.fontDesign(.monospaced)
@@ -201,8 +201,9 @@ struct ExerciseRunList: View {
 
     // MARK: - Helpers
 
-    private func formatIntensity(_ intensity: Float) -> String {
-        String(format: "%0.1f", intensity)
+    private func formattedIntensity(_ intensity: Float, _ units: Int16?) -> String {
+        let _units = units != nil ? Units(rawValue: units!) ?? .none : .none
+        return formatIntensity(intensity, units: _units, withUnits: true, isFractional: true)
     }
 
     private func getDuration(_ completedAt: Date?) -> TimeInterval? {
@@ -230,8 +231,8 @@ struct ExerciseRunList_Previews: PreviewProvider {
         let completedAt2 = completedAt1.addingTimeInterval(173)
         let intensity1: Float = 150.0
         let intensity2: Float = 200.0
-        let zE1 = ZExercise.create(ctx, zRoutine: zR, exerciseName: "Lat Pulldown", exerciseArchiveID: exerciseArchiveID1, toStore: archiveStore)
-        let zE2 = ZExercise.create(ctx, zRoutine: zR, exerciseName: "Rear Delt", exerciseArchiveID: exerciseArchiveID2, toStore: archiveStore)
+        let zE1 = ZExercise.create(ctx, zRoutine: zR, exerciseName: "Lat Pulldown", exerciseUnits: .kilograms, exerciseArchiveID: exerciseArchiveID1, toStore: archiveStore)
+        let zE2 = ZExercise.create(ctx, zRoutine: zR, exerciseName: "Rear Delt", exerciseUnits: .none, exerciseArchiveID: exerciseArchiveID2, toStore: archiveStore)
         _ = ZExerciseRun.create(ctx, zRoutineRun: zRR, zExercise: zE1, completedAt: completedAt1, intensity: intensity1, toStore: archiveStore)
         _ = ZExerciseRun.create(ctx, zRoutineRun: zRR, zExercise: zE2, completedAt: completedAt2, intensity: intensity2, toStore: archiveStore)
         try! ctx.save()
