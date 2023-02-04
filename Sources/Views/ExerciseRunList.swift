@@ -28,8 +28,8 @@ struct ExerciseRunList: View {
 
     // MARK: - Parameters
 
-    private var archiveStore: NSPersistentStore
     private var zRoutineRun: ZRoutineRun
+    private var archiveStore: NSPersistentStore
 
     init(zRoutineRun: ZRoutineRun, archiveStore: NSPersistentStore) {
         self.zRoutineRun = zRoutineRun
@@ -185,14 +185,25 @@ struct ExerciseRunList: View {
         zRoutineRun.zRoutine?.wrappedName ?? "UNKNOWN"
     }
 
+    // MARK: - Properties
+
     // MARK: - Actions
 
     private func deleteAction(at offsets: IndexSet) {
-        for index in offsets {
-            let element = exerciseRuns[index]
-            viewContext.delete(element)
-        }
+        // NOTE: removing specified zExerciseRun records, where present, from both mainStore and archiveStore.
+
         do {
+            for index in offsets {
+                let zExerciseRun = exerciseRuns[index]
+
+                guard let zExercise = zExerciseRun.zExercise,
+                      let exerciseArchiveID = zExercise.exerciseArchiveID,
+                      let completedAt = zExerciseRun.completedAt
+                else { continue }
+
+                try ZExerciseRun.delete(viewContext, exerciseArchiveID: exerciseArchiveID, completedAt: completedAt, inStore: nil)
+            }
+
             try viewContext.save()
         } catch {
             logger.error("\(#function): \(error.localizedDescription)")

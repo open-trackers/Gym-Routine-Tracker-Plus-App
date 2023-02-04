@@ -140,11 +140,20 @@ struct RoutineRunList: View {
     }
 
     private func deleteAction(at offsets: IndexSet) {
-        for index in offsets {
-            let element = routineRuns[index]
-            viewContext.delete(element)
-        }
+        // NOTE: removing specified zRoutineRun records, where present, from both mainStore and archiveStore.
+
         do {
+            for index in offsets {
+                let zRoutineRun = routineRuns[index]
+
+                guard let zRoutine = zRoutineRun.zRoutine,
+                      let routineArchiveID = zRoutine.routineArchiveID,
+                      let startedAt = zRoutineRun.startedAt
+                else { continue }
+
+                try ZRoutineRun.delete(viewContext, routineArchiveID: routineArchiveID, startedAt: startedAt, inStore: nil)
+            }
+
             try viewContext.save()
         } catch {
             logger.error("\(#function): \(error.localizedDescription)")

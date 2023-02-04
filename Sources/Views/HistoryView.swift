@@ -72,7 +72,8 @@ struct HistoryView: View {
 
     private func clearHistoryAction() {
         do {
-            try PersistenceManager.clearZEntities(viewContext, inStore: archiveStore)
+            // clear all 'z' records from both mainStore and archiveStore
+            try PersistenceManager.clearZEntities(viewContext)
             try viewContext.save()
         } catch {
             logger.error("\(#function): \(error.localizedDescription)")
