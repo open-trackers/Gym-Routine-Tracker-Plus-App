@@ -35,7 +35,7 @@ struct ContentView: View {
         TabView(selection: $selectedTab) {
             NavStack(name: "routines",
                      navData: $routinesNavData) {
-                RoutineList()
+                RoutineList(beforeStart: beforeStartAction)
             }
             .tabItem {
                 Label("Routines", systemImage: "dumbbell")
@@ -73,6 +73,13 @@ struct ContentView: View {
         } else {
             Text("Routine Run not available to display detail.")
         }
+    }
+
+    // MARK: - Actions
+
+    private func beforeStartAction() {
+        // in case routine is started via shortcut, force the first tab
+        selectedTab = Tabs.routines.rawValue
     }
 }
 
