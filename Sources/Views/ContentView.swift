@@ -79,7 +79,11 @@ struct ContentView: View {
 
     private func beforeStartAction() {
         // in case routine is started via shortcut, force the first tab
-        selectedTab = Tabs.routines.rawValue
+        
+        // NOTE: trying an explicit time delay, as it didn't switch the first time I tested.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            selectedTab = Tabs.routines.rawValue
+        }
     }
 }
 
