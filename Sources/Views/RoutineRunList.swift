@@ -11,6 +11,7 @@
 import CoreData
 import os
 import SwiftUI
+import StoreKit
 
 import Compactor
 import Tabler
@@ -19,6 +20,7 @@ import GroutLib
 import GroutUI
 
 struct RoutineRunList: View {
+    @Environment(\.requestReview) private var requestReview
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.managedObjectContext) private var viewContext
@@ -77,6 +79,10 @@ struct RoutineRunList: View {
 
     private let tc = TimeCompactor(ifZero: "", style: .medium, roundSmallToWhole: false)
 
+    // support for app review prompt
+    @SceneStorage("has-been-prompted-for-app-reviewc") private var hasBeenPromptedForAppReview = false
+    private let minimumRunsForAppReviewAlert = 15
+
     // MARK: - Views
 
     var body: some View {
@@ -86,6 +92,7 @@ struct RoutineRunList: View {
                    rowBackground: rowBackground,
                    results: routineRuns)
             .listStyle(.plain)
+            .onAppear(perform: appearAction)
     }
 
     private func header(ctx _: Binding<Context>) -> some View {
@@ -134,6 +141,14 @@ struct RoutineRunList: View {
     // MARK: - Properties
 
     // MARK: - Actions
+
+    private func appearAction() {
+        guard !hasBeenPromptedForAppReview,
+              routineRuns.count >= minimumRunsForAppReviewAlert else { return }
+        hasBeenPromptedForAppReview = true
+        logger.notice("\(#function): attempting to request review, which may not work")
+        requestReview()
+    }
 
     private func detailAction(zRoutineRun: ZRoutineRun) {
         router.path.append(MyRoutes.routineRunDetail(zRoutineRun.uriRepresentation))
