@@ -80,7 +80,7 @@ struct RoutineRunList: View {
     private let tc = TimeCompactor(ifZero: "", style: .medium, roundSmallToWhole: false)
 
     // support for app review prompt
-    @SceneStorage("has-been-prompted-for-app-reviewc") private var hasBeenPromptedForAppReview = false
+    @SceneStorage("has-been-prompted-for-app-review") private var hasBeenPromptedForAppReview = false
     private let minimumRunsForAppReviewAlert = 15
 
     // MARK: - Views
