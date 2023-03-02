@@ -36,7 +36,7 @@ struct ContentView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             NavStack(navData: $routinesNavData, destination: destination) {
-                RoutineList(beforeStart: beforeStartAction)
+                RoutineList(onShortcut: shortcutAction)
             }
             .tabItem {
                 Label("Routines", systemImage: "dumbbell")
@@ -90,8 +90,8 @@ struct ContentView: View {
 
     // MARK: - Actions
 
-    private func beforeStartAction() {
-        // in case routine is started via shortcut, force the first tab
+    private func shortcutAction() {
+        // in case app is started via shortcut, force the first tab
 
         // NOTE: trying an explicit time delay, as it didn't switch the first time I tested.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
