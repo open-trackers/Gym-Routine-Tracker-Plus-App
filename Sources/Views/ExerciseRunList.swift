@@ -228,7 +228,8 @@ struct ExerciseRunList: View {
 
 struct ExerciseRunList_Previews: PreviewProvider {
     static var previews: some View {
-        let ctx = PersistenceManager.getPreviewContainer().viewContext
+        let manager = CoreDataStack.getPreviewStack()
+        let ctx = manager.container.viewContext
         let archiveStore = PersistenceManager.getArchiveStore(ctx)!
 
         let routineArchiveID = UUID()

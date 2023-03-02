@@ -17,7 +17,7 @@ import GroutUI
 
 struct HistoryView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @EnvironmentObject private var router: MyRouter
+    @EnvironmentObject private var router: GroutRouter
 
     // MARK: - Parameters
 
@@ -100,7 +100,8 @@ struct HistoryView: View {
 
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        let ctx = PersistenceManager.getPreviewContainer().viewContext
+        let manager = CoreDataStack.getPreviewStack()
+        let ctx = manager.container.viewContext
         let archiveStore = PersistenceManager.getArchiveStore(ctx)!
 
         let routineArchiveID = UUID()

@@ -10,8 +10,8 @@
 
 import CoreData
 import os
-import SwiftUI
 import StoreKit
+import SwiftUI
 
 import Compactor
 import Tabler
@@ -24,7 +24,7 @@ struct RoutineRunList: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.managedObjectContext) private var viewContext
-    @EnvironmentObject private var router: MyRouter
+    @EnvironmentObject private var router: GroutRouter
 
     typealias Sort = TablerSort<ZRoutineRun>
     typealias Context = TablerContext<ZRoutineRun>
@@ -151,7 +151,7 @@ struct RoutineRunList: View {
     }
 
     private func detailAction(zRoutineRun: ZRoutineRun) {
-        router.path.append(MyRoutes.routineRunDetail(zRoutineRun.uriRepresentation))
+        router.path.append(GroutRoute.routineRunDetail(zRoutineRun.uriRepresentation))
     }
 
     private func deleteAction(at offsets: IndexSet) {
@@ -178,7 +178,8 @@ struct RoutineRunList: View {
 
 struct RoutineRunList_Previews: PreviewProvider {
     static var previews: some View {
-        let ctx = PersistenceManager.getPreviewContainer().viewContext
+        let manager = CoreDataStack.getPreviewStack()
+        let ctx = manager.container.viewContext
         let archiveStore = PersistenceManager.getArchiveStore(ctx)!
         let routineArchiveID = UUID()
 

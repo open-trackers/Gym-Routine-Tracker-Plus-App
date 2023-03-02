@@ -15,7 +15,7 @@ import GroutLib
 import GroutUI
 
 struct PhoneSettingsForm: View {
-    @EnvironmentObject private var router: MyRouter
+    @EnvironmentObject private var router: GroutRouter
 
     // MARK: - Views
 
@@ -26,7 +26,7 @@ struct PhoneSettingsForm: View {
             ExportSettings()
 
             Button(action: {
-                router.path.append(MyRoutes.about)
+                router.path.append(GroutRoute.about)
             }) {
                 Text("About \(appName)")
             }
