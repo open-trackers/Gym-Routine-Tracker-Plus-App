@@ -19,7 +19,7 @@ public func createZipArchive(_ context: NSManagedObjectContext,
                              format: ExportFormat = .CSV) throws -> Data?
 {
     guard let archive = Archive(accessMode: .create)
-    else { throw DataError.archiveCreationFailure }
+    else { throw TrackerError.archiveCreationFailure }
 
     func makeDelimFile<T: NSFetchRequestResult & Encodable & MAttributable>(_: T.Type,
                                                                             inStore: NSPersistentStore?) throws
