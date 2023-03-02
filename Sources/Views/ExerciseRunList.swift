@@ -17,6 +17,8 @@ import Tabler
 
 import GroutLib
 import GroutUI
+import TrackerLib
+import TrackerUI
 
 struct ExerciseRunList: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
@@ -230,7 +232,7 @@ struct ExerciseRunList_Previews: PreviewProvider {
     static var previews: some View {
         let manager = CoreDataStack.getPreviewStack()
         let ctx = manager.container.viewContext
-        let archiveStore = PersistenceManager.getArchiveStore(ctx)!
+        let archiveStore = manager.getArchiveStore(ctx)!
 
         let routineArchiveID = UUID()
         let startedAt1 = Date.now.addingTimeInterval(-20000)

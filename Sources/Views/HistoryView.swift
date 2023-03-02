@@ -14,16 +14,18 @@ import SwiftUI
 
 import GroutLib
 import GroutUI
+import TrackerUI
 
 struct HistoryView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject private var manager: CoreDataStack
     @EnvironmentObject private var router: GroutRouter
 
     // MARK: - Parameters
 
     // MARK: - Locals
 
-    @State private var showAlert = false
+    @State private var showClearDialog = false
 
     private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
                                 category: String(describing: HistoryView.self))
@@ -31,27 +33,31 @@ struct HistoryView: View {
     // MARK: - Views
 
     var body: some View {
-        RoutineRunList(archiveStore: archiveStore)
-            .toolbar {
-                ToolbarItem(placement: .destructiveAction) {
-                    Button(action: {
-                        Haptics.play(.warning)
-                        showAlert = true
-                    }) {
-                        Text("Clear")
+        if let archiveStore = manager.getArchiveStore(viewContext) {
+            RoutineRunList(archiveStore: archiveStore)
+                .toolbar {
+                    ToolbarItem(placement: .destructiveAction) {
+                        Button(action: {
+                            Haptics.play(.warning)
+                            showClearDialog = true
+                        }) {
+                            Text("Clear")
+                        }
                     }
                 }
-            }
-            .alert("Are you sure?",
-                   isPresented: $showAlert,
-                   actions: {
-                       Button("Delete", role: .destructive, action: clearHistoryAction)
-                   },
-                   message: {
-                       Text("This will remove all historical data.")
-                   })
-            .navigationTitle(navigationTitle)
-            .task(priority: .userInitiated, taskAction)
+                .confirmationDialog("",
+                                    isPresented: $showClearDialog,
+                                    actions: {
+                                        Button("Clear", role: .destructive, action: clearHistoryAction)
+                                    },
+                                    message: {
+                                        Text("This will remove all historical data.")
+                                    })
+                .navigationTitle(navigationTitle)
+                .task(priority: .userInitiated, taskAction)
+        } else {
+            Text("History not available.")
+        }
     }
 
     // MARK: - Properties
@@ -60,20 +66,12 @@ struct HistoryView: View {
         "History"
     }
 
-    private var archiveStore: NSPersistentStore {
-        guard let store = PersistenceManager.getArchiveStore(viewContext)
-        else {
-            fatalError("unable to resolve archive store")
-        }
-        return store
-    }
-
     // MARK: - Actions
 
     private func clearHistoryAction() {
         do {
             // clear all 'z' records from both mainStore and archiveStore
-            try PersistenceManager.clearZEntities(viewContext)
+            try manager.clearZEntities(viewContext)
             try viewContext.save()
         } catch {
             logger.error("\(#function): \(error.localizedDescription)")
@@ -86,9 +84,18 @@ struct HistoryView: View {
 
         // transfer any 'Z' records from the 'Main' store to the 'Archive' store.
 
-        await PersistenceManager.shared.container.performBackgroundTask { backgroundContext in
+        await manager.container.performBackgroundTask { backgroundContext in
+            guard let mainStore = manager.getMainStore(backgroundContext),
+                  let archiveStore = manager.getArchiveStore(backgroundContext)
+            else {
+                logger.error("\(#function): unable to acquire configuration to transfer log records.")
+                return
+            }
+
             do {
-                try transferToArchive(backgroundContext)
+                try transferToArchive(backgroundContext,
+                                      mainStore: mainStore,
+                                      archiveStore: archiveStore)
                 try backgroundContext.save()
             } catch {
                 logger.error("\(#function): TRANSFER \(error.localizedDescription)")
@@ -102,7 +109,7 @@ struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
         let manager = CoreDataStack.getPreviewStack()
         let ctx = manager.container.viewContext
-        let archiveStore = PersistenceManager.getArchiveStore(ctx)!
+        let archiveStore = manager.getArchiveStore(ctx)!
 
         let routineArchiveID = UUID()
         let startedAt1 = Date.now.addingTimeInterval(-20000)

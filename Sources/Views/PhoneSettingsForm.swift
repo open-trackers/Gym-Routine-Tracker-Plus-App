@@ -13,23 +13,35 @@ import SwiftUI
 
 import GroutLib
 import GroutUI
+import TrackerLib
+import TrackerUI
 
 struct PhoneSettingsForm: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject private var manager: CoreDataStack
     @EnvironmentObject private var router: GroutRouter
 
     // MARK: - Views
 
     var body: some View {
-        SettingsForm {
-            ColorSettings()
+        if let appSetting = try? AppSetting.getOrCreate(viewContext),
+           let mainStore = manager.getMainStore(viewContext),
+           let archiveStore = manager.getArchiveStore(viewContext)
+        {
+            GroutSettings(appSetting: appSetting, onRestoreToDefaults: {}) {
+                ExportSettings(mainStore: mainStore,
+                               archiveStore: archiveStore,
+                               filePrefix: "grt-",
+                               createZipArchive: groutCreateZipArchive)
 
-            ExportSettings()
-
-            Button(action: {
-                router.path.append(GroutRoute.about)
-            }) {
-                Text("About \(appName)")
+                Button(action: {
+                    router.path.append(GroutRoute.about)
+                }) {
+                    Text("About \(appName)")
+                }
             }
+        } else {
+            Text("Settings not available.")
         }
     }
 

@@ -13,9 +13,11 @@ import SwiftUI
 
 import GroutLib
 import GroutUI
+import TrackerUI
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject private var manager: CoreDataStack
 
     enum Tabs: Int {
         case routines = 0
@@ -33,8 +35,7 @@ struct ContentView: View {
 
     var body: some View {
         TabView(selection: $selectedTab) {
-            NavStack(name: "routines",
-                     navData: $routinesNavData) {
+            NavStack(navData: $routinesNavData, destination: destination) {
                 RoutineList(beforeStart: beforeStartAction)
             }
             .tabItem {
@@ -42,9 +43,7 @@ struct ContentView: View {
             }
             .tag(Tabs.routines.rawValue)
 
-            NavStack(name: "history",
-                     navData: $historyNavData,
-                     routineRunDetail: exerciseRunList) {
+            NavStack(navData: $historyNavData, destination: destination) {
                 HistoryView()
             }
             .tabItem {
@@ -52,8 +51,7 @@ struct ContentView: View {
             }
             .tag(Tabs.history.rawValue)
 
-            NavStack(name: "settings",
-                     navData: $settingsNavData) {
+            NavStack(navData: $settingsNavData, destination: destination) {
                 PhoneSettingsForm()
             }
             .tabItem {
@@ -63,11 +61,26 @@ struct ContentView: View {
         }
     }
 
+    // handle routes for iOS-specific views here
+    @ViewBuilder
+    private func destination(_ router: GroutRouter, _ route: GroutRoute) -> some View {
+        switch route {
+        case let .routineRunList(routineRunUri):
+            exerciseRunList(routineRunUri)
+                .environmentObject(router)
+                .environment(\.managedObjectContext, viewContext)
+        default:
+            GroutDestination(route)
+                .environmentObject(router)
+                .environment(\.managedObjectContext, viewContext)
+        }
+    }
+
     // used to inject view into NavStack
     @ViewBuilder
     private func exerciseRunList(_ routineRunUri: URL) -> some View {
         if let zRoutineRun = ZRoutineRun.get(viewContext, forURIRepresentation: routineRunUri),
-           let archiveStore = PersistenceManager.getArchiveStore(viewContext)
+           let archiveStore = manager.getArchiveStore(viewContext)
         {
             ExerciseRunList(zRoutineRun: zRoutineRun, archiveStore: archiveStore)
         } else {
