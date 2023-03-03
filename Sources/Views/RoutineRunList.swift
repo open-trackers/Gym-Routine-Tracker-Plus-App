@@ -189,7 +189,7 @@ struct RoutineRunList_Previews: PreviewProvider {
         let duration1 = 500.0
         let startedAt2 = Date.now.addingTimeInterval(-10000)
         let duration2 = 400.0
-        let zR = ZRoutine.create(ctx, routineName: "Chest & Shoulder", routineArchiveID: routineArchiveID, toStore: archiveStore)
+        let zR = ZRoutine.create(ctx, routineArchiveID: routineArchiveID, routineName: "Chest & Shoulder", toStore: archiveStore)
         _ = ZRoutineRun.create(ctx, zRoutine: zR, startedAt: startedAt1, duration: duration1, toStore: archiveStore)
         _ = ZRoutineRun.create(ctx, zRoutine: zR, startedAt: startedAt2, duration: duration2, toStore: archiveStore)
         try! ctx.save()
