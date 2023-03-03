@@ -37,7 +37,7 @@ struct ExerciseRunList: View {
         self.zRoutineRun = zRoutineRun
         self.archiveStore = archiveStore
 
-        let predicate = NSPredicate(format: "zRoutineRun = %@", zRoutineRun)
+        let predicate = NSPredicate(format: "zRoutineRun == %@ AND userRemoved == %@", zRoutineRun, NSNumber(value: false))
         let sortDescriptors = [NSSortDescriptor(keyPath: \ZExerciseRun.completedAt, ascending: true)]
         let request = makeRequest(ZExerciseRun.self,
                                   predicate: predicate,
@@ -63,7 +63,7 @@ struct ExerciseRunList: View {
 
     private var listConfig: TablerListConfig<ZExerciseRun> {
         TablerListConfig<ZExerciseRun>(
-            onDelete: deleteAction
+            onDelete: userRemoveAction
         )
     }
 
@@ -191,19 +191,11 @@ struct ExerciseRunList: View {
 
     // MARK: - Actions
 
-    private func deleteAction(at offsets: IndexSet) {
-        // NOTE: removing specified zExerciseRun records, where present, from both mainStore and archiveStore.
-
+    private func userRemoveAction(at offsets: IndexSet) {
         do {
             for index in offsets {
                 let zExerciseRun = exerciseRuns[index]
-
-                guard let zExercise = zExerciseRun.zExercise,
-                      let exerciseArchiveID = zExercise.exerciseArchiveID,
-                      let completedAt = zExerciseRun.completedAt
-                else { continue }
-
-                try ZExerciseRun.delete(viewContext, exerciseArchiveID: exerciseArchiveID, completedAt: completedAt, inStore: nil)
+                zExerciseRun.userRemoved = true
             }
 
             try viewContext.save()
@@ -237,7 +229,7 @@ struct ExerciseRunList_Previews: PreviewProvider {
         let routineArchiveID = UUID()
         let startedAt1 = Date.now.addingTimeInterval(-20000)
         let duration1 = 500.0
-        let zR = ZRoutine.create(ctx, routineName: "blah", routineArchiveID: routineArchiveID, toStore: archiveStore)
+        let zR = ZRoutine.create(ctx, routineArchiveID: routineArchiveID, routineName: "blah", toStore: archiveStore)
         let zRR = ZRoutineRun.create(ctx, zRoutine: zR, startedAt: startedAt1, duration: duration1, toStore: archiveStore)
         let exerciseArchiveID1 = UUID()
         let exerciseArchiveID2 = UUID()
@@ -245,8 +237,8 @@ struct ExerciseRunList_Previews: PreviewProvider {
         let completedAt2 = completedAt1.addingTimeInterval(173)
         let intensity1: Float = 150.0
         let intensity2: Float = 200.0
-        let zE1 = ZExercise.create(ctx, zRoutine: zR, exerciseName: "Lat Pulldown", exerciseUnits: .kilograms, exerciseArchiveID: exerciseArchiveID1, toStore: archiveStore)
-        let zE2 = ZExercise.create(ctx, zRoutine: zR, exerciseName: "Rear Delt", exerciseUnits: .none, exerciseArchiveID: exerciseArchiveID2, toStore: archiveStore)
+        let zE1 = ZExercise.create(ctx, zRoutine: zR, exerciseArchiveID: exerciseArchiveID1, exerciseName: "Lat Pulldown", exerciseUnits: .kilograms, toStore: archiveStore)
+        let zE2 = ZExercise.create(ctx, zRoutine: zR, exerciseArchiveID: exerciseArchiveID2, exerciseName: "Rear Delt", exerciseUnits: .none, toStore: archiveStore)
         _ = ZExerciseRun.create(ctx, zRoutineRun: zRR, zExercise: zE1, completedAt: completedAt1, intensity: intensity1, toStore: archiveStore)
         _ = ZExerciseRun.create(ctx, zRoutineRun: zRR, zExercise: zE2, completedAt: completedAt2, intensity: intensity2, toStore: archiveStore)
         try! ctx.save()
