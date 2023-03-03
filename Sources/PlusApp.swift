@@ -26,10 +26,8 @@ struct Gym_Routine_Tracker_Plus_App: App {
 
     @AppStorage(colorSchemeModeKey) var colorSchemeMode: ColorSchemeMode = .automatic
 
-    private let logger = Logger(
-        subsystem: Bundle.main.bundleIdentifier!,
-        category: "App"
-    )
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
+                                category: "App")
 
     // MARK: - Scene
 
