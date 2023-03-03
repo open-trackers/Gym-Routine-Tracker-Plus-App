@@ -79,7 +79,7 @@ struct ContentView: View {
     // used to inject view into NavStack
     @ViewBuilder
     private func exerciseRunList(_ routineRunUri: URL) -> some View {
-        if let zRoutineRun: ZRoutineRun = ZRoutineRun.get(viewContext, forURIRepresentation: routineRunUri),
+        if let zRoutineRun = ZRoutineRun.get(viewContext, forURIRepresentation: routineRunUri),
            let archiveStore = manager.getArchiveStore(viewContext)
         {
             ExerciseRunList(zRoutineRun: zRoutineRun, archiveStore: archiveStore)
