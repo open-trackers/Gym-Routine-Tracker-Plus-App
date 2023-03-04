@@ -39,8 +39,10 @@ struct RoutineRunList: View {
     internal init(archiveStore: NSPersistentStore) {
         self.archiveStore = archiveStore
 
+        let predicate = NSPredicate(format: "userRemoved == %@", NSNumber(value: false))
         let sortDescriptors = [NSSortDescriptor(keyPath: \ZRoutineRun.startedAt, ascending: false)]
         let request = makeRequest(ZRoutineRun.self,
+                                  predicate: predicate,
                                   sortDescriptors: sortDescriptors,
                                   inStore: archiveStore)
         _routineRuns = FetchRequest<ZRoutineRun>(fetchRequest: request)
@@ -69,7 +71,7 @@ struct RoutineRunList: View {
 
     private var listConfig: TablerListConfig<ZRoutineRun> {
         TablerListConfig<ZRoutineRun>(
-            onDelete: deleteAction
+            onDelete: userRemoveAction
         )
     }
 
@@ -156,19 +158,13 @@ struct RoutineRunList: View {
         router.path.append(GroutRoute.routineRunDetail(zRoutineRun.uriRepresentation))
     }
 
-    private func deleteAction(at offsets: IndexSet) {
-        // NOTE: removing specified zRoutineRun records, where present, from both mainStore and archiveStore.
+    private func userRemoveAction(at offsets: IndexSet) {
+        // NOTE: 'removing' specified zRoutineRun records, where present, from both mainStore and archiveStore.
 
         do {
             for index in offsets {
                 let zRoutineRun = routineRuns[index]
-
-                guard let zRoutine = zRoutineRun.zRoutine,
-                      let routineArchiveID = zRoutine.routineArchiveID,
-                      let startedAt = zRoutineRun.startedAt
-                else { continue }
-
-                try ZRoutineRun.delete(viewContext, routineArchiveID: routineArchiveID, startedAt: startedAt, inStore: nil)
+                zRoutineRun.userRemoved = true
             }
 
             try viewContext.save()
