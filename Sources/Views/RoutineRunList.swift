@@ -39,7 +39,7 @@ struct RoutineRunList: View {
     internal init(archiveStore: NSPersistentStore) {
         self.archiveStore = archiveStore
 
-        let predicate = NSPredicate(format: "userRemoved == %@", NSNumber(value: false))
+        let predicate = NSPredicate(format: "userRemoved != %@", NSNumber(value: true))
         let sortDescriptors = [NSSortDescriptor(keyPath: \ZRoutineRun.startedAt, ascending: false)]
         let request = makeRequest(ZRoutineRun.self,
                                   predicate: predicate,
@@ -85,7 +85,7 @@ struct RoutineRunList: View {
 
     // support for app review prompt
     @SceneStorage("has-been-prompted-for-app-review") private var hasBeenPromptedForAppReview = false
-    private let minimumRunsForAppReviewAlert = 15
+    private let minimumRunsForAppReviewAlert = 30
 
     // MARK: - Views
 
@@ -122,7 +122,6 @@ struct RoutineRunList: View {
                     .padding(columnPadding)
                 durationText(element.duration)
                     .lineLimit(1)
-//                ElapsedTimeText(elapsedSecs: element.duration)
                     .padding(columnPadding)
             }
             .frame(maxWidth: .infinity)
@@ -155,7 +154,7 @@ struct RoutineRunList: View {
     }
 
     private func detailAction(zRoutineRun: ZRoutineRun) {
-        router.path.append(GroutRoute.routineRunDetail(zRoutineRun.uriRepresentation))
+        router.path.append(GroutRoute.exerciseRunList(zRoutineRun.uriRepresentation))
     }
 
     private func userRemoveAction(at offsets: IndexSet) {

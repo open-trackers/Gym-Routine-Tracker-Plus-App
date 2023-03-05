@@ -37,7 +37,7 @@ struct ExerciseRunList: View {
         self.zRoutineRun = zRoutineRun
         self.archiveStore = archiveStore
 
-        let predicate = NSPredicate(format: "zRoutineRun == %@ AND userRemoved == %@", zRoutineRun, NSNumber(value: false))
+        let predicate = NSPredicate(format: "zRoutineRun == %@ AND userRemoved != %@", zRoutineRun, NSNumber(value: true))
         let sortDescriptors = [NSSortDescriptor(keyPath: \ZExerciseRun.completedAt, ascending: true)]
         let request = makeRequest(ZExerciseRun.self,
                                   predicate: predicate,
@@ -233,14 +233,20 @@ struct ExerciseRunList_Previews: PreviewProvider {
         let zRR = ZRoutineRun.create(ctx, zRoutine: zR, startedAt: startedAt1, duration: duration1, toStore: archiveStore)
         let exerciseArchiveID1 = UUID()
         let exerciseArchiveID2 = UUID()
+        let exerciseArchiveID3 = UUID()
         let completedAt1 = startedAt1.addingTimeInterval(116)
         let completedAt2 = completedAt1.addingTimeInterval(173)
+        let completedAt3 = completedAt1.addingTimeInterval(210)
         let intensity1: Float = 150.0
         let intensity2: Float = 200.0
+        let intensity3: Float = 50.0
         let zE1 = ZExercise.create(ctx, zRoutine: zR, exerciseArchiveID: exerciseArchiveID1, exerciseName: "Lat Pulldown", exerciseUnits: .kilograms, toStore: archiveStore)
         let zE2 = ZExercise.create(ctx, zRoutine: zR, exerciseArchiveID: exerciseArchiveID2, exerciseName: "Rear Delt", exerciseUnits: .none, toStore: archiveStore)
+        let zE3 = ZExercise.create(ctx, zRoutine: zR, exerciseArchiveID: exerciseArchiveID3, exerciseName: "Arm Curl", exerciseUnits: .none, toStore: archiveStore)
         _ = ZExerciseRun.create(ctx, zRoutineRun: zRR, zExercise: zE1, completedAt: completedAt1, intensity: intensity1, toStore: archiveStore)
-        _ = ZExerciseRun.create(ctx, zRoutineRun: zRR, zExercise: zE2, completedAt: completedAt2, intensity: intensity2, toStore: archiveStore)
+        let er2 = ZExerciseRun.create(ctx, zRoutineRun: zRR, zExercise: zE2, completedAt: completedAt2, intensity: intensity2, toStore: archiveStore)
+        _ = ZExerciseRun.create(ctx, zRoutineRun: zRR, zExercise: zE3, completedAt: completedAt3, intensity: intensity3, toStore: archiveStore)
+        er2.userRemoved = true
         try! ctx.save()
 
         return NavigationStack {

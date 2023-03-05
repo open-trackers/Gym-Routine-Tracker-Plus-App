@@ -65,7 +65,7 @@ struct ContentView: View {
     @ViewBuilder
     private func destination(_ router: GroutRouter, _ route: GroutRoute) -> some View {
         switch route {
-        case let .routineRunList(routineRunUri):
+        case let .exerciseRunList(routineRunUri):
             exerciseRunList(routineRunUri)
                 .environmentObject(router)
                 .environment(\.managedObjectContext, viewContext)
