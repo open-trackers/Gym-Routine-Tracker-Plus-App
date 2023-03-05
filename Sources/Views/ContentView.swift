@@ -36,7 +36,7 @@ struct ContentView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             NavStack(navData: $routinesNavData, destination: destination) {
-                RoutineList(onShortcut: shortcutAction)
+                RoutineList()
             }
             .tabItem {
                 Label("Routines", systemImage: "dumbbell")
@@ -59,6 +59,8 @@ struct ContentView: View {
             }
             .tag(Tabs.settings.rawValue)
         }
+        .onContinueUserActivity(runRoutineActivityType,
+                                perform: continueUserActivityAction)
     }
 
     // handle routes for iOS-specific views here
@@ -90,12 +92,28 @@ struct ContentView: View {
 
     // MARK: - Actions
 
-    private func shortcutAction() {
-        // in case app is started via shortcut, force the first tab
+    // MARK: - User Activity
 
-        // NOTE: trying an explicit time delay, as it didn't switch the first time I tested.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+    private func continueUserActivityAction(_ userActivity: NSUserActivity) {
+        logger.notice("\(#function)")
+
+        DispatchQueue.main.async {
             selectedTab = Tabs.routines.rawValue
+
+            guard let routineURI = userActivity.userInfo?[userActivity_uriRepKey] as? URL,
+                  let routine = Routine.get(viewContext, forURIRepresentation: routineURI) as? Routine,
+                  !routine.isDeleted,
+                  routine.archiveID != nil
+            else {
+                logger.notice("\(#function): could not resolve Routine; so unable to start it via shortcut.")
+                return
+            }
+
+            logger.notice("\(#function): routine=\(routine.wrappedName)")
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                NotificationCenter.default.post(name: .startRoutine, object: routineURI)
+            }
         }
     }
 }
