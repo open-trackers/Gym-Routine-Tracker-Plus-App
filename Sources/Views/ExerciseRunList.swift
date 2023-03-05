@@ -37,7 +37,7 @@ struct ExerciseRunList: View {
         self.zRoutineRun = zRoutineRun
         self.archiveStore = archiveStore
 
-        let predicate = NSPredicate(format: "zRoutineRun == %@ AND userRemoved != %@", zRoutineRun, NSNumber(value: true))
+        let predicate = NSPredicate(format: "zRoutineRun == %@ AND userRemoved == %@", zRoutineRun, NSNumber(value: false))
         let sortDescriptors = [NSSortDescriptor(keyPath: \ZExerciseRun.completedAt, ascending: true)]
         let request = makeRequest(ZExerciseRun.self,
                                   predicate: predicate,
@@ -191,11 +191,17 @@ struct ExerciseRunList: View {
 
     // MARK: - Actions
 
+    // NOTE: 'removes' matching records, where present, from both mainStore and archiveStore.
     private func userRemoveAction(at offsets: IndexSet) {
         do {
             for index in offsets {
                 let zExerciseRun = exerciseRuns[index]
-                zExerciseRun.userRemoved = true
+
+                guard let exerciseArchiveID = zExerciseRun.zExercise?.exerciseArchiveID,
+                      let completedAt = zExerciseRun.completedAt
+                else { continue }
+
+                try ZExerciseRun.userRemove(viewContext, exerciseArchiveID: exerciseArchiveID, completedAt: completedAt)
             }
 
             try viewContext.save()
