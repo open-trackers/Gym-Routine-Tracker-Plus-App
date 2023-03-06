@@ -13,9 +13,11 @@ import SwiftUI
 
 import GroutLib
 import GroutUI
+import TrackerUI
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject private var manager: CoreDataStack
 
     enum Tabs: Int {
         case routines = 0
@@ -33,18 +35,15 @@ struct ContentView: View {
 
     var body: some View {
         TabView(selection: $selectedTab) {
-            NavStack(name: "routines",
-                     navData: $routinesNavData) {
-                RoutineList(beforeStart: beforeStartAction)
+            NavStack(navData: $routinesNavData, destination: destination) {
+                RoutineList()
             }
             .tabItem {
                 Label("Routines", systemImage: "dumbbell")
             }
             .tag(Tabs.routines.rawValue)
 
-            NavStack(name: "history",
-                     navData: $historyNavData,
-                     routineRunDetail: exerciseRunList) {
+            NavStack(navData: $historyNavData, destination: destination) {
                 HistoryView()
             }
             .tabItem {
@@ -52,8 +51,7 @@ struct ContentView: View {
             }
             .tag(Tabs.history.rawValue)
 
-            NavStack(name: "settings",
-                     navData: $settingsNavData) {
+            NavStack(navData: $settingsNavData, destination: destination) {
                 PhoneSettingsForm()
             }
             .tabItem {
@@ -61,43 +59,50 @@ struct ContentView: View {
             }
             .tag(Tabs.settings.rawValue)
         }
+        .onContinueUserActivity(startRoutineActivityType) {
+            selectedTab = Tabs.routines.rawValue
+            handleStartRoutineUA(viewContext, $0)
+        }
+    }
+
+    // handle routes for iOS-specific views here
+    @ViewBuilder
+    private func destination(_ router: GroutRouter, _ route: GroutRoute) -> some View {
+        switch route {
+        case let .exerciseRunList(routineRunUri):
+            exerciseRunList(routineRunUri)
+                .environmentObject(router)
+                .environment(\.managedObjectContext, viewContext)
+        default:
+            GroutDestination(route)
+                .environmentObject(router)
+                .environment(\.managedObjectContext, viewContext)
+        }
     }
 
     // used to inject view into NavStack
     @ViewBuilder
     private func exerciseRunList(_ routineRunUri: URL) -> some View {
-        if let zRoutineRun = ZRoutineRun.get(viewContext, forURIRepresentation: routineRunUri),
-           let archiveStore = PersistenceManager.getArchiveStore(viewContext)
+        if let zRoutineRun: ZRoutineRun = ZRoutineRun.get(viewContext, forURIRepresentation: routineRunUri),
+           let archiveStore = manager.getArchiveStore(viewContext)
         {
             ExerciseRunList(zRoutineRun: zRoutineRun, archiveStore: archiveStore)
         } else {
             Text("Routine Run not available to display detail.")
         }
     }
-
-    // MARK: - Actions
-
-    private func beforeStartAction() {
-        // in case routine is started via shortcut, force the first tab
-
-        // NOTE: trying an explicit time delay, as it didn't switch the first time I tested.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            selectedTab = Tabs.routines.rawValue
-        }
-    }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let ctx = PersistenceManager.getPreviewContainer().viewContext
+        let manager = CoreDataStack.getPreviewStack()
+        let ctx = manager.container.viewContext
         let routine = Routine.create(ctx, userOrder: 0)
         routine.name = "Back & Bicep"
-        let e1 = Exercise.create(ctx, userOrder: 0)
+        let e1 = Exercise.create(ctx, routine: routine, userOrder: 0)
         e1.name = "Lat Pulldown"
-        e1.routine = routine
-        let e2 = Exercise.create(ctx, userOrder: 1)
+        let e2 = Exercise.create(ctx, routine: routine, userOrder: 1)
         e2.name = "Arm Curl"
-        e2.routine = routine
         return ContentView()
             .environment(\.managedObjectContext, ctx)
     }

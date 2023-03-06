@@ -7,15 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4001ED0D29732D4500F165ED /* ExportSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4001ED0C29732D4500F165ED /* ExportSettings.swift */; };
-		4001ED0F29732E1300F165ED /* ColorSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4001ED0E29732E1300F165ED /* ColorSettings.swift */; };
-		401064D92973374700BFB00E /* ZipDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401064D82973374700BFB00E /* ZipDocument.swift */; };
 		4011EECD2961C9B000A36D87 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4011EECC2961C9B000A36D87 /* LICENSE */; };
 		40245EF6296BE7D4007B5DAB /* ExerciseRunList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40245EF5296BE7D4007B5DAB /* ExerciseRunList.swift */; };
 		402A5F2F296B7FE000A43DB3 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402A5F2E296B7F7B00A43DB3 /* HistoryView.swift */; };
 		402A5F32296B835B00A43DB3 /* Tabler in Frameworks */ = {isa = PBXBuildFile; productRef = 402A5F31296B835B00A43DB3 /* Tabler */; };
 		403CA2CE2971F6660084785B /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 403CA2CD2971F6660084785B /* ZIPFoundation */; };
-		403CA2D0297220460084785B /* Export-Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403CA2CF29721E750084785B /* Export-Utils.swift */; };
 		403CA2D22972829F0084785B /* PhoneSettingsForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403CA2D12972829F0084785B /* PhoneSettingsForm.swift */; };
 		408FACFE296CAC9300D02C9C /* RoutineRunList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408FACFD296CABC400D02C9C /* RoutineRunList.swift */; };
 		40B51E45294549DF0047377A /* GroutUI in Frameworks */ = {isa = PBXBuildFile; productRef = 40B51E44294549DF0047377A /* GroutUI */; };
@@ -29,14 +25,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4001ED0C29732D4500F165ED /* ExportSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportSettings.swift; sourceTree = "<group>"; };
-		4001ED0E29732E1300F165ED /* ColorSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSettings.swift; sourceTree = "<group>"; };
-		401064D82973374700BFB00E /* ZipDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipDocument.swift; sourceTree = "<group>"; };
 		4011EECC2961C9B000A36D87 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4011EECE2961C9BC00A36D87 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		40245EF5296BE7D4007B5DAB /* ExerciseRunList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseRunList.swift; sourceTree = "<group>"; };
 		402A5F2E296B7F7B00A43DB3 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
-		403CA2CF29721E750084785B /* Export-Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Export-Utils.swift"; sourceTree = "<group>"; };
 		403CA2D12972829F0084785B /* PhoneSettingsForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneSettingsForm.swift; sourceTree = "<group>"; };
 		408FACFD296CABC400D02C9C /* RoutineRunList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineRunList.swift; sourceTree = "<group>"; };
 		40E347BA29452CF1003A19B9 /* Gym Routine Tracker Plus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gym Routine Tracker Plus.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,22 +57,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		401064DA2973378500BFB00E /* Helper */ = {
-			isa = PBXGroup;
-			children = (
-				401064D82973374700BFB00E /* ZipDocument.swift */,
-				403CA2CF29721E750084785B /* Export-Utils.swift */,
-			);
-			path = Helper;
-			sourceTree = "<group>";
-		};
 		401064DB2973378C00BFB00E /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				40E347BF29452CF1003A19B9 /* ContentView.swift */,
-				4001ED0E29732E1300F165ED /* ColorSettings.swift */,
 				40245EF5296BE7D4007B5DAB /* ExerciseRunList.swift */,
-				4001ED0C29732D4500F165ED /* ExportSettings.swift */,
 				402A5F2E296B7F7B00A43DB3 /* HistoryView.swift */,
 				403CA2D12972829F0084785B /* PhoneSettingsForm.swift */,
 				408FACFD296CABC400D02C9C /* RoutineRunList.swift */,
@@ -119,7 +100,6 @@
 			children = (
 				40E347BD29452CF1003A19B9 /* PlusApp.swift */,
 				401064DB2973378C00BFB00E /* Views */,
-				401064DA2973378500BFB00E /* Helper */,
 				40E347C329452CF1003A19B9 /* App.entitlements */,
 				40E347C129452CF1003A19B9 /* Assets.xcassets */,
 				40EBCFDE294BFB880082A172 /* Info.plist */,
@@ -172,7 +152,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1410;
-				LastUpgradeCheck = 1410;
+				LastUpgradeCheck = 1420;
 				TargetAttributes = {
 					40E347B929452CF1003A19B9 = {
 						CreatedOnToolsVersion = 14.1;
@@ -223,10 +203,6 @@
 			files = (
 				40E347C029452CF1003A19B9 /* ContentView.swift in Sources */,
 				403CA2D22972829F0084785B /* PhoneSettingsForm.swift in Sources */,
-				4001ED0F29732E1300F165ED /* ColorSettings.swift in Sources */,
-				4001ED0D29732D4500F165ED /* ExportSettings.swift in Sources */,
-				401064D92973374700BFB00E /* ZipDocument.swift in Sources */,
-				403CA2D0297220460084785B /* Export-Utils.swift in Sources */,
 				408FACFE296CAC9300D02C9C /* RoutineRunList.swift in Sources */,
 				40245EF6296BE7D4007B5DAB /* ExerciseRunList.swift in Sources */,
 				402A5F2F296B7FE000A43DB3 /* HistoryView.swift in Sources */,
@@ -270,6 +246,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -328,6 +305,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -352,15 +330,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Sources/App.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 10;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Sources/Preview Content\"";
 				DEVELOPMENT_TEAM = J735QC5U38;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Gym RT+";
+				INFOPLIST_KEY_CFBundleDisplayName = "Gym Routines";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -376,7 +357,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.6.1;
+				MARKETING_VERSION = 1.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.openalloc.grout.plus;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -395,15 +376,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Sources/App.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 10;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Sources/Preview Content\"";
 				DEVELOPMENT_TEAM = J735QC5U38;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Gym RT+";
+				INFOPLIST_KEY_CFBundleDisplayName = "Gym Routines";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -419,7 +403,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.6.1;
+				MARKETING_VERSION = 1.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.openalloc.grout.plus;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;

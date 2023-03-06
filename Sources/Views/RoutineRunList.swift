@@ -10,21 +10,23 @@
 
 import CoreData
 import os
-import SwiftUI
 import StoreKit
+import SwiftUI
 
 import Compactor
 import Tabler
 
 import GroutLib
 import GroutUI
+import TrackerLib
+import TrackerUI
 
 struct RoutineRunList: View {
     @Environment(\.requestReview) private var requestReview
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.managedObjectContext) private var viewContext
-    @EnvironmentObject private var router: MyRouter
+    @EnvironmentObject private var router: GroutRouter
 
     typealias Sort = TablerSort<ZRoutineRun>
     typealias Context = TablerContext<ZRoutineRun>
@@ -37,8 +39,10 @@ struct RoutineRunList: View {
     internal init(archiveStore: NSPersistentStore) {
         self.archiveStore = archiveStore
 
+        let predicate = NSPredicate(format: "userRemoved == %@", NSNumber(value: false))
         let sortDescriptors = [NSSortDescriptor(keyPath: \ZRoutineRun.startedAt, ascending: false)]
         let request = makeRequest(ZRoutineRun.self,
+                                  predicate: predicate,
                                   sortDescriptors: sortDescriptors,
                                   inStore: archiveStore)
         _routineRuns = FetchRequest<ZRoutineRun>(fetchRequest: request)
@@ -67,7 +71,7 @@ struct RoutineRunList: View {
 
     private var listConfig: TablerListConfig<ZRoutineRun> {
         TablerListConfig<ZRoutineRun>(
-            onDelete: deleteAction
+            onDelete: userRemoveAction
         )
     }
 
@@ -81,7 +85,7 @@ struct RoutineRunList: View {
 
     // support for app review prompt
     @SceneStorage("has-been-prompted-for-app-review") private var hasBeenPromptedForAppReview = false
-    private let minimumRunsForAppReviewAlert = 15
+    private let minimumRunsForAppReviewAlert = 30
 
     // MARK: - Views
 
@@ -118,7 +122,6 @@ struct RoutineRunList: View {
                     .padding(columnPadding)
                 durationText(element.duration)
                     .lineLimit(1)
-//                ElapsedTimeText(elapsedSecs: element.duration)
                     .padding(columnPadding)
             }
             .frame(maxWidth: .infinity)
@@ -151,22 +154,19 @@ struct RoutineRunList: View {
     }
 
     private func detailAction(zRoutineRun: ZRoutineRun) {
-        router.path.append(MyRoutes.routineRunDetail(zRoutineRun.uriRepresentation))
+        router.path.append(GroutRoute.exerciseRunList(zRoutineRun.uriRepresentation))
     }
 
-    private func deleteAction(at offsets: IndexSet) {
-        // NOTE: removing specified zRoutineRun records, where present, from both mainStore and archiveStore.
-
+    // NOTE: 'removes' matching records, where present, from both mainStore and archiveStore.
+    private func userRemoveAction(at offsets: IndexSet) {
         do {
             for index in offsets {
                 let zRoutineRun = routineRuns[index]
-
-                guard let zRoutine = zRoutineRun.zRoutine,
-                      let routineArchiveID = zRoutine.routineArchiveID,
+                guard let routineArchiveID = zRoutineRun.zRoutine?.routineArchiveID,
                       let startedAt = zRoutineRun.startedAt
                 else { continue }
 
-                try ZRoutineRun.delete(viewContext, routineArchiveID: routineArchiveID, startedAt: startedAt, inStore: nil)
+                try ZRoutineRun.userRemove(viewContext, routineArchiveID: routineArchiveID, startedAt: startedAt)
             }
 
             try viewContext.save()
@@ -178,15 +178,16 @@ struct RoutineRunList: View {
 
 struct RoutineRunList_Previews: PreviewProvider {
     static var previews: some View {
-        let ctx = PersistenceManager.getPreviewContainer().viewContext
-        let archiveStore = PersistenceManager.getArchiveStore(ctx)!
+        let manager = CoreDataStack.getPreviewStack()
+        let ctx = manager.container.viewContext
+        let archiveStore = manager.getArchiveStore(ctx)!
         let routineArchiveID = UUID()
 
         let startedAt1 = Date.now.addingTimeInterval(-20000)
         let duration1 = 500.0
         let startedAt2 = Date.now.addingTimeInterval(-10000)
         let duration2 = 400.0
-        let zR = ZRoutine.create(ctx, routineName: "Chest & Shoulder", routineArchiveID: routineArchiveID, toStore: archiveStore)
+        let zR = ZRoutine.create(ctx, routineArchiveID: routineArchiveID, routineName: "Chest & Shoulder", toStore: archiveStore)
         _ = ZRoutineRun.create(ctx, zRoutine: zR, startedAt: startedAt1, duration: duration1, toStore: archiveStore)
         _ = ZRoutineRun.create(ctx, zRoutine: zR, startedAt: startedAt2, duration: duration2, toStore: archiveStore)
         try! ctx.save()

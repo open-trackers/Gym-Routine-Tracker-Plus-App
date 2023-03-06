@@ -17,6 +17,8 @@ import Tabler
 
 import GroutLib
 import GroutUI
+import TrackerLib
+import TrackerUI
 
 struct ExerciseRunList: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
@@ -35,7 +37,7 @@ struct ExerciseRunList: View {
         self.zRoutineRun = zRoutineRun
         self.archiveStore = archiveStore
 
-        let predicate = NSPredicate(format: "zRoutineRun = %@", zRoutineRun)
+        let predicate = NSPredicate(format: "zRoutineRun == %@ AND userRemoved == %@", zRoutineRun, NSNumber(value: false))
         let sortDescriptors = [NSSortDescriptor(keyPath: \ZExerciseRun.completedAt, ascending: true)]
         let request = makeRequest(ZExerciseRun.self,
                                   predicate: predicate,
@@ -61,7 +63,7 @@ struct ExerciseRunList: View {
 
     private var listConfig: TablerListConfig<ZExerciseRun> {
         TablerListConfig<ZExerciseRun>(
-            onDelete: deleteAction
+            onDelete: userRemoveAction
         )
     }
 
@@ -189,19 +191,17 @@ struct ExerciseRunList: View {
 
     // MARK: - Actions
 
-    private func deleteAction(at offsets: IndexSet) {
-        // NOTE: removing specified zExerciseRun records, where present, from both mainStore and archiveStore.
-
+    // NOTE: 'removes' matching records, where present, from both mainStore and archiveStore.
+    private func userRemoveAction(at offsets: IndexSet) {
         do {
             for index in offsets {
                 let zExerciseRun = exerciseRuns[index]
 
-                guard let zExercise = zExerciseRun.zExercise,
-                      let exerciseArchiveID = zExercise.exerciseArchiveID,
+                guard let exerciseArchiveID = zExerciseRun.zExercise?.exerciseArchiveID,
                       let completedAt = zExerciseRun.completedAt
                 else { continue }
 
-                try ZExerciseRun.delete(viewContext, exerciseArchiveID: exerciseArchiveID, completedAt: completedAt, inStore: nil)
+                try ZExerciseRun.userRemove(viewContext, exerciseArchiveID: exerciseArchiveID, completedAt: completedAt)
             }
 
             try viewContext.save()
@@ -228,24 +228,31 @@ struct ExerciseRunList: View {
 
 struct ExerciseRunList_Previews: PreviewProvider {
     static var previews: some View {
-        let ctx = PersistenceManager.getPreviewContainer().viewContext
-        let archiveStore = PersistenceManager.getArchiveStore(ctx)!
+        let manager = CoreDataStack.getPreviewStack()
+        let ctx = manager.container.viewContext
+        let archiveStore = manager.getArchiveStore(ctx)!
 
         let routineArchiveID = UUID()
         let startedAt1 = Date.now.addingTimeInterval(-20000)
         let duration1 = 500.0
-        let zR = ZRoutine.create(ctx, routineName: "blah", routineArchiveID: routineArchiveID, toStore: archiveStore)
+        let zR = ZRoutine.create(ctx, routineArchiveID: routineArchiveID, routineName: "blah", toStore: archiveStore)
         let zRR = ZRoutineRun.create(ctx, zRoutine: zR, startedAt: startedAt1, duration: duration1, toStore: archiveStore)
         let exerciseArchiveID1 = UUID()
         let exerciseArchiveID2 = UUID()
+        let exerciseArchiveID3 = UUID()
         let completedAt1 = startedAt1.addingTimeInterval(116)
         let completedAt2 = completedAt1.addingTimeInterval(173)
+        let completedAt3 = completedAt1.addingTimeInterval(210)
         let intensity1: Float = 150.0
         let intensity2: Float = 200.0
-        let zE1 = ZExercise.create(ctx, zRoutine: zR, exerciseName: "Lat Pulldown", exerciseUnits: .kilograms, exerciseArchiveID: exerciseArchiveID1, toStore: archiveStore)
-        let zE2 = ZExercise.create(ctx, zRoutine: zR, exerciseName: "Rear Delt", exerciseUnits: .none, exerciseArchiveID: exerciseArchiveID2, toStore: archiveStore)
+        let intensity3: Float = 50.0
+        let zE1 = ZExercise.create(ctx, zRoutine: zR, exerciseArchiveID: exerciseArchiveID1, exerciseName: "Lat Pulldown", exerciseUnits: .kilograms, toStore: archiveStore)
+        let zE2 = ZExercise.create(ctx, zRoutine: zR, exerciseArchiveID: exerciseArchiveID2, exerciseName: "Rear Delt", exerciseUnits: .none, toStore: archiveStore)
+        let zE3 = ZExercise.create(ctx, zRoutine: zR, exerciseArchiveID: exerciseArchiveID3, exerciseName: "Arm Curl", exerciseUnits: .none, toStore: archiveStore)
         _ = ZExerciseRun.create(ctx, zRoutineRun: zRR, zExercise: zE1, completedAt: completedAt1, intensity: intensity1, toStore: archiveStore)
-        _ = ZExerciseRun.create(ctx, zRoutineRun: zRR, zExercise: zE2, completedAt: completedAt2, intensity: intensity2, toStore: archiveStore)
+        let er2 = ZExerciseRun.create(ctx, zRoutineRun: zRR, zExercise: zE2, completedAt: completedAt2, intensity: intensity2, toStore: archiveStore)
+        _ = ZExerciseRun.create(ctx, zRoutineRun: zRR, zExercise: zE3, completedAt: completedAt3, intensity: intensity3, toStore: archiveStore)
+        er2.userRemoved = true
         try! ctx.save()
 
         return NavigationStack {
