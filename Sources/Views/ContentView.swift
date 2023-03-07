@@ -35,7 +35,7 @@ struct ContentView: View {
 
     var body: some View {
         TabView(selection: $selectedTab) {
-            NavStack(navData: $routinesNavData, destination: destination) {
+            GroutNavStack(navData: $routinesNavData, destination: destination) {
                 RoutineList()
             }
             .tabItem {
@@ -43,7 +43,7 @@ struct ContentView: View {
             }
             .tag(Tabs.routines.rawValue)
 
-            NavStack(navData: $historyNavData, destination: destination) {
+            GroutNavStack(navData: $historyNavData, destination: destination) {
                 HistoryView()
             }
             .tabItem {
@@ -51,7 +51,7 @@ struct ContentView: View {
             }
             .tag(Tabs.history.rawValue)
 
-            NavStack(navData: $settingsNavData, destination: destination) {
+            GroutNavStack(navData: $settingsNavData, destination: destination) {
                 PhoneSettingsForm()
             }
             .tabItem {
@@ -81,7 +81,6 @@ struct ContentView: View {
         }
     }
 
-    // used to inject view into NavStack
     @ViewBuilder
     private func exerciseRunList(_ routineRunUri: URL) -> some View {
         if let zRoutineRun: ZRoutineRun = ZRoutineRun.get(viewContext, forURIRepresentation: routineRunUri),
