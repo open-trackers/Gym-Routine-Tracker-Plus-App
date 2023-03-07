@@ -59,6 +59,7 @@ struct ContentView: View {
             }
             .tag(Tabs.settings.rawValue)
         }
+        .task(priority: .utility, taskAction)
         .onContinueUserActivity(startRoutineActivityType) {
             selectedTab = Tabs.routines.rawValue
             handleStartRoutineUA(viewContext, $0)
@@ -90,6 +91,11 @@ struct ContentView: View {
         } else {
             Text("Routine Run not available to display detail.")
         }
+    }
+
+    @Sendable
+    private func taskAction() async {
+        await handleTaskAction(manager)
     }
 }
 
