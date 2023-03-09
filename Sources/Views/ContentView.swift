@@ -33,9 +33,28 @@ struct ContentView: View {
     private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
                                 category: String(describing: ContentView.self))
 
+    private let routineNavUUID = UUID(uuidString: "31C02874-F079-4A59-A59E-67FBCE140AC5")!
+
+    // NOTE: this proxy is duplicated in Daily Calorie Tracker Plus's ContentView.
+    private var selectedProxy: Binding<Int> {
+        Binding(get: { selectedTab },
+                set: { nuTab in
+                    if nuTab != selectedTab {
+                        selectedTab = nuTab
+                    } else if nuTab == Tabs.routines.rawValue {
+                        logger.debug("ContentView: detected tap on already-selected tab")
+                        NotificationCenter.default.post(name: .trackerPopNavStack,
+                                                        object: routineNavUUID)
+                    }
+                })
+    }
+
     var body: some View {
-        TabView(selection: $selectedTab) {
-            GroutNavStack(navData: $routinesNavData, destination: destination) {
+        TabView(selection: selectedProxy) {
+            GroutNavStack(navData: $routinesNavData,
+                          stackIdentifier: routineNavUUID,
+                          destination: destination)
+            {
                 RoutineList()
             }
             .tabItem {
