@@ -23,6 +23,21 @@ struct ContentView: View {
         case routines = 0
         case history = 1
         case settings = 2
+
+        static let routinesNavUUID = UUID()
+        static let historyNavUUID = UUID()
+        static let settingsNavUUID = UUID()
+
+        var uuid: UUID {
+            switch self {
+            case .routines:
+                return Self.routinesNavUUID
+            case .history:
+                return Self.historyNavUUID
+            case .settings:
+                return Self.settingsNavUUID
+            }
+        }
     }
 
     @SceneStorage("main-tab") private var selectedTab = 0
@@ -33,18 +48,17 @@ struct ContentView: View {
     private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
                                 category: String(describing: ContentView.self))
 
-    private let routineNavUUID = UUID(uuidString: "31C02874-F079-4A59-A59E-67FBCE140AC5")!
-
     // NOTE: this proxy is duplicated in Daily Calorie Tracker Plus's ContentView.
     private var selectedProxy: Binding<Int> {
         Binding(get: { selectedTab },
                 set: { nuTab in
                     if nuTab != selectedTab {
                         selectedTab = nuTab
-                    } else if nuTab == Tabs.routines.rawValue {
+                    } else {
+                        guard let _nuTab = Tabs(rawValue: nuTab) else { return }
                         logger.debug("ContentView: detected tap on already-selected tab")
                         NotificationCenter.default.post(name: .trackerPopNavStack,
-                                                        object: routineNavUUID)
+                                                        object: _nuTab.uuid)
                     }
                 })
     }
@@ -52,7 +66,7 @@ struct ContentView: View {
     var body: some View {
         TabView(selection: selectedProxy) {
             GroutNavStack(navData: $routinesNavData,
-                          stackIdentifier: routineNavUUID,
+                          stackIdentifier: Tabs.routinesNavUUID,
                           destination: destination)
             {
                 RoutineList()
@@ -62,7 +76,10 @@ struct ContentView: View {
             }
             .tag(Tabs.routines.rawValue)
 
-            GroutNavStack(navData: $historyNavData, destination: destination) {
+            GroutNavStack(navData: $historyNavData,
+                          stackIdentifier: Tabs.historyNavUUID,
+                          destination: destination)
+            {
                 HistoryView()
             }
             .tabItem {
@@ -70,7 +87,10 @@ struct ContentView: View {
             }
             .tag(Tabs.history.rawValue)
 
-            GroutNavStack(navData: $settingsNavData, destination: destination) {
+            GroutNavStack(navData: $settingsNavData,
+                          stackIdentifier: Tabs.settingsNavUUID,
+                          destination: destination)
+            {
                 PhoneSettingsForm()
             }
             .tabItem {
