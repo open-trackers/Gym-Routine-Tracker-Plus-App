@@ -39,8 +39,8 @@ struct RoutineRunList: View {
     internal init(archiveStore: NSPersistentStore) {
         self.archiveStore = archiveStore
 
-        let predicate = NSPredicate(format: "userRemoved == %@", NSNumber(value: false))
-        let sortDescriptors = [NSSortDescriptor(keyPath: \ZRoutineRun.startedAt, ascending: false)]
+        let predicate = ZRoutineRun.getPredicate(userRemoved: false)
+        let sortDescriptors = ZRoutineRun.byStartedAt(ascending: false)
         let request = makeRequest(ZRoutineRun.self,
                                   predicate: predicate,
                                   sortDescriptors: sortDescriptors,

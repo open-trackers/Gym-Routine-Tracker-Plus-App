@@ -37,8 +37,8 @@ struct ExerciseRunList: View {
         self.zRoutineRun = zRoutineRun
         self.archiveStore = archiveStore
 
-        let predicate = NSPredicate(format: "zRoutineRun == %@ AND userRemoved == %@", zRoutineRun, NSNumber(value: false))
-        let sortDescriptors = [NSSortDescriptor(keyPath: \ZExerciseRun.completedAt, ascending: true)]
+        let predicate = ZExerciseRun.getPredicate(zRoutineRun: zRoutineRun, userRemoved: false)
+        let sortDescriptors = ZExerciseRun.byCompletedAt(ascending: true)
         let request = makeRequest(ZExerciseRun.self,
                                   predicate: predicate,
                                   sortDescriptors: sortDescriptors,
