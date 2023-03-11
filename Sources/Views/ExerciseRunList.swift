@@ -80,7 +80,7 @@ struct ExerciseRunList: View {
         return df
     }()
 
-    private let tc = TimeCompactor(ifZero: "", style: .full, roundSmallToWhole: false)
+    private static let tc = TimeCompactor(ifZero: "", style: .full, roundSmallToWhole: false)
 
     // MARK: - Views
 
@@ -172,7 +172,7 @@ struct ExerciseRunList: View {
     }
 
     private func durationText(_ duration: TimeInterval) -> some View {
-        Text(tc.string(from: duration as NSNumber) ?? "")
+        Text(Self.tc.string(from: duration as NSNumber) ?? "")
     }
 
     // MARK: - Properties

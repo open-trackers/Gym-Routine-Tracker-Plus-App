@@ -81,7 +81,7 @@ struct RoutineRunList: View {
         GridItem(.flexible(minimum: 70), spacing: columnSpacing, alignment: .leading),
     ] }
 
-    private let tc = TimeCompactor(ifZero: "", style: .medium, roundSmallToWhole: false)
+    private static let tc = TimeCompactor(ifZero: "", style: .medium, roundSmallToWhole: false)
 
     // support for app review prompt
     @SceneStorage("has-been-prompted-for-app-review") private var hasBeenPromptedForAppReview = false
@@ -138,7 +138,7 @@ struct RoutineRunList: View {
     }
 
     private func durationText(_ duration: TimeInterval) -> some View {
-        Text(tc.string(from: duration as NSNumber) ?? "")
+        Text(Self.tc.string(from: duration as NSNumber) ?? "")
     }
 
     // MARK: - Properties
