@@ -73,7 +73,7 @@ struct ExerciseRunList: View {
         GridItem(.flexible(minimum: 80), spacing: columnSpacing, alignment: .trailing),
     ] }
 
-    private let df: DateFormatter = {
+    private static let df: DateFormatter = {
         let df = DateFormatter()
         df.dateStyle = .short
         df.timeStyle = .short
@@ -147,7 +147,7 @@ struct ExerciseRunList: View {
     private var startedAtText: some View {
         VStack {
             if let startedAt = zRoutineRun.startedAt,
-               let dateStr = df.string(from: startedAt)
+               let dateStr = Self.df.string(from: startedAt)
             {
                 Text(dateStr)
             } else {

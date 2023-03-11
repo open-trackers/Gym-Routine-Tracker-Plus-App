@@ -60,7 +60,7 @@ struct RoutineRunList: View {
         // EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
     }
 
-    private let df: DateFormatter = {
+    private static let df: DateFormatter = {
         let df = DateFormatter()
         df.dateStyle = .short
         df.timeStyle = .none
@@ -134,7 +134,7 @@ struct RoutineRunList: View {
 
     private func startedAtText(_ date: Date?) -> some View {
         guard let date else { return Text("") }
-        return Text(df.string(from: date))
+        return Text(Self.df.string(from: date))
     }
 
     private func durationText(_ duration: TimeInterval) -> some View {
