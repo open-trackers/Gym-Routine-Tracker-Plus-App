@@ -56,7 +56,7 @@ struct ContentView: View {
                 RoutineList()
             }
             .tabItem {
-                Label("Routines", systemImage: "dumbbell")
+                Label("Gym Routines", systemImage: "dumbbell")
             }
             .tag(Tabs.routines.rawValue)
 
