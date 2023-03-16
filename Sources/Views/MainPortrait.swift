@@ -64,7 +64,7 @@ struct MainPortrait: View {
                           stackIdentifier: PortraitTab.history.rawValue,
                           destination: destination)
             {
-                HistoryView()
+                RoutineRunRecent()
             }
             .tabItem {
                 Label("History", systemImage: "fossil.shell")

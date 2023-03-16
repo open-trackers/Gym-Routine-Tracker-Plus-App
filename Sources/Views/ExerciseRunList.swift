@@ -31,18 +31,18 @@ struct ExerciseRunList: View {
     // MARK: - Parameters
 
     private var zRoutineRun: ZRoutineRun
-    private var archiveStore: NSPersistentStore
+    private var inStore: NSPersistentStore
 
-    init(zRoutineRun: ZRoutineRun, archiveStore: NSPersistentStore) {
+    init(zRoutineRun: ZRoutineRun, inStore: NSPersistentStore) {
         self.zRoutineRun = zRoutineRun
-        self.archiveStore = archiveStore
+        self.inStore = inStore
 
         let predicate = ZExerciseRun.getPredicate(zRoutineRun: zRoutineRun, userRemoved: false)
         let sortDescriptors = ZExerciseRun.byCompletedAt(ascending: true)
         let request = makeRequest(ZExerciseRun.self,
                                   predicate: predicate,
                                   sortDescriptors: sortDescriptors,
-                                  inStore: archiveStore)
+                                  inStore: inStore)
 
         _exerciseRuns = FetchRequest<ZExerciseRun>(fetchRequest: request)
     }
@@ -256,7 +256,7 @@ struct ExerciseRunList_Previews: PreviewProvider {
         try! ctx.save()
 
         return NavigationStack {
-            ExerciseRunList(zRoutineRun: zRR, archiveStore: archiveStore)
+            ExerciseRunList(zRoutineRun: zRR, inStore: archiveStore)
                 .environment(\.managedObjectContext, ctx)
         }
     }

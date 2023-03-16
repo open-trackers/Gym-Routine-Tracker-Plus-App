@@ -27,8 +27,8 @@ struct ContentView: View {
 
     @SceneStorage(tabbedViewSelectedTabKey) private var selectedTab = PortraitTab.routines.rawValue
 
-    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
-                                category: String(describing: ContentView.self))
+//    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!,
+//                                category: String(describing: ContentView.self))
 
     var body: some View {
         GeometryReader { geo in

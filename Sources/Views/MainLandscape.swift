@@ -18,7 +18,6 @@ import TrackerUI
 struct MainLandscape: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject private var manager: CoreDataStack
-    // @EnvironmentObject private var router: DcaltRouter
 
     @SceneStorage(mainNavDataRoutineKey) private var routineNavData: Data?
     @SceneStorage(mainNavDataHistoryKey) private var historyNavData: Data?
@@ -36,7 +35,7 @@ struct MainLandscape: View {
                           stackIdentifier: "History",
                           destination: destination)
             {
-                HistoryView(withSettings: true)
+                RoutineRunRecent(withSettings: true)
             }
         }
     }

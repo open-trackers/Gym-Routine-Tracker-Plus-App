@@ -26,6 +26,14 @@ struct Destination: View {
 
     var body: some View {
         switch route {
+        case .routineRunList:
+            HistoryView()
+                .environmentObject(router)
+                .environment(\.managedObjectContext, viewContext)
+        case .routineRunRecent:
+            RoutineRunRecent()
+                .environmentObject(router)
+                .environment(\.managedObjectContext, viewContext)
         case let .exerciseRunList(routineRunUri):
             exerciseRunList(routineRunUri)
                 .environmentObject(router)
@@ -42,7 +50,7 @@ struct Destination: View {
         if let zRoutineRun: ZRoutineRun = ZRoutineRun.get(viewContext, forURIRepresentation: routineRunUri),
            let archiveStore = manager.getArchiveStore(viewContext)
         {
-            ExerciseRunList(zRoutineRun: zRoutineRun, archiveStore: archiveStore)
+            ExerciseRunList(zRoutineRun: zRoutineRun, inStore: archiveStore)
         } else {
             Text("Routine Run not available to display detail.")
         }
