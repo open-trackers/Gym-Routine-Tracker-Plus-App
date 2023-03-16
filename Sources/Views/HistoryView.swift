@@ -23,6 +23,8 @@ struct HistoryView: View {
 
     // MARK: - Parameters
 
+    var withSettings = false
+
     // MARK: - Locals
 
     @State private var showClearDialog = false
@@ -42,6 +44,15 @@ struct HistoryView: View {
                             showClearDialog = true
                         }) {
                             Text("Clear")
+                        }
+                    }
+                    if withSettings {
+                        ToolbarItem {
+                            Button(action: {
+                                router.path.append(GroutRoute.settings)
+                            }) {
+                                Text("Settings")
+                            }
                         }
                     }
                 }
