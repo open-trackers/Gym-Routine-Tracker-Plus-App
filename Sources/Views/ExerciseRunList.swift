@@ -92,7 +92,7 @@ struct ExerciseRunList: View {
                    rowBackground: rowBackground,
                    results: exerciseRuns)
             .listStyle(.plain)
-            .navigationTitle(navigationTitle)
+            //.navigationTitle(navigationTitle)
     }
 
     private func header(ctx _: Binding<Context>) -> some View {
@@ -183,9 +183,9 @@ struct ExerciseRunList: View {
         return zRoutineRun.duration < secondsPerHour ? .mm_ss : .hh_mm_ss
     }
 
-    private var navigationTitle: String {
-        zRoutineRun.zRoutine?.wrappedName ?? "UNKNOWN"
-    }
+//    private var navigationTitle: String {
+//        zRoutineRun.zRoutine?.wrappedName ?? "UNKNOWN"
+//    }
 
     // MARK: - Properties
 

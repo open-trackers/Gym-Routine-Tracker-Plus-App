@@ -48,9 +48,11 @@ struct Destination: View {
     @ViewBuilder
     private func exerciseRunList(_ routineRunUri: URL) -> some View {
         if let zRoutineRun: ZRoutineRun = ZRoutineRun.get(viewContext, forURIRepresentation: routineRunUri),
-           let archiveStore = manager.getArchiveStore(viewContext)
+           let archiveStore = manager.getArchiveStore(viewContext),
+           let title = zRoutineRun.zRoutine?.name
         {
             ExerciseRunList(zRoutineRun: zRoutineRun, inStore: archiveStore)
+                .navigationTitle(title)
         } else {
             Text("Routine Run not available to display detail.")
         }

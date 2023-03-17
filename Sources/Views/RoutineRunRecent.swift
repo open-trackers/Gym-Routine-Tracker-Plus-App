@@ -59,8 +59,7 @@ struct RoutineRunRecent: View {
                 }
             }
         }
-        // TODO: not working!
-        .navigationTitle("Most Recent") // , \(formattedConsumedDate(zRoutineRun))
+        .navigationTitle("Most Recent") // ,zRoutineRun.zRoutine?.name
     }
 }
 
