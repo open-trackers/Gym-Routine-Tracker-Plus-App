@@ -106,7 +106,8 @@ struct HistoryView: View {
             do {
                 try transferToArchive(backgroundContext,
                                       mainStore: mainStore,
-                                      archiveStore: archiveStore)
+                                      archiveStore: archiveStore,
+                                      thresholdSecs: freshThresholdSecs)
                 try backgroundContext.save()
             } catch {
                 logger.error("\(#function): TRANSFER \(error.localizedDescription)")

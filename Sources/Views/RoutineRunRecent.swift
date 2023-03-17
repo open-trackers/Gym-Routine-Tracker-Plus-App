@@ -36,6 +36,8 @@ struct RoutineRunRecent: View {
                let zRoutineRun = try? ZRoutineRun.getMostRecent(viewContext, mainStore: mainStore)
             {
                 ExerciseRunList(zRoutineRun: zRoutineRun, inStore: mainStore)
+            } else {
+                Text("No recent activity. See ‘Full History’.")
             }
         }
         .toolbar {
