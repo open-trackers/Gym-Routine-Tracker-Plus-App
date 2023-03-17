@@ -23,7 +23,7 @@ struct HistoryView: View {
 
     // MARK: - Parameters
 
-    var withSettings = false
+    let withSettings = false
 
     // MARK: - Locals
 

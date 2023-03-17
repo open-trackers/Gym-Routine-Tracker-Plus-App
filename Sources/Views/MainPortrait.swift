@@ -67,7 +67,7 @@ struct MainPortrait: View {
                 if let mainStore = manager.getMainStore(viewContext) {
                     RoutineRunRecent(withSettings: false, mainStore: mainStore)
                 } else {
-                    Text("Routine Run not available to display detail.")
+                    Text("Recent not available.")
                 }
             }
             .tabItem {

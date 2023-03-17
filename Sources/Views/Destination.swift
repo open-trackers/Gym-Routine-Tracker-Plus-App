@@ -36,7 +36,7 @@ struct Destination: View {
                     .environmentObject(router)
                     .environment(\.managedObjectContext, viewContext)
             } else {
-                Text("Routine Run not available to display detail.")
+                Text("Recent not available.")
             }
         case let .exerciseRunList(routineRunUri):
             exerciseRunList(routineRunUri)
