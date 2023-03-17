@@ -67,7 +67,7 @@ struct MainPortrait: View {
                 RoutineRunRecent()
             }
             .tabItem {
-                Label("History", systemImage: "fossil.shell")
+                Label("Recent", systemImage: "fossil.shell")
             }
             .tag(PortraitTab.history.rawValue)
 
