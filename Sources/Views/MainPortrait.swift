@@ -64,7 +64,11 @@ struct MainPortrait: View {
                           stackIdentifier: PortraitTab.history.rawValue,
                           destination: destination)
             {
-                RoutineRunRecent()
+                if let mainStore = manager.getMainStore(viewContext) {
+                    RoutineRunRecent(withSettings: false, mainStore: mainStore)
+                } else {
+                    Text("Routine Run not available to display detail.")
+                }
             }
             .tabItem {
                 Label("Recent", systemImage: "fossil.shell")

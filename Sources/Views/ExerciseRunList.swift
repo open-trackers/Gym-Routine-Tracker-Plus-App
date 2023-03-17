@@ -20,7 +20,7 @@ import GroutUI
 import TrackerLib
 import TrackerUI
 
-struct ExerciseRunList: View {
+struct ExerciseRunList<Header: View>: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.managedObjectContext) private var viewContext
 
@@ -32,10 +32,15 @@ struct ExerciseRunList: View {
 
     private var zRoutineRun: ZRoutineRun
     private var inStore: NSPersistentStore
+    private var tableHeader: () -> Header
 
-    init(zRoutineRun: ZRoutineRun, inStore: NSPersistentStore) {
+    init(zRoutineRun: ZRoutineRun,
+         inStore: NSPersistentStore,
+         tableHeader: @escaping () -> Header = { EmptyView() })
+    {
         self.zRoutineRun = zRoutineRun
         self.inStore = inStore
+        self.tableHeader = tableHeader
 
         let predicate = ZExerciseRun.getPredicate(zRoutineRun: zRoutineRun, userRemoved: false)
         let sortDescriptors = ZExerciseRun.byCompletedAt(ascending: true)
@@ -73,14 +78,14 @@ struct ExerciseRunList: View {
         GridItem(.flexible(minimum: 80), spacing: columnSpacing, alignment: .trailing),
     ] }
 
-    private static let df: DateFormatter = {
+    private let df: DateFormatter = {
         let df = DateFormatter()
         df.dateStyle = .short
         df.timeStyle = .short
         return df
     }()
 
-    private static let tc = TimeCompactor(ifZero: "", style: .full, roundSmallToWhole: false)
+    private let tc = TimeCompactor(ifZero: "", style: .full, roundSmallToWhole: false)
 
     // MARK: - Views
 
@@ -92,10 +97,12 @@ struct ExerciseRunList: View {
                    rowBackground: rowBackground,
                    results: exerciseRuns)
             .listStyle(.plain)
-            //.navigationTitle(navigationTitle)
+        // .navigationTitle(navigationTitle)
     }
 
+    @ViewBuilder
     private func header(ctx _: Binding<Context>) -> some View {
+        tableHeader()
         LazyVGrid(columns: gridItems, alignment: .leading) {
             Text("Elapsed")
                 .padding(columnPadding)
@@ -147,7 +154,7 @@ struct ExerciseRunList: View {
     private var startedAtText: some View {
         VStack {
             if let startedAt = zRoutineRun.startedAt,
-               let dateStr = Self.df.string(from: startedAt)
+               let dateStr = df.string(from: startedAt)
             {
                 Text(dateStr)
             } else {
@@ -172,7 +179,7 @@ struct ExerciseRunList: View {
     }
 
     private func durationText(_ duration: TimeInterval) -> some View {
-        Text(Self.tc.string(from: duration as NSNumber) ?? "")
+        Text(tc.string(from: duration as NSNumber) ?? "")
     }
 
     // MARK: - Properties
@@ -182,12 +189,6 @@ struct ExerciseRunList: View {
         let secondsPerHour: TimeInterval = 3600
         return zRoutineRun.duration < secondsPerHour ? .mm_ss : .hh_mm_ss
     }
-
-//    private var navigationTitle: String {
-//        zRoutineRun.zRoutine?.wrappedName ?? "UNKNOWN"
-//    }
-
-    // MARK: - Properties
 
     // MARK: - Actions
 

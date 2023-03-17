@@ -21,21 +21,40 @@ struct RoutineRunRecent: View {
     @EnvironmentObject private var manager: CoreDataStack
     @EnvironmentObject private var router: GroutRouter
 
-    var withSettings = false
+    // MARK: - Parameters
 
-    private static let df: DateFormatter = {
-        let df = DateFormatter()
-        df.dateStyle = .medium
-        df.timeStyle = .none
-        return df
-    }()
+    private let withSettings: Bool
+    private var mainStore: NSPersistentStore
+
+    internal init(withSettings: Bool,
+                  mainStore: NSPersistentStore)
+    {
+        self.withSettings = withSettings
+        self.mainStore = mainStore
+
+        let predicate = ZRoutineRun.getPredicate(userRemoved: false)
+        let sortDescriptors = ZRoutineRun.byStartedAt(ascending: false)
+        let request = makeRequest(ZRoutineRun.self,
+                                  predicate: predicate,
+                                  sortDescriptors: sortDescriptors,
+                                  inStore: mainStore)
+        request.fetchLimit = 1
+        _routineRuns = FetchRequest<ZRoutineRun>(fetchRequest: request)
+    }
+
+    // MARK: - Locals
+
+    @FetchRequest private var routineRuns: FetchedResults<ZRoutineRun>
+
+    // MARK: - Views
 
     var body: some View {
         VStack {
-            if let mainStore = manager.getMainStore(viewContext),
-               let zRoutineRun = try? ZRoutineRun.getMostRecent(viewContext, mainStore: mainStore)
-            {
-                ExerciseRunList(zRoutineRun: zRoutineRun, inStore: mainStore)
+            if let routineRun {
+                ExerciseRunList(zRoutineRun: routineRun, inStore: mainStore) {
+                    Text(routineRun.zRoutine?.wrappedName ?? "")
+                        .font(.largeTitle)
+                }
             } else {
                 Text("No recent activity. See ‘Full History’.")
             }
@@ -59,7 +78,14 @@ struct RoutineRunRecent: View {
                 }
             }
         }
-        .navigationTitle("Most Recent") // ,zRoutineRun.zRoutine?.name
+        .navigationTitle("Recent")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+
+    // MARK: - Properties
+
+    private var routineRun: ZRoutineRun? {
+        routineRuns.first
     }
 }
 
@@ -93,7 +119,7 @@ struct RecentRoutineRun_Previews: PreviewProvider {
         try! ctx.save()
 
         return NavigationStack {
-            RoutineRunRecent()
+            RoutineRunRecent(withSettings: false, mainStore: mainStore)
                 .environment(\.managedObjectContext, ctx)
         }
     }
