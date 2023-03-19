@@ -17,7 +17,7 @@
 		4094B3EE29C371E900670963 /* MainPortrait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4094B3ED29C371E900670963 /* MainPortrait.swift */; };
 		4094B3F029C371F500670963 /* MainLandscape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4094B3EF29C371F500670963 /* MainLandscape.swift */; };
 		4094B3F229C3739000670963 /* Destination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4094B3F129C3739000670963 /* Destination.swift */; };
-		4094B3F429C37F2C00670963 /* RoutineRunRecent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4094B3F329C37F2C00670963 /* RoutineRunRecent.swift */; };
+		4094B3F429C37F2C00670963 /* PlusRecentRoutineRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4094B3F329C37F2C00670963 /* PlusRecentRoutineRun.swift */; };
 		40B51E45294549DF0047377A /* GroutUI in Frameworks */ = {isa = PBXBuildFile; productRef = 40B51E44294549DF0047377A /* GroutUI */; };
 		40CCF3F629454D2B007DDE69 /* GroutLib in Frameworks */ = {isa = PBXBuildFile; productRef = 40CCF3F529454D2B007DDE69 /* GroutLib */; };
 		40E347BE29452CF1003A19B9 /* PlusApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E347BD29452CF1003A19B9 /* PlusApp.swift */; };
@@ -38,7 +38,7 @@
 		4094B3ED29C371E900670963 /* MainPortrait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPortrait.swift; sourceTree = "<group>"; };
 		4094B3EF29C371F500670963 /* MainLandscape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLandscape.swift; sourceTree = "<group>"; };
 		4094B3F129C3739000670963 /* Destination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Destination.swift; sourceTree = "<group>"; };
-		4094B3F329C37F2C00670963 /* RoutineRunRecent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineRunRecent.swift; sourceTree = "<group>"; };
+		4094B3F329C37F2C00670963 /* PlusRecentRoutineRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusRecentRoutineRun.swift; sourceTree = "<group>"; };
 		40E347BA29452CF1003A19B9 /* Gym Routine Tracker Plus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gym Routine Tracker Plus.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		40E347BD29452CF1003A19B9 /* PlusApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusApp.swift; sourceTree = "<group>"; };
 		40E347BF29452CF1003A19B9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -76,7 +76,7 @@
 				402A5F2E296B7F7B00A43DB3 /* HistoryView.swift */,
 				403CA2D12972829F0084785B /* PlusSettingsForm.swift */,
 				408FACFD296CABC400D02C9C /* RoutineRunList.swift */,
-				4094B3F329C37F2C00670963 /* RoutineRunRecent.swift */,
+				4094B3F329C37F2C00670963 /* PlusRecentRoutineRun.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -222,7 +222,7 @@
 				4094B3F029C371F500670963 /* MainLandscape.swift in Sources */,
 				40E347BE29452CF1003A19B9 /* PlusApp.swift in Sources */,
 				4094B3EE29C371E900670963 /* MainPortrait.swift in Sources */,
-				4094B3F429C37F2C00670963 /* RoutineRunRecent.swift in Sources */,
+				4094B3F429C37F2C00670963 /* PlusRecentRoutineRun.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

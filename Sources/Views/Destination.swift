@@ -31,13 +31,9 @@ struct Destination: View {
                 .environmentObject(router)
                 .environment(\.managedObjectContext, viewContext)
         case .routineRunRecent:
-            if let mainStore = manager.getMainStore(viewContext) {
-                RoutineRunRecent(withSettings: false, mainStore: mainStore)
-                    .environmentObject(router)
-                    .environment(\.managedObjectContext, viewContext)
-            } else {
-                Text("Recent not available.")
-            }
+            PlusRecentRoutineRun(withSettings: false)
+                .environmentObject(router)
+                .environment(\.managedObjectContext, viewContext)
         case let .exerciseRunList(routineRunUri):
             exerciseRunList(routineRunUri)
                 .environmentObject(router)

@@ -35,11 +35,7 @@ struct MainLandscape: View {
                           stackIdentifier: "History",
                           destination: destination)
             {
-                if let mainStore = manager.getMainStore(viewContext) {
-                    RoutineRunRecent(withSettings: true, mainStore: mainStore)
-                } else {
-                    Text("Routine Run not available to display detail.")
-                }
+                PlusRecentRoutineRun(withSettings: true)
             }
         }
     }
