@@ -1,5 +1,5 @@
 //
-//  PhoneSettingsForm.swift
+//  PlusSettingsForm.swift
 //
 // Copyright 2023  OpenAlloc LLC
 //
@@ -16,7 +16,7 @@ import GroutUI
 import TrackerLib
 import TrackerUI
 
-struct PhoneSettingsForm: View {
+struct PlusSettingsForm: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject private var manager: CoreDataStack
     @EnvironmentObject private var router: GroutRouter
@@ -52,8 +52,8 @@ struct PhoneSettingsForm: View {
     }
 }
 
-struct PhoneSettingsForm_Previews: PreviewProvider {
+struct PlusSettingsForm_Previews: PreviewProvider {
     static var previews: some View {
-        PhoneSettingsForm()
+        PlusSettingsForm()
     }
 }
