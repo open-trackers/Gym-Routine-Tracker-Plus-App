@@ -154,7 +154,7 @@ struct ExerciseRunList<Header: View>: View {
     private var startedAtText: some View {
         VStack {
             if let startedAt = zRoutineRun.startedAt,
-               let dateStr = df.string(from: startedAt)
+               case let dateStr = df.string(from: startedAt)
             {
                 Text(dateStr)
             } else {
