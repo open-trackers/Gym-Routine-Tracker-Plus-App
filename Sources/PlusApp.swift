@@ -17,7 +17,7 @@ import TrackerLib
 import TrackerUI
 
 @main
-struct Gym_Routine_Tracker_Plus_App: App {
+struct Plus_App: App {
     @Environment(\.scenePhase) var scenePhase
 
     // MARK: - Locals
