@@ -13,6 +13,7 @@
 		4004525429E3996100B0D7B2 /* WidgetGRT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4004525329E3996100B0D7B2 /* WidgetGRT.swift */; };
 		4004525629E3996200B0D7B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4004525529E3996200B0D7B2 /* Assets.xcassets */; };
 		4004525A29E3996200B0D7B2 /* WidgetGRTExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4004524B29E3996100B0D7B2 /* WidgetGRTExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		400452A829E39C9100B0D7B2 /* GroutUI in Frameworks */ = {isa = PBXBuildFile; productRef = 400452A729E39C9100B0D7B2 /* GroutUI */; };
 		4011EECD2961C9B000A36D87 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4011EECC2961C9B000A36D87 /* LICENSE */; };
 		40245EF6296BE7D4007B5DAB /* ExerciseRunList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40245EF5296BE7D4007B5DAB /* ExerciseRunList.swift */; };
 		402A5F2F296B7FE000A43DB3 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402A5F2E296B7F7B00A43DB3 /* HistoryView.swift */; };
@@ -91,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				400452A829E39C9100B0D7B2 /* GroutUI in Frameworks */,
 				4004524F29E3996100B0D7B2 /* SwiftUI.framework in Frameworks */,
 				4004524D29E3996100B0D7B2 /* WidgetKit.framework in Frameworks */,
 			);
@@ -207,6 +209,9 @@
 			dependencies = (
 			);
 			name = WidgetGRTExtension;
+			packageProductDependencies = (
+				400452A729E39C9100B0D7B2 /* GroutUI */,
+			);
 			productName = WidgetGRTExtension;
 			productReference = 4004524B29E3996100B0D7B2 /* WidgetGRTExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -678,6 +683,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		400452A729E39C9100B0D7B2 /* GroutUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GroutUI;
+		};
 		402A5F31296B835B00A43DB3 /* Tabler */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 402A5F30296B835B00A43DB3 /* XCRemoteSwiftPackageReference "SwiftTabler" */;
