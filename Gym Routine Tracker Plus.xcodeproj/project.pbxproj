@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4004524D29E3996100B0D7B2 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4004524C29E3996100B0D7B2 /* WidgetKit.framework */; };
+		4004524F29E3996100B0D7B2 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4004524E29E3996100B0D7B2 /* SwiftUI.framework */; };
+		4004525229E3996100B0D7B2 /* WidgetGRTBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4004525129E3996100B0D7B2 /* WidgetGRTBundle.swift */; };
+		4004525429E3996100B0D7B2 /* WidgetGRT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4004525329E3996100B0D7B2 /* WidgetGRT.swift */; };
+		4004525629E3996200B0D7B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4004525529E3996200B0D7B2 /* Assets.xcassets */; };
+		4004525A29E3996200B0D7B2 /* WidgetGRTExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4004524B29E3996100B0D7B2 /* WidgetGRTExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4011EECD2961C9B000A36D87 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4011EECC2961C9B000A36D87 /* LICENSE */; };
 		40245EF6296BE7D4007B5DAB /* ExerciseRunList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40245EF5296BE7D4007B5DAB /* ExerciseRunList.swift */; };
 		402A5F2F296B7FE000A43DB3 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402A5F2E296B7F7B00A43DB3 /* HistoryView.swift */; };
@@ -28,7 +34,39 @@
 		40EBE1CC29635306004B9189 /* GroutUI in Frameworks */ = {isa = PBXBuildFile; productRef = 40EBE1CB29635306004B9189 /* GroutUI */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		4004525829E3996200B0D7B2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 40E347B229452CF0003A19B9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4004524A29E3996100B0D7B2;
+			remoteInfo = WidgetGRTExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4004525B29E3996200B0D7B2 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				4004525A29E3996200B0D7B2 /* WidgetGRTExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		4004524B29E3996100B0D7B2 /* WidgetGRTExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetGRTExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		4004524C29E3996100B0D7B2 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		4004524E29E3996100B0D7B2 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		4004525129E3996100B0D7B2 /* WidgetGRTBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetGRTBundle.swift; sourceTree = "<group>"; };
+		4004525329E3996100B0D7B2 /* WidgetGRT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetGRT.swift; sourceTree = "<group>"; };
+		4004525529E3996200B0D7B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4004525729E3996200B0D7B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4004529D29E39A3600B0D7B2 /* WidgetGRTExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetGRTExtension.entitlements; sourceTree = "<group>"; };
 		4011EECC2961C9B000A36D87 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4011EECE2961C9BC00A36D87 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		40245EF5296BE7D4007B5DAB /* ExerciseRunList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseRunList.swift; sourceTree = "<group>"; };
@@ -49,6 +87,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4004524829E3996100B0D7B2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4004524F29E3996100B0D7B2 /* SwiftUI.framework in Frameworks */,
+				4004524D29E3996100B0D7B2 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		40E347B729452CF1003A19B9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -65,6 +112,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4004525029E3996100B0D7B2 /* WidgetGRT */ = {
+			isa = PBXGroup;
+			children = (
+				4004525129E3996100B0D7B2 /* WidgetGRTBundle.swift */,
+				4004525329E3996100B0D7B2 /* WidgetGRT.swift */,
+				4004525529E3996200B0D7B2 /* Assets.xcassets */,
+				4004525729E3996200B0D7B2 /* Info.plist */,
+			);
+			path = WidgetGRT;
+			sourceTree = "<group>";
+		};
 		401064DB2973378C00BFB00E /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -84,6 +142,8 @@
 		40B51E41294549D90047377A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4004524C29E3996100B0D7B2 /* WidgetKit.framework */,
+				4004524E29E3996100B0D7B2 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -91,9 +151,11 @@
 		40E347B129452CF0003A19B9 = {
 			isa = PBXGroup;
 			children = (
+				4004529D29E39A3600B0D7B2 /* WidgetGRTExtension.entitlements */,
 				4011EECC2961C9B000A36D87 /* LICENSE */,
 				4011EECE2961C9BC00A36D87 /* README.md */,
 				40E347BC29452CF1003A19B9 /* Sources */,
+				4004525029E3996100B0D7B2 /* WidgetGRT */,
 				40E347BB29452CF1003A19B9 /* Products */,
 				40B51E41294549D90047377A /* Frameworks */,
 			);
@@ -103,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				40E347BA29452CF1003A19B9 /* Gym Routine Tracker Plus.app */,
+				4004524B29E3996100B0D7B2 /* WidgetGRTExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -131,6 +194,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4004524A29E3996100B0D7B2 /* WidgetGRTExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4004525E29E3996200B0D7B2 /* Build configuration list for PBXNativeTarget "WidgetGRTExtension" */;
+			buildPhases = (
+				4004524729E3996100B0D7B2 /* Sources */,
+				4004524829E3996100B0D7B2 /* Frameworks */,
+				4004524929E3996100B0D7B2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WidgetGRTExtension;
+			productName = WidgetGRTExtension;
+			productReference = 4004524B29E3996100B0D7B2 /* WidgetGRTExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		40E347B929452CF1003A19B9 /* Gym Routine Tracker Plus */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 40E347C929452CF1003A19B9 /* Build configuration list for PBXNativeTarget "Gym Routine Tracker Plus" */;
@@ -138,10 +218,12 @@
 				40E347B629452CF1003A19B9 /* Sources */,
 				40E347B729452CF1003A19B9 /* Frameworks */,
 				40E347B829452CF1003A19B9 /* Resources */,
+				4004525B29E3996200B0D7B2 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				4004525929E3996200B0D7B2 /* PBXTargetDependency */,
 			);
 			name = "Gym Routine Tracker Plus";
 			packageProductDependencies = (
@@ -163,9 +245,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1410;
+				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
+					4004524A29E3996100B0D7B2 = {
+						CreatedOnToolsVersion = 14.3;
+					};
 					40E347B929452CF1003A19B9 = {
 						CreatedOnToolsVersion = 14.1;
 					};
@@ -191,11 +276,20 @@
 			projectRoot = "";
 			targets = (
 				40E347B929452CF1003A19B9 /* Gym Routine Tracker Plus */,
+				4004524A29E3996100B0D7B2 /* WidgetGRTExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4004524929E3996100B0D7B2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4004525629E3996200B0D7B2 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		40E347B829452CF1003A19B9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -209,6 +303,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4004524729E3996100B0D7B2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4004525229E3996100B0D7B2 /* WidgetGRTBundle.swift in Sources */,
+				4004525429E3996100B0D7B2 /* WidgetGRT.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		40E347B629452CF1003A19B9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -228,7 +331,80 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		4004525929E3996200B0D7B2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4004524A29E3996100B0D7B2 /* WidgetGRTExtension */;
+			targetProxy = 4004525829E3996200B0D7B2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		4004525C29E3996200B0D7B2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = WidgetGRTExtension.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J735QC5U38;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WidgetGRT/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = WidgetGRT;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.openalloc.grout.plus.WidgetGRT;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4004525D29E3996200B0D7B2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = WidgetGRTExtension.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J735QC5U38;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WidgetGRT/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = WidgetGRT;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.openalloc.grout.plus.WidgetGRT;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		40E347C729452CF1003A19B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -343,6 +519,7 @@
 		40E347CA29452CF1003A19B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Sources/App.entitlements;
@@ -389,6 +566,7 @@
 		40E347CB29452CF1003A19B9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Sources/App.entitlements;
@@ -435,6 +613,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4004525E29E3996200B0D7B2 /* Build configuration list for PBXNativeTarget "WidgetGRTExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4004525C29E3996200B0D7B2 /* Debug */,
+				4004525D29E3996200B0D7B2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		40E347B529452CF0003A19B9 /* Build configuration list for PBXProject "Gym Routine Tracker Plus" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
