@@ -170,6 +170,11 @@ struct RoutineRunList: View {
             }
 
             try viewContext.save()
+
+            // update the widget(s), if any
+            try WidgetEntry.refresh(viewContext,
+                                    reload: true,
+                                    defaultColor: .accentColor)
         } catch {
             logger.error("\(#function): \(error.localizedDescription)")
         }
