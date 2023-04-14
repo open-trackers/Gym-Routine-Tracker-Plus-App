@@ -1,5 +1,5 @@
 //
-//  WidgetGRT.swift
+//  WidgetGRTP.swift
 //
 // Copyright 2023  OpenAlloc LLC
 //
@@ -14,8 +14,8 @@ import WidgetKit
 import GroutLib
 import GroutUI
 
-struct WidgetGRT: Widget {
-    let kind: String = "WidgetGRT"
+struct WidgetGRTP: Widget {
+    let kind: String = "WidgetGRTP"
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
@@ -26,7 +26,7 @@ struct WidgetGRT: Widget {
     }
 }
 
-struct WidgetGRT_Previews: PreviewProvider {
+struct WidgetGRTP_Previews: PreviewProvider {
     static var previews: some View {
         let entry = WidgetEntry(name: "Back & Bicep", timeInterval: 1000)
         return WidgetView(entry: entry)
