@@ -23,12 +23,13 @@ struct WidgetGRTP: Widget {
         }
         .configurationDisplayName("Gym Routines")
         .description("Time since last gym routine.")
+        .supportedFamilies([.systemSmall])
     }
 }
 
 struct WidgetGRTP_Previews: PreviewProvider {
     static var previews: some View {
-        let entry = WidgetEntry(name: "Back & Bicep", timeInterval: 1000)
+        let entry = WidgetEntry(name: "Back & Bicep", imageName: nil, timeInterval: 1000)
         return WidgetView(entry: entry)
             .accentColor(.blue)
             .previewContext(WidgetPreviewContext(family: .systemSmall))
