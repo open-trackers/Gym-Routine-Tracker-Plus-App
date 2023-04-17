@@ -13,6 +13,13 @@
 		402A5F32296B835B00A43DB3 /* Tabler in Frameworks */ = {isa = PBXBuildFile; productRef = 402A5F31296B835B00A43DB3 /* Tabler */; };
 		403CA2CE2971F6660084785B /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 403CA2CD2971F6660084785B /* ZIPFoundation */; };
 		403CA2D22972829F0084785B /* PlusSettingsForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403CA2D12972829F0084785B /* PlusSettingsForm.swift */; };
+		4057021029EA116000F92502 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4004524C29E3996100B0D7B2 /* WidgetKit.framework */; };
+		4057021129EA116000F92502 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4004524E29E3996100B0D7B2 /* SwiftUI.framework */; };
+		4057021429EA116000F92502 /* WidgetGRTPBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4057021329EA116000F92502 /* WidgetGRTPBundle.swift */; };
+		4057021629EA116000F92502 /* WidgetGRTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4057021529EA116000F92502 /* WidgetGRTP.swift */; };
+		4057021829EA116000F92502 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4057021729EA116000F92502 /* Assets.xcassets */; };
+		4057021C29EA116000F92502 /* WidgetGRTPExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4057020F29EA116000F92502 /* WidgetGRTPExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4057022129EA11B700F92502 /* GroutUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4057022029EA11B700F92502 /* GroutUI */; };
 		408FACFE296CAC9300D02C9C /* RoutineRunList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408FACFD296CABC400D02C9C /* RoutineRunList.swift */; };
 		4094B3EE29C371E900670963 /* MainPortrait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4094B3ED29C371E900670963 /* MainPortrait.swift */; };
 		4094B3F029C371F500670963 /* MainLandscape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4094B3EF29C371F500670963 /* MainLandscape.swift */; };
@@ -28,12 +35,44 @@
 		40EBE1CC29635306004B9189 /* GroutUI in Frameworks */ = {isa = PBXBuildFile; productRef = 40EBE1CB29635306004B9189 /* GroutUI */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		4057021A29EA116000F92502 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 40E347B229452CF0003A19B9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4057020E29EA116000F92502;
+			remoteInfo = WidgetGRTPExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4004525B29E3996200B0D7B2 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				4057021C29EA116000F92502 /* WidgetGRTPExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		4004524C29E3996100B0D7B2 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		4004524E29E3996100B0D7B2 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		4011EECC2961C9B000A36D87 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4011EECE2961C9BC00A36D87 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		40245EF5296BE7D4007B5DAB /* ExerciseRunList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseRunList.swift; sourceTree = "<group>"; };
 		402A5F2E296B7F7B00A43DB3 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		403CA2D12972829F0084785B /* PlusSettingsForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusSettingsForm.swift; sourceTree = "<group>"; };
+		4057020F29EA116000F92502 /* WidgetGRTPExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetGRTPExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		4057021329EA116000F92502 /* WidgetGRTPBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetGRTPBundle.swift; sourceTree = "<group>"; };
+		4057021529EA116000F92502 /* WidgetGRTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetGRTP.swift; sourceTree = "<group>"; };
+		4057021729EA116000F92502 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4057021929EA116000F92502 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4057025129EA12C900F92502 /* WidgetGRTPExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetGRTPExtension.entitlements; sourceTree = "<group>"; };
 		408FACFD296CABC400D02C9C /* RoutineRunList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineRunList.swift; sourceTree = "<group>"; };
 		4094B3ED29C371E900670963 /* MainPortrait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPortrait.swift; sourceTree = "<group>"; };
 		4094B3EF29C371F500670963 /* MainLandscape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLandscape.swift; sourceTree = "<group>"; };
@@ -49,6 +88,16 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4057020C29EA116000F92502 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4057022129EA11B700F92502 /* GroutUI in Frameworks */,
+				4057021129EA116000F92502 /* SwiftUI.framework in Frameworks */,
+				4057021029EA116000F92502 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		40E347B729452CF1003A19B9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -81,9 +130,22 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		4057021229EA116000F92502 /* WidgetGRTP */ = {
+			isa = PBXGroup;
+			children = (
+				4057021329EA116000F92502 /* WidgetGRTPBundle.swift */,
+				4057021529EA116000F92502 /* WidgetGRTP.swift */,
+				4057021729EA116000F92502 /* Assets.xcassets */,
+				4057021929EA116000F92502 /* Info.plist */,
+			);
+			path = WidgetGRTP;
+			sourceTree = "<group>";
+		};
 		40B51E41294549D90047377A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4004524C29E3996100B0D7B2 /* WidgetKit.framework */,
+				4004524E29E3996100B0D7B2 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -91,9 +153,11 @@
 		40E347B129452CF0003A19B9 = {
 			isa = PBXGroup;
 			children = (
+				4057025129EA12C900F92502 /* WidgetGRTPExtension.entitlements */,
 				4011EECC2961C9B000A36D87 /* LICENSE */,
 				4011EECE2961C9BC00A36D87 /* README.md */,
 				40E347BC29452CF1003A19B9 /* Sources */,
+				4057021229EA116000F92502 /* WidgetGRTP */,
 				40E347BB29452CF1003A19B9 /* Products */,
 				40B51E41294549D90047377A /* Frameworks */,
 			);
@@ -103,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				40E347BA29452CF1003A19B9 /* Gym Routine Tracker Plus.app */,
+				4057020F29EA116000F92502 /* WidgetGRTPExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -131,6 +196,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4057020E29EA116000F92502 /* WidgetGRTPExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4057021D29EA116000F92502 /* Build configuration list for PBXNativeTarget "WidgetGRTPExtension" */;
+			buildPhases = (
+				4057020B29EA116000F92502 /* Sources */,
+				4057020C29EA116000F92502 /* Frameworks */,
+				4057020D29EA116000F92502 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WidgetGRTPExtension;
+			packageProductDependencies = (
+				4057022029EA11B700F92502 /* GroutUI */,
+			);
+			productName = WidgetGRTPExtension;
+			productReference = 4057020F29EA116000F92502 /* WidgetGRTPExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		40E347B929452CF1003A19B9 /* Gym Routine Tracker Plus */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 40E347C929452CF1003A19B9 /* Build configuration list for PBXNativeTarget "Gym Routine Tracker Plus" */;
@@ -138,10 +223,12 @@
 				40E347B629452CF1003A19B9 /* Sources */,
 				40E347B729452CF1003A19B9 /* Frameworks */,
 				40E347B829452CF1003A19B9 /* Resources */,
+				4004525B29E3996200B0D7B2 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				4057021B29EA116000F92502 /* PBXTargetDependency */,
 			);
 			name = "Gym Routine Tracker Plus";
 			packageProductDependencies = (
@@ -163,9 +250,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1410;
+				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
+					4057020E29EA116000F92502 = {
+						CreatedOnToolsVersion = 14.3;
+					};
 					40E347B929452CF1003A19B9 = {
 						CreatedOnToolsVersion = 14.1;
 					};
@@ -191,11 +281,20 @@
 			projectRoot = "";
 			targets = (
 				40E347B929452CF1003A19B9 /* Gym Routine Tracker Plus */,
+				4057020E29EA116000F92502 /* WidgetGRTPExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4057020D29EA116000F92502 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4057021829EA116000F92502 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		40E347B829452CF1003A19B9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -209,6 +308,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4057020B29EA116000F92502 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4057021629EA116000F92502 /* WidgetGRTP.swift in Sources */,
+				4057021429EA116000F92502 /* WidgetGRTPBundle.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		40E347B629452CF1003A19B9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -228,7 +336,80 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		4057021B29EA116000F92502 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4057020E29EA116000F92502 /* WidgetGRTPExtension */;
+			targetProxy = 4057021A29EA116000F92502 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		4057021E29EA116000F92502 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = WidgetGRTPExtension.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 16;
+				DEVELOPMENT_TEAM = J735QC5U38;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WidgetGRTP/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = WidgetGRTP;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.10;
+				PRODUCT_BUNDLE_IDENTIFIER = org.openalloc.grout.plus.WidgetGRTP;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4057021F29EA116000F92502 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = WidgetGRTPExtension.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 16;
+				DEVELOPMENT_TEAM = J735QC5U38;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WidgetGRTP/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = WidgetGRTP;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.10;
+				PRODUCT_BUNDLE_IDENTIFIER = org.openalloc.grout.plus.WidgetGRTP;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		40E347C729452CF1003A19B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -343,13 +524,14 @@
 		40E347CA29452CF1003A19B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Sources/App.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Sources/Preview Content\"";
 				DEVELOPMENT_TEAM = J735QC5U38;
@@ -373,7 +555,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.9;
+				MARKETING_VERSION = 1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.openalloc.grout.plus;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -389,13 +571,14 @@
 		40E347CB29452CF1003A19B9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Sources/App.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Sources/Preview Content\"";
 				DEVELOPMENT_TEAM = J735QC5U38;
@@ -419,7 +602,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.9;
+				MARKETING_VERSION = 1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.openalloc.grout.plus;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -435,6 +618,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4057021D29EA116000F92502 /* Build configuration list for PBXNativeTarget "WidgetGRTPExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4057021E29EA116000F92502 /* Debug */,
+				4057021F29EA116000F92502 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		40E347B529452CF0003A19B9 /* Build configuration list for PBXProject "Gym Routine Tracker Plus" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -500,6 +692,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 403CA2CC2971F6660084785B /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
 			productName = ZIPFoundation;
+		};
+		4057022029EA11B700F92502 /* GroutUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GroutUI;
 		};
 		40B51E44294549DF0047377A /* GroutUI */ = {
 			isa = XCSwiftPackageProductDependency;

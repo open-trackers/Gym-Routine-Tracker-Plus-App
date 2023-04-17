@@ -14,9 +14,19 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>WidgetGRTPExtension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>4004524A29E3996100B0D7B2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>40E347B929452CF1003A19B9</key>
 		<dict>
 			<key>primary</key>
