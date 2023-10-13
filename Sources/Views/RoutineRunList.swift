@@ -36,7 +36,7 @@ struct RoutineRunList: View {
 
     private var archiveStore: NSPersistentStore
 
-    internal init(archiveStore: NSPersistentStore) {
+    init(archiveStore: NSPersistentStore) {
         self.archiveStore = archiveStore
 
         let predicate = ZRoutineRun.getPredicate(userRemoved: false)
